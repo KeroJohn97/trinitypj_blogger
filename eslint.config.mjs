@@ -61,6 +61,9 @@ const config = typescriptEslint.config(
         {
           ignoreCase: true,
           ignoreDeclarationSort: true,
+          ignoreMemberSort: false,
+          allowEmptyInterfaces: "with-extends",
+          allowEmptyObjectTypes: "never",
         },
       ],
       "import/order": [
