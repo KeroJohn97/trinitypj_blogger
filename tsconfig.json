@@ -19,7 +19,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "baseUrl": ".",
     "types": [
@@ -36,7 +36,7 @@
       "@/*": [
         "./src/*"
       ]
-    },
+    }
   },
   "include": [
     "next-env.d.ts",
@@ -45,7 +45,8 @@
     "**/*.mjs",
     "vitest.config.ts",
     ".next/types/**/*.ts",
-    "eslint.config.mjs"
+    "eslint.config.mjs",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
