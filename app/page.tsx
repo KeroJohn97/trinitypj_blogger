@@ -1,17 +1,13 @@
-import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { EventBanner } from "@/components/event-banner"
+import { Navigation } from "@/components/navigation"
 import { OngoingEvents } from "@/components/ongoing-events"
+import NewsGrid from "@/components/post-grid"
 import { Button } from "@/components/ui/button"
-import { Calendar, Users, Heart, MapPin, Play } from "lucide-react"
-import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
-import HomeServices from "./app-components/home-services"
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious } from "@/components/ui/carousel"
-import YoutubeServices from "./app-components/youtube-services"
+import { Calendar, Heart, MapPin, Users } from "lucide-react"
+import Link from "next/link"
 import HomeCarousel from "./app-components/home-carousel"
 import YoutubeButton from "./app-components/youtube-button"
-import NoticeCarousel from "./app-components/notice-carousel"
 
 export default function HomePage() {
   return (
@@ -19,19 +15,27 @@ export default function HomePage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="from-primary/10 to-accent/5 relative bg-gradient-to-br py-20 lg:py-32">
+      <section className="from-primary/10 to-accent/5 relative bg-linear-to-br py-20 lg:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div>
               <h1 className="text-foreground mb-6 text-4xl font-bold text-balance lg:text-6xl">
                 Welcome to Trinity Methodist Church PJ
               </h1>
-              <p className="text-muted-foreground mb-8 text-xl text-pretty">
-                Join us in worship, fellowship, and service as we grow together in faith and love. Experience the warmth
-                of our community every Sunday.
+              <p className="text-muted-foreground mb-4 text-xl text-pretty">
+                Everyone a disciple, rooted and built up in Jesus Christ
+              </p>
+              <p className="text-muted-foreground mb-4 text-xl text-pretty">Every family discipled for Jesus Christ</p>
+              <p className="text-muted-foreground mb-4 text-xl text-pretty">
+                Everyone united in ministry for Jesus Christ
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Button size="lg" className="font-semibold" href={"#"}>
+                <Button
+                  size="lg"
+                  className="font-semibold"
+                  href="https://maps.app.goo.gl/EHhX5cWQHERFD4AR6"
+                  target="_blank"
+                >
                   Join Us This Sunday
                 </Button>
                 <YoutubeButton />
@@ -55,7 +59,7 @@ export default function HomePage() {
         ctaLink="/events/christmas-2025"
       /> */}
 
-      <NoticeCarousel />
+      <NewsGrid />
 
       <OngoingEvents />
 
@@ -106,7 +110,7 @@ export default function HomePage() {
                   <MapPin className="text-primary h-6 w-6" />
                 </div>
                 <h3 className="text-foreground mb-2 font-semibold">Connect With Us</h3>
-                <p className="text-muted-foreground mb-4 text-sm">Find us and explore our offerings</p>
+                <p className="text-muted-foreground mb-4 text-sm">Find us and explore our church ministries</p>
                 <Link href="/location-services">
                   <Button variant="outline" size="sm">
                     Learn More

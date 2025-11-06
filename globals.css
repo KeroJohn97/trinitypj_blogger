@@ -18,7 +18,7 @@
   /* Emerald-600 */
   --primary-foreground: oklch(1 0 0);
   /* White text on emerald */
-  --secondary: oklch(0.97 0 0);
+  --secondary: oklch(72.445% 0.18897 50.929);
   --secondary-foreground: oklch(0.145 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
@@ -57,7 +57,7 @@
   --primary: oklch(0.646 0.222 162.734);
   /* Lighter emerald for dark mode */
   --primary-foreground: oklch(0.145 0 0);
-  --secondary: oklch(0.269 0 0);
+  --secondary: oklch(0.637 0.174 57.8);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);

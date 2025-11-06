@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { Church, MapPin, Phone, Mail, Clock } from "lucide-react"
+import { Clock, Mail, MapPin, Phone } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 import logo from "@/../assets/logo.jpg"
 
@@ -16,10 +16,7 @@ export function Footer() {
             <div className="mb-4 flex items-center space-x-2">
               <Image src={logo} alt="TMCPJ Logo" />
             </div>
-            <p className="text-muted-foreground mb-4 max-w-md">
-              A welcoming community dedicated to growing in faith, serving others, and building lasting relationships
-              through God's love.
-            </p>
+            <p className="text-muted-primary mb-4 max-w-md font-bold tracking-wider">A DICIPLE MAKING CHURCH</p>
           </div>
 
           {/* Contact Information */}
@@ -31,7 +28,7 @@ export function Footer() {
                 <Link
                   href="https://maps.app.goo.gl/EHhX5cWQHERFD4AR6"
                   target="_blank"
-                  className="text-sm hover:underline text-primary"
+                  className="text-primary text-sm hover:underline"
                 >
                   6 Jalan 5/37, 46000 Petaling Jaya, Selangor, Malaysia
                 </Link>
@@ -63,6 +60,13 @@ export function Footer() {
               </div>
             </div>
           </div>
+          {/* <Card>
+            <CardContent>
+              <div className="flex h-full w-full items-center justify-center">
+                <TimelineLayout items={timelineData} size="sm" animate={false} connectorColor="secondary" />
+              </div>
+            </CardContent>
+          </Card> */}
         </div>
 
         <div className="border-border mt-8 border-t pt-8">
