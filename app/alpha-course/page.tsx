@@ -1,10 +1,28 @@
-import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
-import { StaggeredGallery } from "@/components/staggered-gallery"
+import { StaggeredVideoGallery } from "@/components/staggered-video-gallery"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { Building, Heart, Users, Target, Calendar, DollarSign } from "lucide-react"
+import { Building, Calendar, DollarSign, Heart, Target, Users } from "lucide-react"
+import Image from "next/image"
+
+const videos = [
+  {
+    id: "1",
+    youtubeId: "Un4kKyjmw44",
+    title: "Camp Highlights",
+    description: "A fun look back at last summer’s activities!",
+    category: "Highlights",
+  },
+  {
+    id: "2",
+    youtubeId: "9ib_IOjNMJs",
+    title: "Nature Hike",
+    description: "A peaceful journey through the forest trails.",
+    category: "Adventure",
+  },
+]
 
 const projectImages = [
   {
@@ -57,8 +75,8 @@ export default function SanctuaryProjectPage() {
       <Navigation />
 
       <PageHeader
-        title="Sanctuary Restoration Project"
-        subtitle="Renewing our sacred space for worship, fellowship, and community gathering for generations to come"
+        title="Alpha Course"
+        subtitle="Alpha is a series of interactive sessions that explore the basics of the Christian faith"
         backgroundType="gradient"
         colorScheme="warm"
       />
@@ -68,21 +86,25 @@ export default function SanctuaryProjectPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div>
-              <h2 className="text-foreground mb-6 text-3xl font-bold lg:text-4xl">Restoring Our Sacred Space</h2>
+              <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">WHO’S IT FOR?</h2>
               <div className="prose prose-lg text-muted-foreground">
                 <p className="mb-4">
-                  After 50 years of faithful service, our beloved sanctuary is undergoing a comprehensive restoration to
-                  ensure it continues to serve our community for generations to come. This project represents more than
-                  just building improvements – it's an investment in our shared future.
+                  Alpha is for anyone who’s curious to explore the big questions of life, faith and meaning. The videos
+                  are designed to encourage conversation and explore the Christian faith in a friendly, open and
+                  informal environment.
                 </p>
+              </div>
+              <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">HOW DOES IT WORK?</h2>
+              <div className="prose prose-lg text-muted-foreground">
                 <p className="mb-4">
-                  The restoration includes structural reinforcement, updated electrical and sound systems, improved
-                  accessibility features, and enhanced lighting to create a more welcoming and functional worship space.
+                  Typically run over twelve weeks and ends with a celebration. No two Alphas look the same, but
+                  generally they have three key things in common: food (except for Alpha Online), a short video and a
+                  discussion where you can share your thoughts. There’s no pressure and no follow up.
                 </p>
-                <p>
-                  Every aspect of this project has been carefully planned to preserve the sacred character of our
-                  sanctuary while incorporating modern amenities that will serve our growing congregation.
-                </p>
+              </div>
+              <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">HOW MUCH IS IT?</h2>
+              <div className="prose prose-lg text-muted-foreground">
+                <p className="mb-4">There’s no charge for Alpha.</p>
               </div>
             </div>
             <div className="relative">
@@ -127,6 +149,10 @@ export default function SanctuaryProjectPage() {
                 </CardContent>
               </Card>
             </div>
+          </div>
+
+          <div className="flex flex-row justify-center items-center gap-4 p-8">
+            <Image src={""} alt="" />
           </div>
 
           {/* Project Features */}
@@ -262,8 +288,8 @@ export default function SanctuaryProjectPage() {
                         phase.status === "completed"
                           ? "bg-primary"
                           : phase.status === "current"
-                          ? "bg-primary animate-pulse"
-                          : "bg-muted-foreground/30"
+                            ? "bg-primary animate-pulse"
+                            : "bg-muted-foreground/30"
                       }`}
                     />
                     {index < 4 && <div className="bg-muted-foreground/20 mt-2 h-16 w-0.5" />}
@@ -276,8 +302,8 @@ export default function SanctuaryProjectPage() {
                           phase.status === "completed"
                             ? "bg-primary/10 text-primary"
                             : phase.status === "current"
-                            ? "bg-primary/20 text-primary font-semibold"
-                            : "bg-muted text-muted-foreground"
+                              ? "bg-primary/20 text-primary font-semibold"
+                              : "bg-muted text-muted-foreground"
                         }`}
                       >
                         {phase.period}
@@ -293,12 +319,12 @@ export default function SanctuaryProjectPage() {
           {/* Gallery */}
           <div className="mb-16">
             <div className="mb-12 text-center">
-              <h2 className="text-foreground mb-4 text-3xl font-bold lg:text-4xl">Project Gallery</h2>
+              <h2 className="text-foreground mb-4 text-3xl font-bold lg:text-4xl">Alpha's Journey</h2>
               <p className="text-muted-foreground mx-auto max-w-2xl text-xl">
-                Follow our restoration journey through these progress photos and architectural renderings
+                Hear from our community members about the impact of the restoration project
               </p>
             </div>
-            <StaggeredGallery images={projectImages} />
+            <StaggeredVideoGallery videos={videos} />
           </div>
 
           {/* Support CTA */}

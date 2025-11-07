@@ -136,7 +136,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-foreground mb-2 font-semibold">Alpha Course</h3>
                 <p className="text-muted-foreground mb-4 text-sm">Join our restoration initiative</p>
-                <Link href="/sanctuary-project">
+                <Link href="/alpha-course">
                   <Button variant="outline" size="sm">
                     Learn More
                   </Button>
