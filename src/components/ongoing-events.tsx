@@ -1,11 +1,9 @@
-import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Calendar, Clock, MapPin, Users } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 
-import logo from "@/../assets/logo.jpg"
-import sundayServices from "@/../assets/sunday-services.jpg"
 import course from "@/../assets/course.png"
 import smallGroup from "@/../assets/small-group.png"
+import sundayServices from "@/../assets/sunday-services.jpg"
 
 interface Event {
   id: string
@@ -84,47 +82,17 @@ export function OngoingEvents() {
               className="group overflow-hidden transition-all duration-300 hover:shadow-lg"
               backgroundImage={event.backgroundImage}
             >
-              <CardContent className="p-0">
+              <CardContent className="p-0 h-48">
                 {event.image && (
-                  <div className="from-primary/20 to-accent/10 relative h-48 overflow-hidden bg-gradient-to-br">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                  <div className="from-primary/20 to-accent/10 relative h-48 overflow-hidden bg-linear-to-br">
+                    <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
                   </div>
                 )}
 
-                <div className="p-6">
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className="bg-primary/10 text-primary inline-block rounded-full px-3 py-1 text-sm font-medium">
-                      {event.category}
-                    </span>
-                    {event.attendees && (
-                      <div className="text-background flex items-center gap-1 text-sm">
-                        <Users className="h-4 w-4" />
-                        <span>{event.attendees} attending</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <h3 className="text-background group-hover:text-primary mb-3 text-xl font-bold transition-colors">
+                <div className="p-16">
+                  <h3 className="text-background mb-3 text-center text-xl font-bold transition-colors">
                     {event.title}
                   </h3>
-
-                  <p className="text-background mb-4 text-sm leading-relaxed">{event.description}</p>
-
-                  <div className="mb-4 space-y-2">
-                    <div className="text-muted-foreground flex items-center gap-2 text-sm">
-                      <Calendar className="text-primary h-4 w-4" />
-                      <span className="text-background">{event.date}</span>
-                    </div>
-                    <div className="text-muted-foreground flex items-center gap-2 text-sm">
-                      <Clock className="text-primary h-4 w-4" />
-                      <span className="text-background">{event.time}</span>
-                    </div>
-                    <div className="text-muted-foreground flex items-center gap-2 text-sm">
-                      <MapPin className="text-primary h-4 w-4" />
-                      <span className="text-background">{event.location}</span>
-                    </div>
-                  </div>
-
                   <Button
                     variant="outline"
                     size="sm"

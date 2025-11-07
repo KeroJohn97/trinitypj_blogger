@@ -1,7 +1,7 @@
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
+import NewsGrid from "@/components/news-grid"
 import { OngoingEvents } from "@/components/ongoing-events"
-import NewsGrid from "@/components/post-grid"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, Heart, MapPin, Users } from "lucide-react"
@@ -59,7 +59,17 @@ export default function HomePage() {
         ctaLink="/events/christmas-2025"
       /> */}
 
-      <NewsGrid />
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mb-12 text-center">
+          <h1 className="text-foreground mb-4 text-4xl font-bold tracking-tight text-balance sm:text-5xl">
+            Latest Updates
+          </h1>
+          <p className="text-muted-foreground mx-auto max-w-2xl text-lg text-pretty">
+            Stay informed with our latest announcements, events, and ministry highlights
+          </p>
+        </div>
+        <NewsGrid />
+      </div>
 
       <OngoingEvents />
 

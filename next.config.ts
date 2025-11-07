@@ -16,6 +16,14 @@ const config: NextConfig = {
     { source: "/health", destination: "/api/health" },
     { source: "/ping", destination: "/api/health" },
   ],
+  // TODO remove this if not needed
+  images: {
+    remotePatterns: [
+      new URL("https://bearcreek.camp/wp-content/uploads/**"),
+      new URL("https://trinitypj.com/wp-content/uploads/**"),
+      new URL("https://img.youtube.com/**"),
+    ],
+  },
 }
 
 export default env.ANALYZE ? withBundleAnalyzer({ enabled: env.ANALYZE })(config) : config

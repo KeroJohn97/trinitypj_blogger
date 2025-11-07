@@ -1,17 +1,8 @@
 "use client"
 
-import React, { useEffect, useRef } from "react"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselIndicators,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import HomeServices from "./home-services"
-import YoutubeServices from "./youtube-services"
+import { Carousel, CarouselContent, CarouselIndicators, CarouselItem } from "@/components/ui/carousel"
 import Image from "next/image"
+import React, { useEffect, useRef } from "react"
 
 import notice1 from "@/../assets/notice-1.jpg"
 import notice2 from "@/../assets/notice-2.jpg"
@@ -44,30 +35,33 @@ const NoticeCarousel = () => {
   }, [api])
 
   return (
-    <div
-      className="relative mx-auto w-full"
-      onMouseEnter={() => {
-        isPaused.current = true
-      }}
-      onMouseLeave={() => {
-        isPaused.current = false
-      }}
-    >
-      <Carousel orientation="horizontal" opts={{ loop: true, containScroll: "trimSnaps" }} setApi={setApi}>
-        <CarouselContent>
-          <CarouselItem>
-            <div className="relative h-[300px] w-screen sm:h-[400px] lg:h-[500px]">
-              <Image src={notice1} alt="Notice 1" className="rounded-none object-cover object-center" />
-            </div>
-          </CarouselItem>
-          <CarouselItem>
-            <div className="relative h-[300px] w-screen sm:h-[400px] lg:h-[500px]">
-              <Image src={notice2} alt="Notice 2" className="rounded-none object-cover object-center" />
-            </div>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselIndicators className="[&>button]:cursor-pointer [&>button]:transition-transform [&>button:hover]:scale-110" />
-      </Carousel>
+    <div className="py-8">
+      <h2 className="text-foreground mb-4 text-center text-3xl font-bold lg:text-4xl">News & Updates</h2>
+      <div
+        className="relative mx-auto w-full"
+        onMouseEnter={() => {
+          isPaused.current = true
+        }}
+        onMouseLeave={() => {
+          isPaused.current = false
+        }}
+      >
+        <Carousel orientation="horizontal" opts={{ loop: true, containScroll: "trimSnaps" }} setApi={setApi}>
+          <CarouselContent>
+            <CarouselItem>
+              <div className="relative h-[300px] w-screen sm:h-[400px] lg:h-[500px]">
+                <Image src={notice1} alt="Notice 1" className="rounded-none object-cover object-center" />
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="relative h-[300px] w-screen sm:h-[400px] lg:h-[500px]">
+                <Image src={notice2} alt="Notice 2" className="rounded-none object-cover object-center" />
+              </div>
+            </CarouselItem>
+          </CarouselContent>
+          <CarouselIndicators className="[&>button]:cursor-pointer [&>button]:transition-transform [&>button:hover]:scale-110" />
+        </Carousel>
+      </div>
     </div>
   )
 }
