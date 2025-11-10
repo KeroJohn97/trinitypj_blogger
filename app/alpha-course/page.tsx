@@ -1,26 +1,70 @@
+import { ExpandableArticle } from "@/components/expandable-article"
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
-import { StaggeredVideoGallery } from "@/components/staggered-video-gallery"
+import { MediaItem, StaggeredMediaGallery } from "@/components/staggered-media-gallery"
 import { Card, CardContent } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { Building, Calendar, DollarSign, Heart, Target, Users } from "lucide-react"
-import Image from "next/image"
+import DropEmailButton from "app/app-components/drop-email-button"
+import { Mail } from "lucide-react"
 
-const videos = [
+const items: MediaItem[] = [
   {
     id: "1",
+    type: "video",
     youtubeId: "Un4kKyjmw44",
-    title: "Camp Highlights",
-    description: "A fun look back at last summer’s activities!",
-    category: "Highlights",
   },
   {
     id: "2",
+    type: "video",
     youtubeId: "9ib_IOjNMJs",
-    title: "Nature Hike",
-    description: "A peaceful journey through the forest trails.",
-    category: "Adventure",
+  },
+  {
+    id: "3",
+    type: "video",
+    youtubeId: "oWsRQ7MwQbg",
+  },
+  {
+    id: "4",
+    type: "video",
+    youtubeId: "Fv2f4-Fact0",
+  },
+  {
+    id: "5",
+    type: "video",
+    youtubeId: "FrC5WBP5HHQ",
+  },
+  {
+    id: "6",
+    type: "video",
+    youtubeId: "hTDq8A-J0RE",
+  },
+  {
+    id: "7",
+    type: "image",
+    src: "https://trinitypj.com/wp-content/uploads/Alpha-Online-2020-1.png",
+  },
+  {
+    id: "8",
+    type: "image",
+    src: "https://trinitypj.com/wp-content/uploads/Alpha-Online-2020-2-1.png",
+  },
+]
+
+const advertisingItems: MediaItem[] = [
+  {
+    id: "9",
+    type: "image",
+    src: "https://trinitypj.com/wp-content/uploads/alpha2025_16-9ppt_eng-01-2048x1151.jpg",
+  },
+  {
+    id: "10",
+    type: "image",
+    src: "https://trinitypj.com/wp-content/uploads/alpha2025_16-9ppt_chn-01-2048x1151.jpg",
+  },
+  {
+    id: "11",
+    type: "image",
+    src: "https://trinitypj.com/wp-content/uploads/alpha2025_16-9ppt_malay-01-2048x1151.jpg",
   },
 ]
 
@@ -84,7 +128,7 @@ export default function SanctuaryProjectPage() {
       {/* Project Overview */}
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+          <div className="mb-16 grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
             <div>
               <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">WHO’S IT FOR?</h2>
               <div className="prose prose-lg text-muted-foreground">
@@ -108,211 +152,61 @@ export default function SanctuaryProjectPage() {
               </div>
             </div>
             <div className="relative">
-              <Card className="bg-primary/5 border-primary/20">
-                <CardContent className="p-8">
-                  <h3 className="text-foreground mb-6 text-2xl font-bold">Project Progress</h3>
-                  <div className="space-y-6">
-                    <div>
-                      <div className="mb-2 flex items-center justify-between">
-                        <span className="text-foreground font-semibold">Overall Progress</span>
-                        <span className="text-primary font-bold">65%</span>
-                      </div>
-                      <Progress value={65} className="h-3" />
+              <ExpandableArticle previewHeight={400}>
+                <Card className="bg-primary/5 border-primary/20">
+                  <CardContent className="p-8">
+                    <h3 className="text-foreground mb-6 text-2xl font-bold">Alpha: A Journey of Faith</h3>
+                    <div className="prose prose-lg text-muted-foreground">
+                      <p className="mb-4">
+                        Trinity Methodist Church PJ has been running Alpha for many years. Alpha has brought many people
+                        to the salvation grace of our Lord Jesus Christ. Alpha also gives opportunities to people to
+                        serve God with the many gifts and talents which He has uniquely given to individuals. Each year,
+                        the Alpha team sees the miracles which God performs in the participants’ lives and this brings
+                        them back to serve God in Alpha, year after year. Alpha puts us in the right course of our
+                        Christian walk and the journey through Alpha strengthens our love, faith and reliance on the
+                        Holy Spirit through the unity of the spirit with one another and prayer.
+                      </p>
+                      <p className="mb-4">
+                        At the beginning of this year, as the Covid-19 pandemic brought a halt to our running of Alpha
+                        in church, we thank God for being able to share the gospel through Alpha Online (AO). In unity
+                        of Spirit, the AO team was set-up and we started our first AO session on Aug 15, 2020 using the
+                        Zoom platform. We had an average attendance of 16 participants with 6 pre-believers on board.
+                        Our AO team consists of 14 persons – 4 hosts, 5 helpers, 2 prayer warriors and 3 handling main
+                        room functions.
+                      </p>
+                      <p className="mb-4">
+                        It was amazing how we saw 1 participant come to the saving grace of Christ after the video –
+                        “How can I have faith?” and another 2 participants accepted salvation after the video on “How
+                        does God guide us?” The weekend away was a 2.5-hour journey and we saw 3 participants accepted
+                        our Lord Jesus Christ as their Lord and Saviour. We praise God when we saw the amazing works of
+                        the Holy Spirit administering to the 6 participants who weren’t believers when they started the
+                        AO journey and those who were Christians re-dedicated their lives to Jesus Christ.
+                      </p>
+                      <p className="mb-4">
+                        AO just concluded on Nov 14, 2020 with celebration and testimonies. The Alpha F&B sisters
+                        contributed home made and specially ordered cakes, cookies, scones, sweet and savoury stuff.
+                        These yummy stuffs were delivered to all AO participants and the AO team too, in a nice goody
+                        bag on Nov 14. We thank God that the goody bags were delivered in good order to all. Everyone
+                        enjoyed the goodies and the testimonies shared were inspiring and encouraging to all. We give
+                        thanks and praise to our Almighty God for His blessings in this AO.
+                      </p>
+                      <p className="mb-4">
+                        Alpha is a journey for those who come with humble and prepared hearts, be it one who serves or
+                        as participants. It is a journey where the AO team prepares for the topic but leaves the rest to
+                        the work of the Holy Spirit. And for the participants, it is also for the Holy Spirit to work in
+                        their lives. We thank God for giving us this platform to spread the gospel and to point people
+                        to Jesus Christ who made it possible for us to have eternal life. We learned not to
+                        under-estimate the power of the Holy Spirit and we saw this so real in our first journey of AO
+                        and for sure, it will not be our last.
+                      </p>
+                      <p className="mb-4">
+                        Let us continue to grow in the grace and knowledge of our Lord and Saviour Jesus Christ. To Him
+                        be glory both now and forever! Amen. 2 Peter 3:18
+                      </p>
                     </div>
-
-                    <div className="grid grid-cols-2 gap-4 text-center">
-                      <div className="rounded-lg bg-white p-4">
-                        <div className="text-primary mb-1 text-2xl font-bold">RM 450K</div>
-                        <div className="text-muted-foreground text-sm">Raised</div>
-                      </div>
-                      <div className="rounded-lg bg-white p-4">
-                        <div className="text-primary mb-1 text-2xl font-bold">RM 700K</div>
-                        <div className="text-muted-foreground text-sm">Goal</div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Structural Work</span>
-                        <span className="text-primary font-semibold">Completed</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Electrical Systems</span>
-                        <span className="text-primary font-semibold">In Progress</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Interior Finishing</span>
-                        <span className="text-muted-foreground">Ongoing</span>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          <div className="flex flex-row justify-center items-center gap-4 p-8">
-            <Image src={""} alt="" />
-          </div>
-
-          {/* Project Features */}
-          <div className="mb-16">
-            <div className="mb-12 text-center">
-              <h2 className="text-foreground mb-4 text-3xl font-bold lg:text-4xl">Project Features</h2>
-              <p className="text-muted-foreground mx-auto max-w-2xl text-xl">
-                Discover the improvements that will enhance our worship experience and community gatherings
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              <Card className="group transition-shadow duration-300 hover:shadow-lg">
-                <CardContent className="p-6">
-                  <div className="bg-primary/10 group-hover:bg-primary/20 mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
-                    <Building className="text-primary h-6 w-6" />
-                  </div>
-                  <h3 className="text-foreground mb-3 font-bold">Structural Reinforcement</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Strengthening the foundation and framework to ensure safety and longevity for decades to come
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="group transition-shadow duration-300 hover:shadow-lg">
-                <CardContent className="p-6">
-                  <div className="bg-primary/10 group-hover:bg-primary/20 mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
-                    <Users className="text-primary h-6 w-6" />
-                  </div>
-                  <h3 className="text-foreground mb-3 font-bold">Accessibility Improvements</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Installing ramps, accessible restrooms, and seating areas to welcome everyone in our community
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="group transition-shadow duration-300 hover:shadow-lg">
-                <CardContent className="p-6">
-                  <div className="bg-primary/10 group-hover:bg-primary/20 mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
-                    <Target className="text-primary h-6 w-6" />
-                  </div>
-                  <h3 className="text-foreground mb-3 font-bold">Modern Sound System</h3>
-                  <p className="text-muted-foreground text-sm">
-                    State-of-the-art audio equipment to ensure clear hearing for all worship services and events
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="group transition-shadow duration-300 hover:shadow-lg">
-                <CardContent className="p-6">
-                  <div className="bg-primary/10 group-hover:bg-primary/20 mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
-                    <Heart className="text-primary h-6 w-6" />
-                  </div>
-                  <h3 className="text-foreground mb-3 font-bold">Enhanced Lighting</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Energy-efficient LED lighting system creating a warm, welcoming atmosphere for worship
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="group transition-shadow duration-300 hover:shadow-lg">
-                <CardContent className="p-6">
-                  <div className="bg-primary/10 group-hover:bg-primary/20 mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
-                    <Calendar className="text-primary h-6 w-6" />
-                  </div>
-                  <h3 className="text-foreground mb-3 font-bold">Climate Control</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Improved HVAC system for year-round comfort during services and community events
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="group transition-shadow duration-300 hover:shadow-lg">
-                <CardContent className="p-6">
-                  <div className="bg-primary/10 group-hover:bg-primary/20 mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
-                    <Building className="text-primary h-6 w-6" />
-                  </div>
-                  <h3 className="text-foreground mb-3 font-bold">Flexible Seating</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Modular seating arrangements to accommodate different types of services and community gatherings
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          {/* Timeline */}
-          <div className="mb-16">
-            <div className="mb-12 text-center">
-              <h2 className="text-foreground mb-4 text-3xl font-bold lg:text-4xl">Project Timeline</h2>
-              <p className="text-muted-foreground mx-auto max-w-2xl text-xl">
-                Track our progress through each phase of the restoration project
-              </p>
-            </div>
-
-            <div className="space-y-8">
-              {[
-                {
-                  phase: "Phase 1: Planning & Design",
-                  period: "Jan - Mar 2024",
-                  status: "completed",
-                  description: "Architectural planning, permits, and community input sessions",
-                },
-                {
-                  phase: "Phase 2: Structural Work",
-                  period: "Apr - Aug 2024",
-                  status: "completed",
-                  description: "Foundation reinforcement and structural improvements",
-                },
-                {
-                  phase: "Phase 3: Systems Installation",
-                  period: "Sep 2024 - Feb 2025",
-                  status: "current",
-                  description: "Electrical, sound, lighting, and HVAC system installation",
-                },
-                {
-                  phase: "Phase 4: Interior Finishing",
-                  period: "Mar - Jun 2025",
-                  status: "upcoming",
-                  description: "Flooring, seating, painting, and final interior work",
-                },
-                {
-                  phase: "Phase 5: Final Touches",
-                  period: "Jul - Aug 2025",
-                  status: "upcoming",
-                  description: "Final inspections, testing, and preparation for reopening",
-                },
-              ].map((phase, index) => (
-                <div key={index} className="flex gap-6">
-                  <div className="flex flex-col items-center">
-                    <div
-                      className={`h-4 w-4 rounded-full ${
-                        phase.status === "completed"
-                          ? "bg-primary"
-                          : phase.status === "current"
-                            ? "bg-primary animate-pulse"
-                            : "bg-muted-foreground/30"
-                      }`}
-                    />
-                    {index < 4 && <div className="bg-muted-foreground/20 mt-2 h-16 w-0.5" />}
-                  </div>
-                  <div className="flex-1 pb-8">
-                    <div className="mb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                      <h3 className="text-foreground font-bold">{phase.phase}</h3>
-                      <span
-                        className={`rounded-full px-3 py-1 text-sm ${
-                          phase.status === "completed"
-                            ? "bg-primary/10 text-primary"
-                            : phase.status === "current"
-                              ? "bg-primary/20 text-primary font-semibold"
-                              : "bg-muted text-muted-foreground"
-                        }`}
-                      >
-                        {phase.period}
-                      </span>
-                    </div>
-                    <p className="text-muted-foreground text-sm">{phase.description}</p>
-                  </div>
-                </div>
-              ))}
+                  </CardContent>
+                </Card>
+              </ExpandableArticle>
             </div>
           </div>
 
@@ -324,27 +218,28 @@ export default function SanctuaryProjectPage() {
                 Hear from our community members about the impact of the restoration project
               </p>
             </div>
-            <StaggeredVideoGallery videos={videos} />
+            <StaggeredMediaGallery items={items} />
+          </div>
+          <div className="mb-16">
+            <div className="mb-12 text-center">
+              <h2 className="text-foreground mb-8 text-3xl font-bold lg:text-4xl">Available in 3 Languages</h2>
+              <StaggeredMediaGallery items={advertisingItems} />
+            </div>
           </div>
 
           {/* Support CTA */}
           <Card className="bg-primary/5 border-primary/20">
             <CardContent className="p-8 text-center">
               <div className="bg-primary/10 mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full">
-                <DollarSign className="text-primary h-8 w-8" />
+                <Mail className="text-primary h-8 w-8" />
               </div>
-              <h3 className="text-foreground mb-4 text-2xl font-bold">Support Our Project</h3>
+              <h3 className="text-foreground mb-4 text-2xl font-bold">Show Your Interest</h3>
               <p className="text-muted-foreground mx-auto mb-6 max-w-2xl">
-                Your generous contribution helps us create a beautiful, accessible worship space that will serve our
-                community for generations. Every gift, large or small, makes a difference.
+                Want to make sure you don’t miss the next Alpha Online program? Drop us an email at alpha@trinitypj.com
+                to register your interest!
               </p>
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-8 py-3 font-semibold transition-colors">
-                  Make a Donation
-                </button>
-                <button className="border-primary text-primary hover:bg-primary/10 rounded-lg border px-8 py-3 font-semibold transition-colors">
-                  Volunteer to Help
-                </button>
+                <DropEmailButton />
               </div>
             </CardContent>
           </Card>
