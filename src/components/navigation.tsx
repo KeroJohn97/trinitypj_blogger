@@ -10,6 +10,7 @@ import logo from "@/../assets/logo.jpg"
 
 const navigationItems = [
   { name: "Welcome to the Trinity Family", href: "/welcoming" },
+  { name: "Connect & Serve", href: "/connect-serve"},
   { name: "Gallery", href: "/gallery" },
   { name: "Document", href: "/documents" },
 ]
