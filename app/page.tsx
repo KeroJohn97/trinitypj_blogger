@@ -92,7 +92,7 @@ export default function HomePage() {
                 <h3 className="text-foreground mb-2 font-semibold">Small Groups</h3>
                 <p className="text-muted-foreground mb-4 text-sm">Experience our warm and inclusive community</p>
                 <Link href="/welcoming">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="cursor-pointer">
                     Learn More
                   </Button>
                 </Link>
@@ -107,7 +107,7 @@ export default function HomePage() {
                 <h3 className="text-foreground mb-2 font-semibold">Vision & Mission</h3>
                 <p className="text-muted-foreground mb-4 text-sm">Discover our purpose and calling</p>
                 <Link href="/vision-mission">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="cursor-pointer">
                     Learn More
                   </Button>
                 </Link>
@@ -122,7 +122,7 @@ export default function HomePage() {
                 <h3 className="text-foreground mb-2 font-semibold">Connect With Us</h3>
                 <p className="text-muted-foreground mb-4 text-sm">Find us and explore our church ministries</p>
                 <Link href="/location-services">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="cursor-pointer">
                     Learn More
                   </Button>
                 </Link>
@@ -137,7 +137,7 @@ export default function HomePage() {
                 <h3 className="text-foreground mb-2 font-semibold">Alpha Course</h3>
                 <p className="text-muted-foreground mb-4 text-sm">Join our restoration initiative</p>
                 <Link href="/alpha-course">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="cursor-pointer">
                     Learn More
                   </Button>
                 </Link>

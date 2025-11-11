@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Calendar, MapPin, Clock } from "lucide-react"
+import { Calendar, Clock, MapPin } from "lucide-react"
 
 interface EventBannerProps {
   title: string

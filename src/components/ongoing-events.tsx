@@ -82,7 +82,7 @@ export function OngoingEvents() {
               className="group overflow-hidden transition-all duration-300 hover:shadow-lg"
               backgroundImage={event.backgroundImage}
             >
-              <CardContent className="p-0 h-48">
+              <CardContent className="h-48 p-0">
                 {event.image && (
                   <div className="from-primary/20 to-accent/10 relative h-48 overflow-hidden bg-linear-to-br">
                     <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
@@ -96,7 +96,7 @@ export function OngoingEvents() {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="group-hover:bg-primary group-hover:text-primary-foreground text-background w-full bg-transparent transition-colors"
+                    className="group-hover:bg-primary group-hover:text-primary-foreground text-background w-full cursor-pointer bg-transparent transition-colors"
                   >
                     Learn More
                   </Button>
