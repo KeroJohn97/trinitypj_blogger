@@ -130,7 +130,9 @@ export default function SanctuaryProjectPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-16 grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
             <div>
-              <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">WHO’S IT FOR?</h2>
+              <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">
+                WHO’S IT FOR<span className="text-destructive">?</span>
+              </h2>
               <div className="prose prose-lg text-muted-foreground">
                 <p className="mb-4">
                   Alpha is for anyone who’s curious to explore the big questions of life, faith and meaning. The videos
@@ -138,7 +140,9 @@ export default function SanctuaryProjectPage() {
                   informal environment.
                 </p>
               </div>
-              <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">HOW DOES IT WORK?</h2>
+              <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">
+                HOW DOES IT WORK<span className="text-destructive">?</span>
+              </h2>
               <div className="prose prose-lg text-muted-foreground">
                 <p className="mb-4">
                   Typically run over twelve weeks and ends with a celebration. No two Alphas look the same, but
@@ -146,7 +150,9 @@ export default function SanctuaryProjectPage() {
                   discussion where you can share your thoughts. There’s no pressure and no follow up.
                 </p>
               </div>
-              <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">HOW MUCH IS IT?</h2>
+              <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">
+                HOW MUCH IS IT<span className="text-destructive">?</span>
+              </h2>
               <div className="prose prose-lg text-muted-foreground">
                 <p className="mb-4">There’s no charge for Alpha.</p>
               </div>
