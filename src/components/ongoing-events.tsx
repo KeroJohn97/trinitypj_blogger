@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
 import course from "@/../assets/course.png"
+import prayer from "@/../assets/prayer.jpg"
 import smallGroup from "@/../assets/small-group.png"
 import sundayServices from "@/../assets/sunday-services.jpg"
+import Link from "next/link"
 
 interface Event {
   id: string
@@ -16,6 +18,7 @@ interface Event {
   attendees?: number
   image?: string
   backgroundImage?: string
+  href?: string
 }
 
 const ongoingEvents: Event[] = [
@@ -54,13 +57,15 @@ const ongoingEvents: Event[] = [
   },
   {
     id: "4",
-    title: "Communion Sunday",
+    title: "Prayer Lighthouses / Meetings",
     date: "Dec 7, 2025",
     time: "9:00 AM & 11:00 AM",
     location: "Main Sanctuary",
-    description: "A sacred time of remembrance and fellowship through Holy Communion.",
-    category: "Worship",
+    description: "Join us for a dedicated time of prayer for our church, community, and nation.",
+    category: "Prayer",
     attendees: 200,
+    backgroundImage: prayer.src,
+    href: "/prayer",
   },
 ]
 
@@ -94,11 +99,12 @@ export function OngoingEvents() {
                     {event.title}
                   </h3>
                   <Button
+                    asChild
                     variant="outline"
                     size="sm"
                     className="group-hover:bg-primary group-hover:text-primary-foreground text-background w-full cursor-pointer bg-transparent transition-colors"
                   >
-                    Learn More
+                    <Link href={event.href ?? "#"}>Learn More</Link>
                   </Button>
                 </div>
               </CardContent>
