@@ -82,3 +82,61 @@ export const groups = [
     contact: "(+60)16-288 5118",
   },
 ]
+
+export const ministries = [
+  {
+    id: "worship",
+    name: "Worship & Creative Arts",
+    tagline: "Leading hearts into His presence",
+    color: "red",
+    description:
+      "Our Worship Ministry is passionate about creating spaces where people can encounter God through music, media, and the arts.",
+    photos: ["https://trinitypj.com/wp-content/uploads/must-have-4.jpg"],
+    faqs: [
+      {
+        question: "Who can join?",
+        answer: "Anyone with a heart for worship — singers, musicians, and tech team members are welcome.",
+      },
+      {
+        question: "When do we serve?",
+        answer: "We serve every Sunday and during special church events.",
+      },
+    ],
+  },
+  {
+    id: "boys-brigade",
+    name: "Boys Brigade",
+    tagline: "Raising a generation for Christ",
+    color: "blue",
+    description:
+      "The Youth Ministry is a vibrant community where teenagers grow in faith, build friendships, and discover their purpose in God.",
+    photos: ["https://trinitypj.com/wp-content/uploads/BB-GB-Enrolment-2018-42.png"],
+  },
+  {
+    id: "missions",
+    name: "Missions & Outreach",
+    tagline: "Extending God’s love beyond our walls",
+    color: "green",
+    description:
+      "We partner with local and international missions to reach the unreached and serve communities in need.",
+    photos: ["https://trinitypj.com/wp-content/uploads/Visitations-Ministry.jpg"],
+  },
+  {
+    id: "sss",
+    name: "Hello World",
+    tagline: "Extending Redalds for sure",
+    color: "green",
+    description:
+      "We partner with local and international missions to reach the unreached and serve communities in need.",
+    photos: ["https://trinitypj.com/wp-content/uploads/Visitations-Ministry.jpg"],
+  },
+  {
+    id: "aaa",
+    name: "Something funny",
+    tagline: "Gpod gafasd es",
+    color: "green",
+    description:
+      "We partner with local and international missions to reach the unreached and serve communities in need.",
+    photos: ["https://trinitypj.com/wp-content/uploads/Visitations-Ministry.jpg"],
+  },
+]
