@@ -113,7 +113,7 @@ const projectImages = [
   },
 ]
 
-export default function SanctuaryProjectPage() {
+export default function AlphaCoursePage() {
   return (
     <div className="bg-background min-h-screen">
       <Navigation />
