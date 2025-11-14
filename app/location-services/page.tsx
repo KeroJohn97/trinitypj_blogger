@@ -24,7 +24,7 @@ export default function LocationServicesPage() {
               <h2 className="text-foreground mb-6 text-3xl font-bold lg:text-4xl">Visit Us</h2>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full">
+                  <div className="bg-primary/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
                     <MapPin className="text-primary h-5 w-5" />
                   </div>
                   <div>
@@ -40,7 +40,7 @@ export default function LocationServicesPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full">
+                  <div className="bg-primary/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
                     <Phone className="text-primary h-5 w-5" />
                   </div>
                   <div>
@@ -50,7 +50,7 @@ export default function LocationServicesPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full">
+                  <div className="bg-primary/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
                     <Mail className="text-primary h-5 w-5" />
                   </div>
                   <div>
@@ -60,7 +60,7 @@ export default function LocationServicesPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full">
+                  <div className="bg-primary/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
                     <Clock className="text-primary h-5 w-5" />
                   </div>
                   <div>
@@ -81,7 +81,7 @@ export default function LocationServicesPage() {
               <h3 className="text-foreground mb-6 text-2xl font-bold">Getting Here</h3>
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
+                  <div className="bg-primary/10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
                     <Car className="text-primary h-4 w-4" />
                   </div>
                   <div>
@@ -94,7 +94,7 @@ export default function LocationServicesPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full">
+                  <div className="bg-primary/10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
                     <Bus className="text-primary h-4 w-4" />
                   </div>
                   <div>

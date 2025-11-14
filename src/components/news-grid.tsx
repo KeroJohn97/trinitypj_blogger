@@ -173,7 +173,7 @@ export default function NewsGrid() {
                   variant="outline"
                   size="sm"
                   onClick={() => setSelectedNews(item)}
-                  className="hover:bg-primary hover:text-primary-foreground w-full transition-colors"
+                  className="hover:bg-primary hover:text-primary-foreground w-full cursor-pointer transition-colors"
                 >
                   Read More
                 </Button>
@@ -218,7 +218,7 @@ export default function NewsGrid() {
               <p className="text-foreground text-base leading-relaxed whitespace-pre-line">{selectedNews.details}</p>
 
               <div className="mt-6 flex justify-end">
-                <Button onClick={() => setSelectedNews(null)} variant="default">
+                <Button onClick={() => setSelectedNews(null)} variant="default" className="cursor-pointer">
                   Close
                 </Button>
               </div>
