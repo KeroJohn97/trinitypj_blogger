@@ -67,7 +67,10 @@ export function PrayerGroupsTable({ title, description }: PrayerGroupsTableProps
             <p className="mt-1 text-sm text-gray-500">{group.location}</p>
             <p className="mt-1 text-sm text-gray-500">Type: {group.type}</p>
             <p className="mt-1 text-sm text-gray-500 italic">Leader: {group.leader}</p>
-            <div className="pt-2"> <PhoneContact phone={group.contact} whatsapp={true} /></div>
+            <div className="pt-2">
+              {" "}
+              <PhoneContact phone={group.contact} whatsapp={true} />
+            </div>
           </div>
         ))}
       </div>

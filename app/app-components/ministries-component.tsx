@@ -1,11 +1,13 @@
 "use client"
 
+import { MediaModal } from "@/components/media-modal"
 import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft } from "lucide-react"
 import { useCallback, useRef, useState } from "react"
 import InfiniteMinistryCarousel from "./ministry-carousel"
 
 export default function MinistriesPage({ ministries }: MinistriesPageProps) {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [selected, setSelected] = useState<Ministry | null>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -37,7 +39,7 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
-            className="rounded-2xl border-t-4 border-primary bg-white p-6 shadow-lg"
+            className="border-primary rounded-2xl border-t-4 bg-white p-6 shadow-lg"
           >
             {/* Back Button */}
             <button
@@ -68,16 +70,31 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
                 }}
               >
                 {selected.photos.slice(1).map((src, i) => (
-                  <motion.img
-                    key={i}
-                    src={src}
-                    alt={`${selected.name} photo ${i + 1}`}
-                    className="h-48 w-full rounded-xl object-cover shadow-sm"
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0 },
-                    }}
-                  />
+                  <div key={i} className="cursor-pointer overflow-hidden rounded-lg border shadow-sm">
+                    <motion.img
+                      key={i}
+                      src={src}
+                      alt={`${selected.name} photo ${i + 1}`}
+                      className="h-48 w-full rounded-xl object-cover shadow-sm"
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: { opacity: 1, y: 0 },
+                      }}
+                      onClick={() => setSelectedImage(src)}
+                    />
+                    {/* Modal */}
+                    {selectedImage && (
+                      <MediaModal
+                        item={{
+                          id: selectedImage,
+                          type: "image",
+                          src: selectedImage,
+                        }}
+                        isOpen={!!selectedImage}
+                        onClose={() => setSelectedImage(null)}
+                      />
+                    )}
+                  </div>
                 ))}
               </motion.div>
             )}
@@ -89,7 +106,7 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
                 {selected.faqs.map((faq, i) => (
                   <div key={i} className="rounded-xl border bg-gray-50 p-4">
                     <h4 className="font-medium text-gray-900">{faq.question}</h4>
-                    <p className="mt-2 text-gray-600">{faq.answer}</p>
+                    <p className="mt-2 whitespace-pre-wrap text-gray-600">{faq.answer}</p>
                   </div>
                 ))}
               </div>

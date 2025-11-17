@@ -85,40 +85,75 @@ export const groups = [
 
 export const ministries = [
   {
-    id: "worship",
-    name: "Worship & Creative Arts",
-    tagline: "Leading hearts into His presence",
-    color: "red",
-    description:
-      "Our Worship Ministry is passionate about creating spaces where people can encounter God through music, media, and the arts.",
-    photos: ["https://trinitypj.com/wp-content/uploads/must-have-4.jpg"],
+    id: "boys-brigade",
+    name: "Boys' Brigade",
+    tagline: "1st Petaling Jaya Company",
+    color: "blue",
+    description: "The Boys' Brigade in Malaysia",
+    photos: [
+      "https://trinitypj.com/wp-content/uploads/good-to-have-3.jpeg",
+      "https://trinitypj.com/wp-content/uploads/good-to-have-4.jpeg",
+      "https://trinitypj.com/wp-content/uploads/good-to-have-5.jpeg",
+      "https://trinitypj.com/wp-content/uploads/good-to-have-6.jpeg",
+      "https://trinitypj.com/wp-content/uploads/Good-to-have.jpeg",
+      "https://trinitypj.com/wp-content/uploads/must-have-3.jpeg",
+      "https://trinitypj.com/wp-content/uploads/Must-have-2.jpg",
+      "https://trinitypj.com/wp-content/uploads/must-have-4.jpg",
+      "https://trinitypj.com/wp-content/uploads/Must-have.jpg",
+    ],
     faqs: [
       {
-        question: "Who can join?",
-        answer: "Anyone with a heart for worship — singers, musicians, and tech team members are welcome.",
+        question: "What is the Boys' Brigade?",
+        answer:
+          "The Boy's Brigade (BB) is the first uniformed youth organisationin the world, spreading over 60 countries. Sir William Alexander Smith founded the BB in 1883, modelling it on the concept of drill and discipline.",
       },
       {
-        question: "When do we serve?",
-        answer: "We serve every Sunday and during special church events.",
+        question: "How does the Boys' Brigade work?",
+        answer:
+          "The BB movement in Malaysia is made of more than 100 companies in different geographical areas. Members are divided into different sections of the Company.",
+      },
+      {
+        question: "What are the age groups in the Boys’ Brigade?",
+        answer:
+          "•Pre-Junior Section (ages 6-8) \n•Junior Section (ages 9-12) \n•Senior Section (ages 13-19) \n\nMembers are supervised by a group of volunteer officers, many of whom were Members themselves.",
+      },
+      {
+        question: "Why should you join the Boys' Brigade?",
+        answer:
+          "The BB gives young Boys like you the chance to make most out of youtr teenage life and not just having a boring life. The BB gives you the chance to have lots of different experiences, all for your own good! \n\nBB will also equip you for National Service!",
+      },
+      {
+        question: "What do we do at the Boys' Brigade?",
+        answer:
+          "The Brigade's weekly activities range from Bible study, drill, games, brass band and a badge work syllabus that trains the memberss in various aspects of physical, social, educational and spiritual growth. \n\nIn addition, companies also organise special programmes from time to time to provide Members with an enjoyable and educational time.",
+      },
+      {
+        question: "What fun activities can I join in BB?",
+        answer: "•Camping \n•Expeditions \n•Sports \n•Water Adventure \n•Trips Outings \n•Arts, Crafts & Hobbies",
+      },
+      {
+        question: "How can I join the Boys' Brigade?",
+        answer:
+          "The Boys' Brigade is open to all Boys aged from 6 to 19. Come and join us today and have the best experience of your life!",
+      },
+      {
+        question: "When and where does the Boys’ Brigade meet each week?",
+        answer:
+          "The details of our weekly meetings are as follows: \n\nDay: Saturdays \nTime: 2.30pm to 5.30pm \nVenue: Trinity Methodist Church Petaling Jaya",
+      },
+      {
+        question: "Who can I contact for more information about the Boys’ Brigade?",
+        answer: "For more information, please contact: \nMr Jason Tan @ 017-364 6254",
       },
     ],
   },
   {
-    id: "boys-brigade",
-    name: "Boys Brigade",
-    tagline: "Raising a generation for Christ",
-    color: "blue",
-    description:
-      "The Youth Ministry is a vibrant community where teenagers grow in faith, build friendships, and discover their purpose in God.",
-    photos: ["https://trinitypj.com/wp-content/uploads/BB-GB-Enrolment-2018-42.png"],
-  },
-  {
-    id: "missions",
-    name: "Missions & Outreach",
-    tagline: "Extending God’s love beyond our walls",
+    id: "girls-brigade",
+    name: "Girls' Brigade",
+    tagline: "1st Petaling Jaya Company",
     color: "green",
     description:
-      "We partner with local and international missions to reach the unreached and serve communities in need.",
+      "The Girls' Brigade in Malaysia",
     photos: ["https://trinitypj.com/wp-content/uploads/Visitations-Ministry.jpg"],
   },
   {

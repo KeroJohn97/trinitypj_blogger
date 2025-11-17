@@ -14,7 +14,7 @@ export default async function GoogleFormsPage({ params }: { params: Promise<{ id
         <Navigation />
         <GoogleFormEmbed title={category.title} description={category.description} formLink={category.formLink} />
         <Footer />
-      </>  
+      </>
     )
   )
 }
