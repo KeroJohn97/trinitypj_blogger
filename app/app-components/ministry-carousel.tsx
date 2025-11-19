@@ -1,6 +1,7 @@
 "use client"
 
-import { ministries } from "@/lib/data"
+import defaultMinistry from "@/../assets/default-ministry.jpg"
+import { ministries } from "@/lib/ministries-data"
 import { motion } from "framer-motion"
 import { useCallback, useEffect, useMemo, useRef } from "react"
 
@@ -210,7 +211,7 @@ export default function InfiniteMinistryCarousel({
               >
                 <div className="absolute inset-0 z-10 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
                 <motion.img
-                  src={ministry.photos?.[0] || "/images/default-ministry.jpg"}
+                  src={ministry.photos?.[0] || defaultMinistry.src}
                   alt={ministry.name}
                   className="h-64 w-full object-cover"
                   whileHover={{ scale: 1.1 }}

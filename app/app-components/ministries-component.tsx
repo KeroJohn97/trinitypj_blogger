@@ -1,6 +1,10 @@
 "use client"
 
+import DriveFolderViewer from "@/components/drive-folder-viewer"
+import DriveLibraryViewer from "@/components/drive-library-viewer"
+import DrivePdfViewer from "@/components/drive-pdf-viewer"
 import { MediaModal } from "@/components/media-modal"
+import { formatEmail } from "@/lib/helpers"
 import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft } from "lucide-react"
 import { useCallback, useRef, useState } from "react"
@@ -57,7 +61,10 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
             </div>
 
             {/* Description */}
-            <p className="mb-6 text-lg leading-relaxed text-gray-700">{selected.description}</p>
+            <p className="mb-6 text-lg leading-relaxed whitespace-pre-wrap text-gray-700">{selected.description}</p>
+
+            {/* Disclaimer */}
+            {selected.disclaimer && <div className="mb-6 text-red-600 italic">{selected.disclaimer}</div>}
 
             {/* Photos */}
             {selected.photos && selected.photos.length > 1 && (
@@ -86,7 +93,6 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
                     {selectedImage && (
                       <MediaModal
                         item={{
-                          id: selectedImage,
                           type: "image",
                           src: selectedImage,
                         }}
@@ -99,18 +105,32 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
               </motion.div>
             )}
 
+            {selected.attachment && (
+              <div className="mb-6">
+                <DriveFolderViewer folder={selected.attachment.src} title={selected.attachment.title} height={320} />
+              </div>
+            )}
+
+            {selected.pdf && (
+              <div className="mb-6">
+                <DrivePdfViewer url={selected.pdf.src} title={selected.pdf.title} />
+              </div>
+            )}
+
             {/* Q&A Section */}
             {selected.faqs && (
-              <div className="space-y-4">
+              <div className="mb-6 space-y-4">
                 <h3 className="text-2xl font-semibold text-red-700">Q&A</h3>
                 {selected.faqs.map((faq, i) => (
                   <div key={i} className="rounded-xl border bg-gray-50 p-4">
                     <h4 className="font-medium text-gray-900">{faq.question}</h4>
-                    <p className="mt-2 whitespace-pre-wrap text-gray-600">{faq.answer}</p>
+                    <p className="mt-2 whitespace-pre-wrap text-gray-600">{formatEmail(faq.answer)}</p>
                   </div>
                 ))}
               </div>
             )}
+
+            {selected.library && <DriveLibraryViewer items={selected.library} />}
           </motion.div>
         )}
       </AnimatePresence>

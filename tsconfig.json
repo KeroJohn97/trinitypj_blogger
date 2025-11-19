@@ -24,6 +24,7 @@
     "baseUrl": ".",
     "types": [
       "node",
+      "pdfjs-dist",
       "vitest/globals",
       "@testing-library/jest-dom"
     ],

@@ -20,8 +20,8 @@ const config: NextConfig = {
   images: {
     remotePatterns: [
       new URL("https://bearcreek.camp/wp-content/uploads/**"),
-      new URL("https://trinitypj.com/wp-content/uploads/**"),
       new URL("https://img.youtube.com/**"),
+      new URL("https://trinitypj.com/wp-content/uploads/**"),
     ],
   },
 }

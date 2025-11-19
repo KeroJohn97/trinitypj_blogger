@@ -1,6 +1,6 @@
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
-import { ministries } from "@/lib/data"
+import { ministries } from "@/lib/ministries-data"
 import MinistriesPage from "app/app-components/ministries-component"
 
 export default function ChurchMinistryPage() {
