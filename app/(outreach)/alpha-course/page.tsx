@@ -68,51 +68,6 @@ const advertisingItems: MediaItem[] = [
   },
 ]
 
-const projectImages = [
-  {
-    id: "1",
-    src: "/church-sanctuary-renovation-before.jpg",
-    alt: "Sanctuary before renovation",
-    title: "Before Renovation",
-    description: "Our beloved sanctuary before the restoration project",
-  },
-  {
-    id: "2",
-    src: "/church-sanctuary-construction-progress.jpg",
-    alt: "Construction in progress",
-    title: "Work in Progress",
-    description: "Restoration work currently underway",
-  },
-  {
-    id: "3",
-    src: "/church-sanctuary-architectural-plans.jpg",
-    alt: "Architectural plans",
-    title: "Design Plans",
-    description: "Architectural drawings for the new sanctuary",
-  },
-  {
-    id: "4",
-    src: "/church-volunteers-construction-work.jpg",
-    alt: "Volunteers helping",
-    title: "Community Effort",
-    description: "Church members volunteering their time and skills",
-  },
-  {
-    id: "5",
-    src: "/church-sanctuary-new-features.jpg",
-    alt: "New sanctuary features",
-    title: "Modern Features",
-    description: "Updated lighting and sound systems",
-  },
-  {
-    id: "6",
-    src: "/placeholder.svg?height=400&width=600",
-    alt: "Worship space vision",
-    title: "Vision Realized",
-    description: "The completed sanctuary ready for worship",
-  },
-]
-
 export default function AlphaCoursePage() {
   return (
     <div className="bg-background min-h-screen">
