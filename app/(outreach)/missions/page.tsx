@@ -1,35 +1,7 @@
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
-import { MediaItem } from "@/components/staggered-media-gallery"
-
-const items: MediaItem[] = [
-  {
-    id: "1",
-    type: "image",
-    src: "https://trinitypj.com/wp-content/uploads/20190608-Alpha-Celebration-1-4.jpg",
-  },
-  {
-    id: "2",
-    type: "image",
-    src: "https://trinitypj.com/wp-content/uploads/20190608-Alpha-Celebration-1-6.jpg",
-  },
-  {
-    id: "3",
-    type: "image",
-    src: "https://trinitypj.com/wp-content/uploads/20190608-Alpha-Celebration-1-20.jpg",
-  },
-  {
-    id: "4",
-    type: "image",
-    src: "https://trinitypj.com/wp-content/uploads/20190608-Alpha-Celebration-1-45.jpg",
-  },
-  {
-    id: "5",
-    type: "image",
-    src: "https://trinitypj.com/wp-content/uploads/20190608-Alpha-Celebration-1-61.jpg",
-  },
-]
+import { VerseCard } from "@/components/verse-card"
 
 export default function MissionsPage() {
   return (
@@ -62,11 +34,12 @@ export default function MissionsPage() {
               </div>
               <h3 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">Mission Statement</h3>
               <div className="prose prose-lg text-muted-foreground">
-                <p className="mb-4">
-                  “You are the salt of the earth, But if the salt loses its saltiness, how can it be made salty again?
+                <VerseCard
+                  reference="Matthew 5:13-14 (NIV)"
+                  verse="You are the salt of the earth, But if the salt loses its saltiness, how can it be made salty again?
                   It is no longer good for anything, except to be thrown out and trampled by men. You are the light of
-                  the world. A city on a hill cannot be hidden”- Matthew 5:13-14 (NIV)
-                </p>
+                  the world. A city on a hill cannot be hidden"
+                />
               </div>
               <h3 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">Core Missions Projects</h3>
               <div className="prose prose-lg text-muted-foreground">
