@@ -1,7 +1,6 @@
 "use client"
 
 import defaultMinistry from "@/../assets/default-ministry.jpg"
-import { ministries } from "@/lib/ministries-data"
 import { motion } from "framer-motion"
 import { useCallback, useEffect, useMemo, useRef } from "react"
 
@@ -13,12 +12,14 @@ const HOVER_SCALE = 1.05
 const DEFAULT_GAP_PX = 24
 
 interface InfiniteMinistryCarouselProps {
+  ministries : Ministry[],
   selectedId: string | null
   onSelect: (index: number) => void
   gapPx?: number
 }
 
 export default function InfiniteMinistryCarousel({
+  ministries,
   selectedId,
   onSelect,
   gapPx = DEFAULT_GAP_PX,

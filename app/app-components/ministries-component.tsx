@@ -31,7 +31,7 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
   return (
     <section className="mx-auto max-w-6xl space-y-10 px-4 py-16">
       {/* Ministries carousel */}
-      <InfiniteMinistryCarousel selectedId={selected?.id ?? null} onSelect={handleCardClick} />
+      <InfiniteMinistryCarousel ministries={ministries} selectedId={selected?.id ?? null} onSelect={handleCardClick} />
 
       {/* Selected ministry details */}
       <AnimatePresence mode="wait">
