@@ -65,7 +65,7 @@ export default function HomePage() {
             Latest Updates
           </h1>
           <p className="text-muted-foreground mx-auto max-w-2xl text-lg text-pretty">
-            Stay informed with our latest announcements, events, and ministry highlights
+            Stay informed with our latest announcements and events
           </p>
         </div>
         <NewsGrid />

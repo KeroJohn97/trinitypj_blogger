@@ -61,7 +61,9 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
             </div>
 
             {/* Description */}
-            <p className="mb-6 text-lg leading-relaxed whitespace-pre-wrap text-gray-700">{selected.description}</p>
+            <p className="mb-6 text-lg leading-relaxed whitespace-pre-wrap text-gray-700">
+              {formatEmail(selected.description)}
+            </p>
 
             {/* Disclaimer */}
             {selected.disclaimer && <div className="mb-6 text-red-600 italic">{selected.disclaimer}</div>}

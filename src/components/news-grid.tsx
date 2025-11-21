@@ -45,7 +45,7 @@ const newsItems: NewsItem[] = [
     id: 3,
     title: "November Birthday Celebration",
     summary: "Join us as we celebrate all November birthdays with a special service and fellowship time.",
-    category: "Ministry Highlight",
+    category: "Announcement",
     date: "Nov 30, 2025",
     image: "https://bearcreek.camp/wp-content/uploads/2025/01/IMG_4657-1312x875.jpg",
     imageQuery: "youth group teenagers having fun together",
@@ -123,7 +123,6 @@ const newsItems: NewsItem[] = [
 const categoryColors: Record<string, string> = {
   Event: "bg-accent text-accent-foreground",
   Announcement: "bg-primary text-primary-foreground",
-  "Ministry Highlight": "bg-secondary text-secondary-foreground",
 }
 
 export default function NewsGrid() {
