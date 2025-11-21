@@ -29,7 +29,7 @@ const seniorCoordinatorData = [
 // Suggested Example Usage Data
 const contact = {
   name: "Peter Chen",
-  phone: "012.238.6817",
+  phone: "(+60)12-238 6817",
   email: "msf@trinitypj.com",
 }
 

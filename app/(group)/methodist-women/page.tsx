@@ -5,7 +5,7 @@ import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
 import { useState } from "react"
 
-export default function MYFPage() {
+export default function MethodistWomenPage() {
   const [lang, setLang] = useState("en")
   const t = (en: any, zh: any) => (lang === "en" ? en : zh)
 
