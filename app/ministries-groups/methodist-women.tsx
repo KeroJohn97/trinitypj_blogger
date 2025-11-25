@@ -1,8 +1,6 @@
 "use client"
 
 import methodistWomen from "@/../assets/methodist-women.webp"
-import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { useState } from "react"
 
 export default function MethodistWomenPage() {
@@ -11,32 +9,15 @@ export default function MethodistWomenPage() {
 
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       {/* <!-- Hero Section --> */}
-      <section className="relative flex h-screen items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={methodistWomen.src} alt="Methodist Women - WDP 2024" className="h-full w-full object-cover" />
-          <div className="to-background absolute inset-0 bg-linear-to-b from-black/60 via-black/50"></div>
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4 text-center text-emerald-500">
-          <h1 className="mb-6 text-4xl font-black tracking-tight text-balance sm:text-6xl md:text-8xl lg:text-9xl">
-            METHODIST
-            <br />
-            WOMEN
-          </h1>
-
-          <p className="mx-auto mb-8 max-w-2xl text-xl text-pretty text-white md:text-2xl">
-            To Know Christ and to Make Him Known
-          </p>
-        </div>
-
-        {/* <!-- Scroll indicator --> */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="border-muted-foreground/50 flex h-10 w-6 items-start justify-center rounded-full border-2 p-2">
-            <div className="bg-muted-foreground/50 h-3 w-1 rounded-full"></div>
-          </div>
+      <section
+        className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
+        style={{ backgroundImage: `url(${methodistWomen.src})` }}
+      >
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="relative px-6 text-center text-white">
+          <h1 className="text-4xl font-bold">Methodist Women</h1>
+          <p className="mt-3 text-lg">To Know Christ and to Make Him Known</p>
         </div>
       </section>
 
@@ -81,15 +62,6 @@ export default function MethodistWomenPage() {
                   )}
                 </li>
               </ol>
-            </div>
-          </section>
-          <section className="flex-1 ml-24">
-            <div>
-              <img
-                src="https://trinitypj.com/wp-content/uploads/2016/03/MW-Logo-small.jpg"
-                alt="Methodist Women Logo"
-                className="max-h-full max-w-full object-contain"
-              ></img>
             </div>
           </section>
         </div>
@@ -278,7 +250,6 @@ export default function MethodistWomenPage() {
       </section>
 
       <p className="mb-16"></p>
-      <Footer />
     </div>
   )
 }

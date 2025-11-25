@@ -1,7 +1,5 @@
 "use client"
 
-import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import ProgramDashboard from "@/components/program-dashboard"
 import { MediaItem, StaggeredMediaGallery } from "@/components/staggered-media-gallery"
 import { formatEmail } from "@/lib/helpers"
@@ -75,37 +73,18 @@ export default function AdultFellowshipPage() {
 
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       {/* <!-- Hero Section --> */}
-      <section className="relative flex h-screen items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="https://trinitypj.com/wp-content/uploads/2016/03/Picture4.png"
-            alt="Methodist Adult Fellowship 2016"
-            className="h-full w-full object-cover"
-          />
-          <div className="to-background absolute inset-0 bg-linear-to-b from-black/60 via-black/50"></div>
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4 text-center text-emerald-500">
-          <h1 className="mb-6 text-4xl font-black tracking-tight text-balance sm:text-6xl md:text-8xl lg:text-9xl">
-            METHODIST
-            <br />
-            ADULT FELLOWSHIP
-          </h1>
-
-          <p className="mx-auto mb-8 max-w-2xl text-xl text-pretty text-white md:text-2xl">
+      <section
+        className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
+        style={{ backgroundImage: `url('https://trinitypj.com/wp-content/uploads/2016/03/Picture4.png')` }}
+      >
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="relative px-6 text-center text-white">
+          <h1 className="text-4xl font-bold">Methodist Adult Fellowship</h1>
+          <p className="mt-3 text-lg">
             To grow our faith and life in community with other Christians and be challenged to greater commitment and
             service in our church, our community and society
           </p>
-        </div>
-
-        {/* <!-- Scroll indicator --> */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="border-muted-foreground/50 flex h-10 w-6 items-start justify-center rounded-full border-2 p-2">
-            <div className="bg-muted-foreground/50 h-3 w-1 rounded-full"></div>
-          </div>
         </div>
       </section>
 
@@ -210,28 +189,32 @@ export default function AdultFellowshipPage() {
                   )}
                 </p>
               </div>
-
-              <div>
-                <h4 className="text-lg font-semibold">
-                  {t("Bible Sharing/Prayer on Bible Understanding and Spiritual Formation", "每月活动")}
-                </h4>
-                <p className="mt-2 text-slate-700">
-                  {t(
-                    "MAF comes together monthly for a time of bible sharing and prayer. This is usually held on Saturday mornings. Due to the ongoing church redevelopment, the venue may change from time to time, depending on the availability of rooms.",
-                    "我们在每月第三个星期六下午3时聚会。月会内容包括受邀讲员就妇女相关议题分享、探访居家人士、外出活动与福音事工。"
-                  )}
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-lg font-semibold">{t("How I can help/discover my gifts", "每月活动")}</h4>
-                <p className="mt-2 text-slate-700">
-                  {t(
-                    "There are various sub-committees in MAF that you may wish to participate in.  You could discover the special role God wants/needs you to play in your Christian living.  These include Worship, Social Concerns, Faith, Witness/Evangelism, Fellowship, Prayer and Publicity.",
-                    "我们在每月第三个星期六下午3时聚会。月会内容包括受邀讲员就妇女相关议题分享、探访居家人士、外出活动与福音事工。"
-                  )}
-                </p>
-              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-linear-to-b from-white to-emerald-50 p-6 shadow-md">
+            {/* Monthly */}
+            <div>
+              <h4 className="text-lg font-semibold">
+                {t("Bible Sharing/Prayer on Bible Understanding and Spiritual Formation", "每月活动")}
+              </h4>
+              <p className="mt-2 text-slate-700">
+                {t(
+                  "MAF comes together monthly for a time of bible sharing and prayer. This is usually held on Saturday mornings. Due to the ongoing church redevelopment, the venue may change from time to time, depending on the availability of rooms.",
+                  "我们在每月第三个星期六下午3时聚会。月会内容包括受邀讲员就妇女相关议题分享、探访居家人士、外出活动与福音事工。"
+                )}
+              </p>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-linear-to-b from-white to-emerald-50 p-6 shadow-md">
+            {/* Monthly */}
+            <div>
+              <h4 className="text-lg font-semibold">{t("How I can help/discover my gifts", "每月活动")}</h4>
+              <p className="mt-2 text-slate-700">
+                {t(
+                  "There are various sub-committees in MAF that you may wish to participate in.  You could discover the special role God wants/needs you to play in your Christian living.  These include Worship, Social Concerns, Faith, Witness/Evangelism, Fellowship, Prayer and Publicity.",
+                  "我们在每月第三个星期六下午3时聚会。月会内容包括受邀讲员就妇女相关议题分享、探访居家人士、外出活动与福音事工。"
+                )}
+              </p>
             </div>
           </div>
         </section>
@@ -270,7 +253,6 @@ export default function AdultFellowshipPage() {
       </section>
 
       <p className="mb-16"></p>
-      <Footer />
     </div>
   )
 }

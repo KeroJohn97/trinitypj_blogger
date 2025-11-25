@@ -1,12 +1,8 @@
-import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 
 export default function KindergartenPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       <PageHeader
         title="Methodist Kindergarten PJ"
         subtitle="The Methodist Kindergarten was established in 1960 as a non-profit, church-based preschool to provide a quality, affordable and inclusive kindergarten programme for families of the Petaling Jaya, Selangor community."
@@ -44,8 +40,6 @@ export default function KindergartenPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }

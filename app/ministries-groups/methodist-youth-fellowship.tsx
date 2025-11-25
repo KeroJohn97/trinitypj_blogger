@@ -1,7 +1,5 @@
 "use client"
 
-import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { MediaItem, StaggeredMediaGallery } from "@/components/staggered-media-gallery"
 import { Card } from "@/components/ui/card"
 import { Calendar, CalendarDays, MapPin, Users } from "lucide-react"
@@ -45,38 +43,18 @@ export default function MYFPage() {
 
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       {/* <!-- Hero Section --> */}
-      <section className="relative flex h-screen items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="https://trinitypj.com/wp-content/uploads/2019-Youth-Camp-high-res-file-min-scaled.jpg"
-            alt="Trail runners"
-            className="h-full w-full object-cover"
-          />
-          <div className="to-background absolute inset-0 bg-linear-to-b from-black/60 via-black/50"></div>
-        </div>
 
-        <div className="relative z-10 container mx-auto px-4 text-center text-emerald-500">
-          <h1 className="mb-6 text-4xl font-black tracking-tight text-balance sm:text-6xl md:text-8xl lg:text-9xl">
-            METHODIST
-            <br />
-            YOUTH
-            <br />
-            FELLOWSHIP
-          </h1>
-
-          <p className="mx-auto mb-8 max-w-2xl text-xl text-pretty text-white md:text-2xl">
-            Hi, there! Welcome to the Community of Young People!
-          </p>
-        </div>
-
-        {/* <!-- Scroll indicator --> */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="border-muted-foreground/50 flex h-10 w-6 items-start justify-center rounded-full border-2 p-2">
-            <div className="bg-muted-foreground/50 h-3 w-1 rounded-full"></div>
-          </div>
+      <section
+        className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
+        style={{
+          backgroundImage: `url('https://trinitypj.com/wp-content/uploads/2019-Youth-Camp-high-res-file-min-scaled.jpg')`,
+        }}
+      >
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="relative px-6 text-center text-white">
+          <h1 className="text-4xl font-bold">Methodist Youth Fellowship</h1>
+          <p className="mt-3 text-lg"> Hi, there! Welcome to the Community of Young People!</p>
         </div>
       </section>
 
@@ -176,7 +154,6 @@ export default function MYFPage() {
         </div>
       </section>
       <p className="mb-16"></p>
-      <Footer />
     </div>
   )
 }

@@ -1,5 +1,3 @@
-import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import ProgramDashboard from "@/components/program-dashboard"
 import Table from "@/components/table"
 import { BookOpen, Calendar, HeartHandshake, Music, Users } from "lucide-react"
@@ -75,8 +73,6 @@ const activities = [
 export default function SeniorPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       <section
         className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
         style={{ backgroundImage: `url('https://trinitypj.com/wp-content/uploads/2016/03/Picture4.png')` }}
@@ -91,8 +87,8 @@ export default function SeniorPage() {
       {/* Project Overview */}
       <section className="py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h3 className="text-foreground mb-4 px-12 text-3xl font-bold lg:text-4xl">Aims & Objectives of MSF</h3>
-          <div className="prose prose-lg text-muted-foreground mb-12 px-12">
+          <h2 className="mb-4 px-8 text-2xl font-semibold">OUR OBJECTIVES</h2>
+          <div className="prose prose-lg text-muted-foreground mb-12 px-8">
             <p className="mb-4">
               To provide and enhance Christian Fellowship for all Senior Members of the congregation as well as their
               friends so as to lead them to accept Jesus Christ as Lord and Saviour.
@@ -114,8 +110,6 @@ export default function SeniorPage() {
           <ProgramDashboard contact={contact} activities={activities} />
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }
