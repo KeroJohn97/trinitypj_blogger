@@ -12,7 +12,7 @@ const HOVER_SCALE = 1.05
 const DEFAULT_GAP_PX = 24
 
 interface InfiniteMinistryCarouselProps {
-  ministries : Ministry[],
+  ministries: Ministry[]
   selectedId: string | null
   onSelect: (index: number) => void
   gapPx?: number
@@ -185,11 +185,33 @@ export default function InfiniteMinistryCarousel({
 
   return (
     <div className="relative">
+      {/* 🚀 NEW INDEX LIST ELEMENT 🚀 */}
+      <div className="relative top-0 right-0 block h-full p-4 md:hidden md:w-auto">
+        <div className="mx-12 flex h-full flex-col items-start justify-center gap-2">
+          {ministries.map((ministry, originalIndex) => {
+            const isActive = selectedId === ministry.id
+
+            return (
+              <button
+                key={ministry.id}
+                onClick={() => onSelect(originalIndex)}
+                className={`w-full rounded-lg p-3 text-left transition ${
+                  isActive
+                    ? "border-l-4 border-emerald-600 bg-emerald-100 font-semibold text-emerald-800 shadow"
+                    : "bg-white text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                {ministry.name}
+              </button>
+            )
+          })}
+        </div>
+      </div>
       <div ref={containerRef} className="overflow-hidden">
         <motion.div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="no-scrollbar flex gap-6 overflow-x-scroll py-4"
+          className="no-scrollbar hidden gap-6 overflow-x-scroll py-4 md:flex"
           style={{ scrollSnapType: "none" }}
         >
           {tripledMinistries.map((ministry, idx) => {

@@ -12,9 +12,8 @@ import InfiniteMinistryCarousel from "./ministry-carousel"
 
 export default function MinistriesPage({ ministries }: MinistriesPageProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
-  const [selected, setSelected] = useState<Ministry | null>(null)
+  const [selected, setSelected] = useState<Ministry | null>(ministries.length > 0 ? ministries[0]! : null)
   const sectionRef = useRef<HTMLDivElement>(null)
-  const scrollRef = useRef<HTMLDivElement>(null)
 
   const handleCardClick = useCallback(
     (clickedIndex: number) => {
@@ -29,9 +28,15 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
   )
 
   return (
-    <section className="mx-auto max-w-6xl space-y-10 px-4 py-8">
+    <section className="space-y-10 px-4 py-8 sm:max-w-lg md:max-w-2xl md:px-0 lg:max-w-4xl">
       {/* Ministries carousel */}
-      <InfiniteMinistryCarousel ministries={ministries} selectedId={selected?.id ?? null} onSelect={handleCardClick} />
+      <div className="max-w-screen">
+        <InfiniteMinistryCarousel
+          ministries={ministries}
+          selectedId={selected?.id ?? null}
+          onSelect={handleCardClick}
+        />
+      </div>
 
       {/* Selected ministry details */}
       <AnimatePresence mode="wait">
@@ -71,7 +76,7 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
             {/* Photos */}
             {selected.photos && selected.photos.length > 1 && (
               <motion.div
-                className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                className="mb-6 grid gap-4 sm:grid-cols-1 lg:grid-cols-3"
                 initial="hidden"
                 animate="visible"
                 variants={{
