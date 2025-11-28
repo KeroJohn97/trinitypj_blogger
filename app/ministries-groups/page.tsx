@@ -1,5 +1,8 @@
 "use client"
 
+import { Footer } from "@/components/footer"
+import { Navigation } from "@/components/navigation"
+import { PageHeader } from "@/components/page-header"
 import { ministries } from "@/lib/ministries-data"
 import MinistriesPage from "app/app-components/ministries-component"
 import KindergartenPage from "app/ministries-groups/kindergarten"
@@ -184,40 +187,45 @@ const GroupsTopicCloud = () => {
   const currentTab = tabs.find((t) => t.name === activeTab)
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 font-[Inter] md:p-8 lg:p-12">
-      <div className="mx-auto mb-8 max-w-7xl">
-        <h1 className="mb-2 text-3xl font-extrabold text-gray-900 sm:text-4xl">Ministries & Groups</h1>
-        <p className="text-base text-gray-600 sm:text-lg">Find your place to connect, serve, and grow.</p>
-      </div>
+    <div className="bg-background min-h-screen">
+      <Navigation />
+      <PageHeader
+        title="Ministries & Groups"
+        subtitle="Find your place to connect, serve, and grow"
+        backgroundType="gradient"
+        colorScheme="cool"
+      />
+      <div className="min-h-screen bg-gray-50 p-4 font-[Inter] md:p-8 lg:p-12">
+        {/* TABS */}
+        <div className="mx-auto max-w-7xl border-b border-gray-200">
+          <nav className="-mb-px flex space-x-8 overflow-x-auto pb-1">
+            {tabs.map((tab) => {
+              const Icon = tab.icon
+              const isActive = tab.name === activeTab
+              return (
+                <button
+                  key={tab.name}
+                  onClick={() => setActiveTab(tab.name)}
+                  className={`inline-flex items-center border-b-2 px-1 py-3 text-sm font-medium whitespace-nowrap ${
+                    isActive
+                      ? "border-emerald-600 text-emerald-600"
+                      : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  }`}
+                >
+                  <Icon className="mr-2 h-5 w-5" />
+                  {tab.name}
+                </button>
+              )
+            })}
+          </nav>
+        </div>
 
-      {/* TABS */}
-      <div className="mx-auto max-w-7xl border-b border-gray-200">
-        <nav className="-mb-px flex space-x-8 overflow-x-auto pb-1">
-          {tabs.map((tab) => {
-            const Icon = tab.icon
-            const isActive = tab.name === activeTab
-            return (
-              <button
-                key={tab.name}
-                onClick={() => setActiveTab(tab.name)}
-                className={`inline-flex items-center border-b-2 px-1 py-3 text-sm font-medium whitespace-nowrap ${
-                  isActive
-                    ? "border-emerald-600 text-emerald-600"
-                    : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                }`}
-              >
-                <Icon className="mr-2 h-5 w-5" />
-                {tab.name}
-              </button>
-            )
-          })}
-        </nav>
+        {/* TAB CONTENT */}
+        <div className="mx-auto w-full max-w-full min-w-[275px] px-4 py-6 sm:max-w-3xl sm:px-2 lg:max-w-5xl lg:px-4 xl:max-w-7xl">
+          {currentTab?.content}
+        </div>
       </div>
-
-      {/* TAB CONTENT */}
-      <div className="mx-auto w-full max-w-full min-w-[275px] px-4 py-6 sm:max-w-3xl sm:px-2 lg:max-w-5xl lg:px-4 xl:max-w-7xl">
-        {currentTab?.content}
-      </div>
+      <Footer />
     </div>
   )
 }
