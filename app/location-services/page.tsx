@@ -1,8 +1,8 @@
-import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
+import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 import { Card, CardContent } from "@/components/ui/card"
-import { MapPin, Clock, Phone, Mail, Car, Bus, Users } from "lucide-react"
+import { Bus, Car, Clock, Mail, MapPin, Phone, Users } from "lucide-react"
 
 export default function LocationServicesPage() {
   return (
@@ -29,13 +29,19 @@ export default function LocationServicesPage() {
                   </div>
                   <div>
                     <h3 className="text-foreground mb-1 font-semibold">Address</h3>
-                    <p className="text-muted-foreground">
-                      123 Jalan Methodist
-                      <br />
-                      Petaling Jaya, Selangor 47301
-                      <br />
-                      Malaysia
-                    </p>
+                    <a
+                      href="https://maps.app.goo.gl/EHhX5cWQHERFD4AR6"
+                      target="_blank"
+                      className="text-primary hover:underline"
+                    >
+                      <p>
+                        6 Jalan 5/37
+                        <br />
+                        46000 Petaling Jaya, Selangor
+                        <br />
+                        Malaysia
+                      </p>
+                    </a>
                   </div>
                 </div>
 
@@ -45,7 +51,7 @@ export default function LocationServicesPage() {
                   </div>
                   <div>
                     <h3 className="text-foreground mb-1 font-semibold">Phone</h3>
-                    <p className="text-muted-foreground">+60 3-1234 5678</p>
+                    <p className="text-muted-foreground">(+60)3-7956 5986, (+60)3-7956 5872</p>
                   </div>
                 </div>
 
@@ -55,7 +61,7 @@ export default function LocationServicesPage() {
                   </div>
                   <div>
                     <h3 className="text-foreground mb-1 font-semibold">Email</h3>
-                    <p className="text-muted-foreground">info@trinitypj.com</p>
+                    <p className="text-muted-foreground">admin@trinitypj.com</p>
                   </div>
                 </div>
 
