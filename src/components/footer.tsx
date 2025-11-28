@@ -1,4 +1,4 @@
-import { Clock, Mail, MapPin, Phone } from "lucide-react"
+import { BookOpen, Church, Clock, MapPin, Megaphone } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -21,25 +21,31 @@ export function Footer() {
 
           {/* Contact Information */}
           <div>
-            <h3 className="text-foreground mb-4 font-semibold">Contact Us</h3>
+            <h3 className="text-foreground mb-4 font-semibold">Quick Links</h3>
             <div className="space-y-3">
               <div className="text-muted-foreground flex items-center space-x-2">
                 <MapPin className="h-4 w-4" />
-                <Link
-                  href="https://maps.app.goo.gl/EHhX5cWQHERFD4AR6"
-                  target="_blank"
-                  className="text-primary text-sm hover:underline"
-                >
-                  6 Jalan 5/37, 46000 Petaling Jaya, Selangor, Malaysia
+                <Link href="/location-services" className="text-primary text-sm hover:underline">
+                  Location & Services
                 </Link>
               </div>
               <div className="text-muted-foreground flex items-center space-x-2">
-                <Phone className="h-4 w-4" />
-                <span className="text-sm">+603 7956 5986, +603 7956 5872</span>
+                <Church className="h-4 w-4" />
+                <Link href="/ministries-groups" className="text-primary text-sm hover:underline">
+                  Ministries & Groups
+                </Link>
               </div>
               <div className="text-muted-foreground flex items-center space-x-2">
-                <Mail className="h-4 w-4" />
-                <span className="text-sm">admin@trinitypj.com</span>
+                <BookOpen className="h-4 w-4" />
+                <Link href="/location-services" className="text-primary text-sm hover:underline">
+                  Sermons & Resources
+                </Link>
+              </div>
+              <div className="text-muted-foreground flex items-center space-x-2">
+                <Megaphone className="h-4 w-4" />
+                <Link href="/location-services" className="text-primary text-sm hover:underline">
+                  News & Events
+                </Link>
               </div>
             </div>
           </div>
