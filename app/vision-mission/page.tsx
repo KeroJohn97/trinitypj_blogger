@@ -56,11 +56,50 @@ export default function VisionMissionPage() {
       <Navigation />
 
       <PageHeader
-        title="Our Vision & Mission"
+        title="About Our Church"
         subtitle="Guided by God's love, we strive to make disciples, serve others, and transform our community"
         backgroundType="gradient"
         colorScheme="primary"
       />
+
+      <section className="py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="prose prose-lg text-muted-foreground mb-12 px-12">
+            <img
+              src={`https://trinitypj.com/wp-content/uploads/TMCPJ-Vision-Mission-1057x1500.jpg`}
+              alt="TMCPJ Vision Mission"
+            />
+          </div>
+        </div>
+      </section>
+      <section className="py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="prose prose-lg text-muted-foreground mb-12 px-12">
+            <img src={`https://trinitypj.com/wp-content/uploads/CF_1-en-1030x579.png`} alt="TMCPJ Vision Mission" />
+          </div>
+        </div>
+      </section>
+      <section className="py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="prose prose-lg text-muted-foreground mb-12 px-12">
+            <img src={`https://trinitypj.com/wp-content/uploads/CF_2-en-1030x579.png`} alt="TMCPJ Vision Mission" />
+          </div>
+        </div>
+      </section>
+      <section className="py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="prose prose-lg text-muted-foreground mb-12 px-12">
+            <img src={`https://trinitypj.com/wp-content/uploads/CF_3-en-1030x579.png`} alt="TMCPJ Vision Mission" />
+          </div>
+        </div>
+      </section>
+      <section className="py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="prose prose-lg text-muted-foreground mb-12 px-12">
+            <img src={`https://trinitypj.com/wp-content/uploads/CF_4-en-1-1030x579.png`} alt="TMCPJ Vision Mission" />
+          </div>
+        </div>
+      </section>
 
       {/* Vision Section */}
       <section className="py-16">
@@ -77,9 +116,9 @@ export default function VisionMissionPage() {
               </p>
               <div className="prose prose-lg text-muted-foreground mx-auto">
                 <p>
-                  We envision Trinity Methodist Church PJ as a beacon of hope in Petaling Jaya and
-                  beyond. Our vision is to create a community where people from all walks of life can encounter the
-                  transforming power of Jesus Christ, grow in their faith, and discover their God-given purpose.
+                  We envision Trinity Methodist Church PJ as a beacon of hope in Petaling Jaya and beyond. Our vision is
+                  to create a community where people from all walks of life can encounter the transforming power of
+                  Jesus Christ, grow in their faith, and discover their God-given purpose.
                 </p>
               </div>
             </div>

@@ -91,7 +91,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-foreground mb-2 font-semibold">Small Groups</h3>
                 <p className="text-muted-foreground mb-4 text-sm">Experience our warm and inclusive community</p>
-                <Link href="/welcoming">
+                <Link href="/small-groups">
                   <Button variant="outline" size="sm" className="cursor-pointer">
                     Learn More
                   </Button>

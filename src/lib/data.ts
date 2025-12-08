@@ -28,6 +28,15 @@ export const formCategories = [
     buttonText: "Connect With Us",
     color: "text-emerald-600 dark:text-emerald-400",
   },
+  {
+    id: "db87267e-51d2-4918-9980-bf83e44baf61",
+    icon: Heart,
+    title: "Financial Pledge",
+    description: "Trusting God to bless me and provide for my every need, by faith and in obedience to Him who is the Head of the Church",
+    formLink: "https://docs.google.com/forms/d/e/1FAIpQLSePaYSVQ-NREQMXtmdeD77Hu52NEdl5y5qAX1TMSovKSltH-Q/viewform",
+    buttonText: "Submit Prayer Request",
+    color: "text-rose-600 dark:text-rose-400",
+  },
 ]
 
 export const groups = [

@@ -32,6 +32,7 @@ const ongoingEvents: Event[] = [
     category: "Children",
     attendees: 45,
     backgroundImage: sundayServices.src,
+    href: "/location-services",
   },
   {
     id: "2",
@@ -43,6 +44,7 @@ const ongoingEvents: Event[] = [
     category: "Worship",
     attendees: 120,
     backgroundImage: course.src,
+    href: "/alpha-course",
   },
   {
     id: "3",
@@ -51,9 +53,10 @@ const ongoingEvents: Event[] = [
     time: "8:00 PM - 9:00 PM",
     location: "Prayer Room",
     description: "Join us for a dedicated time of prayer for our church, community, and nation.",
-    category: "Prayer",
+    category: "Small Group",
     attendees: 30,
     backgroundImage: smallGroup.src,
+    href: "/small-groups",
   },
   {
     id: "4",
@@ -110,12 +113,6 @@ export function OngoingEvents() {
               </CardContent>
             </Card>
           ))}
-        </div>
-
-        <div className="mt-8 text-center">
-          <Button variant="outline" size="lg">
-            View All Events
-          </Button>
         </div>
       </div>
     </section>
