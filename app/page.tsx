@@ -1,12 +1,12 @@
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
-import NewsGrid from "@/components/news-grid"
 import { OngoingEvents } from "@/components/ongoing-events"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, Heart, MapPin, Users } from "lucide-react"
 import Link from "next/link"
 import HomeCarousel from "./app-components/home-carousel"
+import NoticeCarousel from "./app-components/notice-carousel"
 import YoutubeButton from "./app-components/youtube-button"
 
 export default function HomePage() {
@@ -59,17 +59,7 @@ export default function HomePage() {
         ctaLink="/events/christmas-2025"
       /> */}
 
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mb-12 text-center">
-          <h1 className="text-foreground mb-4 text-4xl font-bold tracking-tight text-balance sm:text-5xl">
-            Latest Updates
-          </h1>
-          <p className="text-muted-foreground mx-auto max-w-2xl text-lg text-pretty">
-            Stay informed with our latest announcements and events
-          </p>
-        </div>
-        <NewsGrid />
-      </div>
+      <NoticeCarousel />
 
       <OngoingEvents />
 
@@ -77,7 +67,7 @@ export default function HomePage() {
       <section className="py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <h2 className="text-foreground mb-4 text-3xl font-bold lg:text-4xl">Explore Our Church</h2>
+            <h2 className="mb-4 text-3xl font-bold lg:text-4xl">Explore Our Church</h2>
             <p className="text-muted-foreground mx-auto max-w-2xl text-xl">
               Discover the various ways you can connect, grow, and serve with us
             </p>

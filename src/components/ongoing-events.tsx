@@ -77,7 +77,7 @@ export function OngoingEvents() {
     <section className="bg-muted/30 py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
-          <h2 className="text-foreground mb-4 text-3xl font-bold lg:text-4xl">Join Us</h2>
+          <h2 className="mb-4 text-3xl font-bold lg:text-4xl">Join Us</h2>
           <p className="text-muted-foreground mx-auto max-w-2xl text-xl">
             Join us for these special gatherings and grow in fellowship with our community
           </p>
