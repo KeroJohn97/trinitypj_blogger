@@ -106,9 +106,7 @@ export default function LocationServicesPage() {
                   <div>
                     <h4 className="text-foreground mb-2 font-semibold">Public Transport</h4>
                     <p className="text-muted-foreground text-sm">
-                      Nearest LRT station: Taman Jaya (5 minutes walk)
-                      <br />
-                      Bus routes: T623, T624, T625
+                      Nearest LRT station: Taman Jaya (6 minutes drive)
                       <br />
                       Grab/taxi drop-off point at main entrance
                     </p>

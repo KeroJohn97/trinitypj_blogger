@@ -1,12 +1,28 @@
 "use client"
 
-import { MediaItem, StaggeredMediaGallery } from "@/components/staggered-media-gallery"
-import { Card } from "@/components/ui/card"
-import { Calendar, CalendarDays, MapPin, Users } from "lucide-react"
-import { useState } from "react"
 import smallGroup from "@/../assets/small-group.png"
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
+import Table from "@/components/table"
+import {
+  chineseMinistryColumns,
+  chineseMinistryData,
+  homeFellowshipColumns,
+  homeFellowshipData,
+  klColumns,
+  klData,
+  pjDayColumns,
+  pjDayData,
+  pjNightColumns,
+  pjNightData,
+  puchongColumns,
+  puchongData,
+  spheresColumns,
+  spheresData,
+  subangShahAlamColumns,
+  subangShahAlamData,
+} from "@/lib/data"
+import { useState } from "react"
 
 export default function SmallGroupsPage() {
   const [galleryVisible, setGalleryVisible] = useState(true)
@@ -54,6 +70,21 @@ export default function SmallGroupsPage() {
           </div>
         </div>
       </section>
+
+      <div className="mx-12">
+        <Table columns={pjDayColumns} data={pjDayData} title="Zone : Petaling Jaya (day)"></Table>
+        <Table columns={pjNightColumns} data={pjNightData} title="Zone : Petaling Jaya (night)"></Table>
+        <Table columns={puchongColumns} data={puchongData} title="Zone : Puchong"></Table>
+        <Table columns={subangShahAlamColumns} data={subangShahAlamData} title="Zone : Subang-Shah Alam"></Table>
+        <Table
+          columns={klColumns}
+          data={klData}
+          title="Zone : KL (Damansara Hts, Sri Hartamas, Mont Kiara, Bangsar, TTDI areas)"
+        ></Table>
+        <Table columns={chineseMinistryColumns} data={chineseMinistryData} title="Zone : Chinese Ministry"></Table>
+        <Table columns={spheresColumns} data={spheresData} title="Zone : Spheres (18 – 35 years old)"></Table>
+        <Table columns={homeFellowshipColumns} data={homeFellowshipData} title="Zone : Puchong"></Table>
+      </div>
 
       <p className="mb-16"></p>
       <Footer />

@@ -36,12 +36,6 @@ export function Footer() {
                 </Link>
               </div>
               <div className="text-muted-foreground flex items-center space-x-2">
-                <BookOpen className="h-4 w-4" />
-                <Link href="/location-services" className="text-primary text-sm hover:underline">
-                  Sermons & Resources
-                </Link>
-              </div>
-              <div className="text-muted-foreground flex items-center space-x-2">
                 <Megaphone className="h-4 w-4" />
                 <Link href="/news-events" className="text-primary text-sm hover:underline">
                   News & Events

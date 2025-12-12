@@ -71,7 +71,7 @@ const NoticeCarousel = () => {
                     src={event.image}
                     alt={event.title}
                     fill
-                    className="object-contain object-center transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                     priority={index === 0}
                   />
                 </div>

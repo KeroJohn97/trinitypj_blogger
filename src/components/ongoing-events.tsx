@@ -36,7 +36,7 @@ const ongoingEvents: Event[] = [
   },
   {
     id: "2",
-    title: "Join A Course",
+    title: "Join Alpha",
     date: "Dec 5-7, 2025",
     time: "7:30 PM - 9:30 PM",
     location: "Main Sanctuary",
@@ -56,7 +56,7 @@ const ongoingEvents: Event[] = [
     category: "Small Group",
     attendees: 30,
     backgroundImage: smallGroup.src,
-    href: "/small-groups",
+    href: "/connect-serve",
   },
   {
     id: "4",

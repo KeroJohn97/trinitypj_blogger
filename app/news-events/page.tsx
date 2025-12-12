@@ -1,13 +1,10 @@
 "use client"
 
-import { MediaItem, StaggeredMediaGallery } from "@/components/staggered-media-gallery"
-import { Card } from "@/components/ui/card"
-import { Calendar, CalendarDays, MapPin, Users } from "lucide-react"
-import { useState } from "react"
 import smallGroup from "@/../assets/small-group.png"
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
 import NewsGrid from "@/components/news-grid"
+import { useState } from "react"
 
 export default function NewsEventsPage() {
   const [galleryVisible, setGalleryVisible] = useState(true)
@@ -25,12 +22,16 @@ export default function NewsEventsPage() {
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative px-6 text-center text-white">
           <h1 className="text-4xl font-bold">News & Events</h1>
-          <p className="mt-3 text-lg"> Join us for a dedicated time of prayer for our church, community, and nation</p>
+          <p className="mt-3 text-lg">
+            Stay connected with our latest updates, upcoming gatherings, and opportunities to grow together
+          </p>
         </div>
       </section>
       <p className="mb-16"></p>
 
-      <NewsGrid />
+      <div className="mx-12">
+        <NewsGrid />
+      </div>
 
       <p className="mb-16"></p>
       <Footer />

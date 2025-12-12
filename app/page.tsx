@@ -1,6 +1,7 @@
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
 import { OngoingEvents } from "@/components/ongoing-events"
+import { TemporaryBanner } from "@/components/temporary-banner"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Calendar, Heart, MapPin, Users } from "lucide-react"
@@ -13,6 +14,13 @@ export default function HomePage() {
   return (
     <div className="bg-background min-h-screen">
       <Navigation />
+
+      <TemporaryBanner
+        startDate={"2025-11-01"}
+        endDate={"2025-12-31"}
+        message={"MW Connect | May – Sep 2025 Issue"}
+        link={"https://drive.google.com/file/d/11NuJQ4bgEUmJs_rJEbJlzyqVt1aVqtN_/view?usp=drive_link"}
+      />
 
       {/* Hero Section */}
       <section className="from-primary/10 to-accent/5 relative bg-linear-to-br py-20 lg:py-32">
@@ -36,7 +44,7 @@ export default function HomePage() {
                   href="https://maps.app.goo.gl/EHhX5cWQHERFD4AR6"
                   target="_blank"
                 >
-                  Join Us This Sunday
+                  Get Directions
                 </Button>
                 <YoutubeButton />
               </div>
@@ -111,7 +119,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-foreground mb-2 font-semibold">Connect With Us</h3>
                 <p className="text-muted-foreground mb-4 text-sm">Find us and explore our church ministries</p>
-                <Link href="/location-services">
+                <Link href="/ministries-groups">
                   <Button variant="outline" size="sm" className="cursor-pointer">
                     Learn More
                   </Button>
