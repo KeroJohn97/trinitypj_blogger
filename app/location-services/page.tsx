@@ -3,6 +3,7 @@ import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { Bus, Car, Clock, Mail, MapPin, Phone, Users } from "lucide-react"
+import Link from "next/link"
 
 export default function LocationServicesPage() {
   return (
@@ -98,16 +99,31 @@ export default function LocationServicesPage() {
                 </div>
 
                 <div className="flex items-start gap-4">
+                  {/* Icon Container */}
                   <div className="bg-primary/10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
-                    <Bus className="text-primary h-4 w-4" />
+                    <Bus className="text-primary h-4 w-4" aria-hidden="true" />
                   </div>
-                  <div>
-                    <h4 className="text-foreground mb-2 font-semibold">Public Transport</h4>
-                    <p className="text-muted-foreground text-sm">
-                      Nearest LRT station: Taman Jaya (6 minutes drive)
-                      <br />
-                      Grab/taxi drop-off point at main entrance
-                    </p>
+
+                  {/* Text Content */}
+                  <div className="grid gap-3">
+                    <h4 className="text-foreground font-semibold">Public Transport</h4>
+
+                    <div className="text-sm">
+                      <p className="text-muted-foreground font-medium">Nearby Bus stop: Bangunan KWSP Petaling Jaya</p>
+                      <p className="text-muted-foreground/80 mt-0.5 text-xs">(8 mins walk) — 750, 751, 770, 772</p>
+                    </div>
+
+                    <div className="text-sm">
+                      <p className="text-muted-foreground font-medium">Nearby Bus stop: PJ472 PJ Church</p>
+                      <p className="text-muted-foreground/80 mt-0.5 text-xs">(8 mins walk) — PJ01</p>
+                    </div>
+
+                    <div className="text-sm">
+                      <p className="text-muted-foreground font-medium">Nearest LRT station: Taman Jaya</p>
+                      <p className="text-muted-foreground/80 mt-0.5 text-xs">
+                        (6 mins drive) — Grab/taxi drop-off point at main entrance
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -170,7 +186,7 @@ export default function LocationServicesPage() {
                   </div>
                   <h3 className="text-foreground mb-2 font-bold">Youth Fellowship</h3>
                   <p className="text-primary mb-2 text-2xl font-bold">11:00 AM</p>
-                  <p className="text-muted-foreground mb-4 text-sm">Methodist Youth Fellowship (MYF) for ages 13-25</p>
+                  <p className="text-muted-foreground mb-4 text-sm">Methodist Youth Fellowship (MYF) for ages 13-18</p>
                   <div className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
                     <Users className="h-4 w-4" />
                     <span>~40 attendees</span>
@@ -213,7 +229,7 @@ export default function LocationServicesPage() {
                 },
                 {
                   title: "Community Outreach",
-                  description: "Food bank, elderly care, and neighborhood service projects",
+                  description: "Street feeding, Samaritan crisis relief, and Shekina Centre",
                   icon: Users,
                 },
                 {
@@ -244,12 +260,20 @@ export default function LocationServicesPage() {
                 ministries, or need prayer support, don't hesitate to reach out.
               </p>
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-6 py-3 font-semibold transition-colors">
+                <Link
+                  href={
+                    "https://docs.google.com/forms/d/e/1FAIpQLSd7s_661yVduVKlqypiHtpYdHQnc6curIPWYfTB_C3HRprK6w/viewform"
+                  }
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer rounded-lg px-6 py-3 font-semibold transition-colors"
+                >
                   Contact Us
-                </button>
-                <button className="border-primary text-primary hover:bg-primary/10 rounded-lg border px-6 py-3 font-semibold transition-colors">
+                </Link>
+                <Link
+                  href="https://maps.app.goo.gl/8R1wyQynoa2UPbHK8"
+                  className="border-primary text-primary hover:bg-primary/10 cursor-pointer rounded-lg border px-6 py-3 font-semibold transition-colors"
+                >
                   Plan Your Visit
-                </button>
+                </Link>
               </div>
             </CardContent>
           </Card>

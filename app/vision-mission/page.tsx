@@ -53,7 +53,7 @@ export default function VisionMissionPage() {
       <Navigation />
 
       <PageHeader
-        title="About Our Church"
+        title="Vision & Mission"
         subtitle="Guided by God's love, we strive to make disciples, serve others, and transform our community"
       />
 

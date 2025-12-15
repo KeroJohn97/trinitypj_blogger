@@ -1,72 +1,54 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-
 import course from "@/../assets/course.png"
 import prayer from "@/../assets/prayer.jpg"
 import smallGroup from "@/../assets/small-group.png"
 import sundayServices from "@/../assets/sunday-services.jpg"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 
 interface Event {
   id: string
   title: string
-  date: string
-  time: string
-  location: string
   description: string
   category: string
+  backgroundImage: string
+  href: string
+  // Kept these in interface if you need them later, but made optional for display logic
+  date?: string
+  time?: string
+  location?: string
   attendees?: number
-  image?: string
-  backgroundImage?: string
-  href?: string
 }
 
 const ongoingEvents: Event[] = [
   {
     id: "1",
     title: "Sunday Services",
-    date: "Dec 5-7, 2025",
-    time: "9:00 AM - 12:00 PM",
-    location: "Trinity Methodist Church PJ Church Hall",
-    description: "A fun-filled program for children to learn about God through games, crafts, and stories.",
-    category: "Children",
-    attendees: 45,
+    description: "Join us for worship, teaching, and community every Sunday morning.",
+    category: "Worship",
     backgroundImage: sundayServices.src,
     href: "/location-services",
   },
   {
     id: "2",
-    title: "Join Alpha",
-    date: "Dec 5-7, 2025",
-    time: "7:30 PM - 9:30 PM",
-    location: "Main Sanctuary",
-    description: "An evening of powerful worship and praise with contemporary music and testimonies.",
-    category: "Worship",
-    attendees: 120,
+    title: "Alpha Course",
+    description: "Explore the basics of the Christian faith in an open, friendly environment.",
+    category: "Education",
     backgroundImage: course.src,
     href: "/alpha-course",
   },
   {
     id: "3",
-    title: "Join A Small Group",
-    date: "Dec 6, 2025",
-    time: "8:00 PM - 9:00 PM",
-    location: "Prayer Room",
-    description: "Join us for a dedicated time of prayer for our church, community, and nation.",
-    category: "Small Group",
-    attendees: 30,
+    title: "Small Groups",
+    description: "Connect with others, study the Bible, and do life together in a smaller setting.",
+    category: "Community",
     backgroundImage: smallGroup.src,
-    href: "/connect-serve",
+    href: "/small-groups",
   },
   {
     id: "4",
-    title: "Prayer Lighthouses / Meetings",
-    date: "Dec 7, 2025",
-    time: "9:00 AM & 11:00 AM",
-    location: "Main Sanctuary",
-    description: "Join us for a dedicated time of prayer for our church, community, and nation.",
+    title: "Prayer Meetings",
+    description: "Join us as we intercede for our church, community, and nation.",
     category: "Prayer",
-    attendees: 200,
     backgroundImage: prayer.src,
     href: "/prayer",
   },
@@ -76,42 +58,49 @@ export function OngoingEvents() {
   return (
     <section className="bg-muted/30 py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <div className="mb-12 text-center">
-          <h2 className="mb-4 text-3xl font-bold lg:text-4xl">Join Us</h2>
+          <h2 className="mb-4 text-3xl font-bold lg:text-4xl">Get Involved</h2>
           <p className="text-muted-foreground mx-auto max-w-2xl text-xl">
-            Join us for these special gatherings and grow in fellowship with our community
+            There is a place for everyone to connect, grow, and serve
           </p>
         </div>
 
+        {/* Grid */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {ongoingEvents.map((event) => (
-            <Card
+            <Link
               key={event.id}
-              className="group overflow-hidden transition-all duration-300 hover:shadow-lg"
-              backgroundImage={event.backgroundImage}
+              href={event.href}
+              className="group relative flex h-[300px] flex-col justify-end overflow-hidden rounded-2xl shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
-              <CardContent className="h-48 p-0">
-                {event.image && (
-                  <div className="from-primary/20 to-accent/10 relative h-48 overflow-hidden bg-linear-to-br">
-                    <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
-                  </div>
-                )}
+              {/* 1. Background Image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                style={{ backgroundImage: `url(${event.backgroundImage})` }}
+              />
 
-                <div className="p-16">
-                  <h3 className="text-background mb-3 text-center text-xl font-bold transition-colors">
-                    {event.title}
-                  </h3>
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="sm"
-                    className="group-hover:bg-primary group-hover:text-primary-foreground text-background w-full cursor-pointer bg-transparent transition-colors"
-                  >
-                    <Link href={event.href ?? "#"}>Learn More</Link>
-                  </Button>
+              {/* 2. Dark Overlay (Gradient) */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
+
+              {/* 3. Content */}
+              <div className="relative z-10 p-8">
+                {/* Category Label */}
+                <span className="bg-primary/90 mb-3 inline-block rounded-full px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                  {event.category}
+                </span>
+
+                <h3 className="mb-2 text-2xl font-bold text-white">{event.title}</h3>
+
+                <p className="mb-6 line-clamp-2 max-w-lg text-sm text-gray-200">{event.description}</p>
+
+                {/* Button Mockup */}
+                <div className="group-hover:text-primary flex items-center text-sm font-bold text-white transition-colors">
+                  Learn More
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -1,4 +1,31 @@
-import { HandHeart, Heart, Users } from "lucide-react"
+import { Calendar, HandHeart, Heart, MapPin, Users } from "lucide-react"
+
+export const quickLinks = [
+  {
+    title: "News & Events",
+    description: "Experience our warm and inclusive community",
+    href: "/news-events",
+    icon: Heart,
+  },
+  {
+    title: "Vision & Mission",
+    description: "Discover our purpose and calling",
+    href: "/vision-mission",
+    icon: Users,
+  },
+  {
+    title: "Ministries & Groups",
+    description: "Find us and explore our church ministries",
+    href: "/ministries-groups",
+    icon: MapPin,
+  },
+  {
+    title: "Alpha Course",
+    description: "Join our restoration initiative",
+    href: "/alpha-course",
+    icon: Calendar,
+  },
+]
 
 export const formCategories = [
   {

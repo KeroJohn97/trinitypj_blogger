@@ -1,5 +1,6 @@
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
+import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { formCategories } from "@/lib/data"
@@ -9,15 +10,10 @@ export default function MinistryFormsPage() {
     <main className="bg-background min-h-screen">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="from-primary/5 to-background bg-linear-to-b px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="text-foreground mb-4 text-4xl font-bold text-balance sm:text-5xl">Connect & Serve</h1>
-          <p className="text-muted-foreground text-lg text-balance sm:text-xl">
-            Your next step in community, service, and spiritual growth starts here
-          </p>
-        </div>
-      </section>
+      <PageHeader
+        title="Connect & Serve"
+        subtitle="Your next step in community, service, and spiritual growth starts here"
+      />
 
       {/* Forms Grid */}
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">

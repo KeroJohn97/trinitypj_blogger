@@ -1,3 +1,12 @@
+import { LucideIcon } from "lucide-react"
+
+interface QuickLink {
+  title: string
+  description: string
+  href: string
+  icon: LucideIcon
+}
+
 interface FAQ {
   question: string
   answer: string
@@ -16,7 +25,7 @@ interface Ministry {
   tagline?: string
   description: string
   photos?: string[]
-  faqs?: FAQ[],
+  faqs?: FAQ[]
   pdf?: Attachment
   color?: string
   disclaimer?: string
