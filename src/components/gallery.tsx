@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
-import { Dialog, DialogContent } from "./ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./ui/dialog"
 
 const galleryImages = [
   {
@@ -100,6 +100,8 @@ export function Gallery() {
       {/* Modal */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="w-full max-w-4xl border-none bg-black/95 p-0">
+          <DialogTitle className="sr-only">YouTube Video</DialogTitle>{" "}
+          <DialogDescription className="sr-only">A YouTube video player inside a dialog</DialogDescription>
           {currentImage && (
             <div className="relative">
               {/* Close button */}
