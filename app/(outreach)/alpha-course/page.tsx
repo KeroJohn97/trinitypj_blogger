@@ -76,8 +76,6 @@ export default function AlphaCoursePage() {
       <PageHeader
         title="Alpha Course"
         subtitle="Alpha is a series of interactive sessions that explore the basics of the Christian faith"
-        backgroundType="gradient"
-        colorScheme="warm"
       />
 
       {/* Project Overview */}

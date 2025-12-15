@@ -42,8 +42,6 @@ export default function EvangelismPage() {
       <PageHeader
         title="Evangelism Ministry"
         subtitle="Evangelising is obeying the commandments of the Lord as found in Matthew 28:19-20, “Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, and teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age."
-        backgroundType="gradient"
-        colorScheme="warm"
       />
 
       {/* Project Overview */}

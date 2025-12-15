@@ -1,45 +1,28 @@
+import church from "@/../assets/church.jpg"
+
 interface PageHeaderProps {
   title: string
   subtitle?: string
-  backgroundImage?: string
-  backgroundType?: "gradient" | "image" | "solid"
-  colorScheme?: "primary" | "warm" | "cool"
+  backgroundImage?: string // Now optional
 }
 
-export function PageHeader({
-  title,
-  subtitle,
-  backgroundImage,
-  backgroundType = "gradient",
-  colorScheme = "primary",
-}: PageHeaderProps) {
-  const getBackgroundClasses = () => {
-    if (backgroundType === "image" && backgroundImage) {
-      return "bg-cover bg-center bg-no-repeat"
-    }
-
-    if (backgroundType === "solid") {
-      return "bg-primary"
-    }
-
-    switch (colorScheme) {
-      case "warm":
-        return "bg-gradient-to-r from-primary/10 to-accent/5"
-      case "cool":
-        return "bg-gradient-to-r from-primary/10 to-accent/5"
-      default:
-        return "bg-gradient-to-r from-primary/10 to-accent/5"
-    }
-  }
+export function PageHeader({ title, subtitle, backgroundImage }: PageHeaderProps) {
+  // Use the provided image URL, or fall back to the imported default's src
+  const activeImage = backgroundImage || church.src
 
   return (
     <section
-      className={`relative py-20 lg:py-32 ${getBackgroundClasses()}`}
-      style={backgroundType === "image" && backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}}
+      className="relative bg-gray-900 bg-cover bg-center bg-no-repeat py-20 lg:py-32"
+      style={{ backgroundImage: `url(${activeImage})` }}
     >
-      <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-        <h1 className="mb-6 text-4xl font-bold text-balance text-primary lg:text-6xl">{title}</h1>
-        {subtitle && <p className="mx-auto max-w-3xl text-xl text-pretty text-primary/90 lg:text-2xl">{subtitle}</p>}
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60" aria-hidden="true" />
+
+      {/* Content */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+        <h1 className="mb-6 text-4xl font-bold text-balance text-white lg:text-6xl">{title}</h1>
+
+        {subtitle && <p className="mx-auto max-w-3xl text-xl text-pretty text-white/90 lg:text-2xl">{subtitle}</p>}
       </div>
     </section>
   )

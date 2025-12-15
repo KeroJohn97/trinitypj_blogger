@@ -55,8 +55,6 @@ export default function VisionMissionPage() {
       <PageHeader
         title="About Our Church"
         subtitle="Guided by God's love, we strive to make disciples, serve others, and transform our community"
-        backgroundType="gradient"
-        colorScheme="primary"
       />
 
       <section className="py-8">

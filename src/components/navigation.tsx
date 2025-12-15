@@ -1,18 +1,14 @@
 "use client"
 
-import { useState } from "react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Church } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { useState } from "react"
 
 import logo from "@/../assets/logo.jpg"
 
-const navigationItems = [
-  { name: "Welcome to the Trinity Family", href: "/welcoming" },
-  { name: "Connect & Serve", href: "/connect-serve"},
-  
-]
+const navigationItems = [{ name: "Connect & Serve", href: "/connect-serve" }]
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)

@@ -11,8 +11,6 @@ export default function MissionsPage() {
       <PageHeader
         title="Missions"
         subtitle="Methodists are a happening people! Involved, committed, diverse and open; a people who try to be accepting, caring, hospitable and inclusive. Family and community oriented. A people who are concerned for those beyond their own communities and around the world. Active in missions and responsive whether in prayer or financial partnership or in good works. A people who love God and who reaches out to include others in God’s redeeming grace."
-        backgroundType="gradient"
-        colorScheme="warm"
       />
 
       {/* Project Overview */}

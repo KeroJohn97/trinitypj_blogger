@@ -12,9 +12,7 @@ export default function SocialConcernsPage() {
       <Navigation />
       <PageHeader
         title="Social Concerns Ministries"
-        subtitle="A group of church members who have been annually selected to provide leadership"
-        backgroundType="gradient"
-        colorScheme="warm"
+        subtitle="A group of church members selected annually to lead our social ministries"
       />
       <div className="w-full items-center justify-center px-48 text-gray-700">
         <VerseCard

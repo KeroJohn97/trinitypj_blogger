@@ -189,12 +189,7 @@ const GroupsTopicCloud = () => {
   return (
     <div className="bg-background min-h-screen">
       <Navigation />
-      <PageHeader
-        title="Ministries & Groups"
-        subtitle="Find your place to connect, serve, and grow"
-        backgroundType="gradient"
-        colorScheme="cool"
-      />
+      <PageHeader title="Ministries & Groups" subtitle="Find your place to connect, serve, and grow" />
       <div className="min-h-screen bg-gray-50 p-4 font-[Inter] md:p-8 lg:p-12">
         {/* TABS */}
         <div className="mx-auto max-w-7xl border-b border-gray-200">

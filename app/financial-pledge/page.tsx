@@ -10,8 +10,6 @@ export default function GivingPage() {
       <PageHeader
         title="Financial Pledge"
         subtitle="Support the mission and ministry of Trinity Methodist Church Petaling Jaya"
-        backgroundType="gradient"
-        colorScheme="cool"
       />
 
       <main className="mx-auto -mt-8 max-w-5xl px-4 py-12">

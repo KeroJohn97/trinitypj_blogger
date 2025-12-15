@@ -8,7 +8,7 @@ export default function ChurchMinistryPage() {
   return (
     <div className="bg-background min-h-screen">
       <Navigation />
-      <PageHeader title="Church Ministries" backgroundType="gradient" colorScheme="warm" />
+      <PageHeader title="Church Ministries" />
       <MinistriesPage ministries={ministries} />
       <Footer />
     </div>

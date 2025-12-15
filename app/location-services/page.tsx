@@ -12,8 +12,6 @@ export default function LocationServicesPage() {
       <PageHeader
         title="Location & Services"
         subtitle="Find us in the heart of Petaling Jaya and discover all the ways we serve our community"
-        backgroundType="gradient"
-        colorScheme="cool"
       />
 
       {/* Location Section */}
@@ -145,7 +143,7 @@ export default function LocationServicesPage() {
                   </p>
                   <div className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
                     <Users className="h-4 w-4" />
-                    <span>~150 attendees</span>
+                    <span>~200 attendees</span>
                   </div>
                 </CardContent>
               </Card>
