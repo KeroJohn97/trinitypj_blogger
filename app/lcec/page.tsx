@@ -85,7 +85,7 @@ export default function LCECPage() {
       {/* Project Overview */}
       <section className="py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-           <div className="prose prose-lg text-muted-foreground mb-12 px-12">
+          <div className="prose prose-lg text-muted-foreground mb-12 px-12">
             <img src={`https://trinitypj.com/wp-content/uploads/2025-LCEC-v2-01-scaled.jpg`} alt="LCEC 2025" />
           </div>
         </div>

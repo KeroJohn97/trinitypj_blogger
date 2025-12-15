@@ -1,16 +1,23 @@
 "use client"
 
+import { Footer } from "@/components/footer"
+import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 import { Building, Check, Copy, CreditCard, Mail } from "lucide-react"
+import Image from "next/image"
 import React, { useState } from "react"
 
-export default function GivingPage() {
+export default function FinancialPledgePage() {
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-gray-800">
+      <Navigation />
       <PageHeader
         title="Financial Pledge"
         subtitle="Support the mission and ministry of Trinity Methodist Church Petaling Jaya"
       />
+      <div className="mt-12 mb-4 flex w-auto items-center justify-center">
+        <img src="https://trinitypj.com/wp-content/uploads/TMCPJ-Giving.png" alt="2 Corinthians 9:7" />
+      </div>
 
       <main className="mx-auto -mt-8 max-w-5xl px-4 py-12">
         {/* Intro Card */}
@@ -19,6 +26,28 @@ export default function GivingPage() {
             We gratefully accept tithes, offerings, and pledges to support our church's work. Please choose one of the
             convenient methods below.
           </p>
+        </div>
+
+        {/* Confirmation Section */}
+        <div className="mb-8 rounded-xl border border-yellow-100 bg-yellow-50 p-6 md:col-span-2">
+          <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-yellow-900">🧾 Proof of Transaction</h3>
+          <p className="mb-4 text-yellow-800">
+            If you have made an online transfer or ATM deposit, please help our finance team by emailing your
+            transaction receipt.
+          </p>
+          <div className="flex flex-col items-start gap-4 md:flex-row md:items-center">
+            <a
+              href="mailto:admin@trinitypj.com"
+              className="inline-flex items-center gap-2 rounded-lg bg-yellow-600 px-5 py-2.5 font-medium text-white transition-colors hover:bg-yellow-700"
+            >
+              <Mail className="h-4 w-4" />
+              Email Receipt
+            </a>
+            <span className="text-sm text-yellow-700">
+              Send to: <strong>admin@trinitypj.com</strong> <br className="hidden md:inline" />
+              (Subject: "Your Name - Purpose of Gift")
+            </span>
+          </div>
         </div>
 
         {/* Payment Methods Grid */}
@@ -83,7 +112,8 @@ export default function GivingPage() {
 
               <div className="rounded bg-blue-50 p-3 text-sm text-blue-800">
                 <span className="font-bold">Note:</span> Please state your <strong>Name</strong> and{" "}
-                <strong>Purpose</strong> (e.g., Tithe, Pledge, Restoration Fund) in the recipient reference.
+                <strong>Purpose</strong> (e.g., Tithe, Pledge, Restoration Fund) in the recipient reference. If making
+                an <strong>ATM deposit</strong>, please email the bank-in slip to admin@trinitypj.com.
               </div>
             </div>
           </PaymentCard>
@@ -113,35 +143,10 @@ export default function GivingPage() {
               </div>
             </div>
           </PaymentCard>
-
-          {/* Confirmation Section */}
-          <div className="rounded-xl border border-yellow-100 bg-yellow-50 p-6 md:col-span-2">
-            <h3 className="mb-2 flex items-center gap-2 text-lg font-bold text-yellow-900">🧾 Proof of Transaction</h3>
-            <p className="mb-4 text-yellow-800">
-              If you have made an online transfer or ATM deposit, please help our finance team by emailing your
-              transaction receipt.
-            </p>
-            <div className="flex flex-col items-start gap-4 md:flex-row md:items-center">
-              <a
-                href="mailto:admin@trinitypj.com"
-                className="inline-flex items-center gap-2 rounded-lg bg-yellow-600 px-5 py-2.5 font-medium text-white transition-colors hover:bg-yellow-700"
-              >
-                <Mail className="h-4 w-4" />
-                Email Receipt
-              </a>
-              <span className="text-sm text-yellow-700">
-                Send to: <strong>admin@trinitypj.com</strong> <br className="hidden md:inline" />
-                (Subject: "Your Name - Purpose of Gift")
-              </span>
-            </div>
-          </div>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="mx-auto max-w-5xl px-4 py-8 text-center text-sm text-gray-400">
-        <p>© {new Date().getFullYear()} Trinity Methodist Church Petaling Jaya</p>
-      </footer>
+      <Footer />
     </div>
   )
 }

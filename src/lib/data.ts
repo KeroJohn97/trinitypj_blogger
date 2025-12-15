@@ -1,4 +1,4 @@
-import { Calendar, HandHeart, Heart, MapPin, Users } from "lucide-react"
+import { Calendar, CircleDollarSign, DollarSign, HandHeart, Heart, MapPin, Users } from "lucide-react"
 
 export const quickLinks = [
   {
@@ -52,18 +52,18 @@ export const formCategories = [
     title: "New Here?",
     description: "Welcome! We'd love to get to know you better and help you connect with our community",
     formLink: "https://docs.google.com/forms/d/e/1FAIpQLSd7s_661yVduVKlqypiHtpYdHQnc6curIPWYfTB_C3HRprK6w/viewform",
-    buttonText: "Connect With Us",
+    buttonText: "Connect with Us",
     color: "text-emerald-600 dark:text-emerald-400",
   },
   {
     id: "db87267e-51d2-4918-9980-bf83e44baf61",
-    icon: Heart,
+    icon: DollarSign,
     title: "Financial Pledge",
     description:
       "Trusting God to bless me and provide for my every need, by faith and in obedience to Him who is the Head of the Church",
-    formLink: "https://docs.google.com/forms/d/e/1FAIpQLSePaYSVQ-NREQMXtmdeD77Hu52NEdl5y5qAX1TMSovKSltH-Q/viewform",
-    buttonText: "Submit Prayer Request",
-    color: "text-rose-600 dark:text-rose-400",
+    link: "/financial-pledge",
+    buttonText: "Make a Pledge",
+    color: "text-orange-600 dark:text-orange-400",
   },
 ]
 

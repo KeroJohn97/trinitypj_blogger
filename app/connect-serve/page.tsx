@@ -34,11 +34,19 @@ export default function MinistryFormsPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <Button asChild className="w-full" size="lg">
-                    <a href={`/${category.id}`} rel="noopener noreferrer">
+                  {category.formLink ? (
+                    // IF: It is a link
+                    <Button asChild className="w-full" size="lg">
+                      <a href={`/${category.id}`} rel="noopener noreferrer">
+                        {category.buttonText}
+                      </a>
+                    </Button>
+                  ) : (
+                    // ELSE: It is a regular button (perhaps disabled?)
+                    <Button className="w-full" size="lg" href={category.link}>
                       {category.buttonText}
-                    </a>
-                  </Button>
+                    </Button>
+                  )}
                 </CardContent>
               </Card>
             )
