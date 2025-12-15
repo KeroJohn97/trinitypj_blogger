@@ -1,5 +1,6 @@
 "use client"
 
+import { Attachment } from "@/lib/interface"
 import { FileText } from "lucide-react"
 
 interface PdfLibraryProps {

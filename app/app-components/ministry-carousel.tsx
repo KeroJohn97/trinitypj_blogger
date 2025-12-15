@@ -1,6 +1,7 @@
 "use client"
 
 import defaultMinistry from "@/../assets/default-ministry.jpg"
+import { Ministry } from "@/lib/interface"
 import { motion } from "framer-motion"
 import { useCallback, useEffect, useMemo, useRef } from "react"
 

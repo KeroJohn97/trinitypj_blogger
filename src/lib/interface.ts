@@ -12,14 +12,14 @@ interface FAQ {
   answer: string
 }
 
-interface Attachment {
+export interface Attachment {
   id: string
   src: string
   title: string
   thumb?: string
 }
 
-interface Ministry {
+export interface Ministry {
   id: string
   name: string
   tagline?: string
@@ -33,6 +33,6 @@ interface Ministry {
   library?: Attachment[]
 }
 
-interface MinistriesPageProps {
+export interface MinistriesPageProps {
   ministries: Ministry[]
 }

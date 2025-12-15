@@ -325,7 +325,7 @@ const TimelineConnector = React.forwardRef<
         "bg-muted": color === "muted" || (!color && status === "pending"),
         "bg-secondary": color === "secondary",
         "bg-accent": color === "accent",
-        "from-primary to-muted bg-gradient-to-b": !color && status === "in-progress",
+        "from-primary to-muted bg-linear-to-b": !color && status === "in-progress",
       },
       className
     )}

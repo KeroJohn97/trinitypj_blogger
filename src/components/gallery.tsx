@@ -139,7 +139,7 @@ export function Gallery() {
               </div>
 
               {/* Title */}
-              <div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+              <div className="absolute right-0 bottom-0 left-0 bg-linear-to-t from-black/80 to-transparent p-6">
                 <h3 className="text-xl font-semibold text-white">{currentImage.title}</h3>
               </div>
             </div>

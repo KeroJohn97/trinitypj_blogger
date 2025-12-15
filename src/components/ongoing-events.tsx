@@ -81,7 +81,7 @@ export function OngoingEvents() {
               />
 
               {/* 2. Dark Overlay (Gradient) */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-black/20" />
 
               {/* 3. Content */}
               <div className="relative z-10 p-8">

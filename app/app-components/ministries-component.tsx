@@ -9,6 +9,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft } from "lucide-react"
 import { useCallback, useRef, useState } from "react"
 import InfiniteMinistryCarousel from "./ministry-carousel"
+import { MinistriesPageProps, Ministry } from "@/lib/interface"
 
 export default function MinistriesPage({ ministries }: MinistriesPageProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
