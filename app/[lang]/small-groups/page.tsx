@@ -2,7 +2,6 @@
 
 import smallGroup from "@/../assets/small-group.png"
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import Table from "@/components/table"
 import {
   chineseMinistryColumns,
@@ -29,8 +28,6 @@ export default function SmallGroupsPage() {
 
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       <section
         className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
         style={{

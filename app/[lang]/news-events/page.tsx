@@ -1,7 +1,6 @@
 "use client"
 
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import NewsGrid from "@/components/news-grid"
 import { PageHeader } from "@/components/page-header"
 import { useState } from "react"
@@ -11,8 +10,6 @@ export default function NewsEventsPage() {
 
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       <PageHeader
         title={"News & Events"}
         subtitle="Stay connected with our latest updates, upcoming gatherings, and opportunities to grow together"

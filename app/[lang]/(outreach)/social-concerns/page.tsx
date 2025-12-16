@@ -1,5 +1,4 @@
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 import { Separator } from "@/components/ui/separator"
 import { VerseCard } from "@/components/verse-card"
@@ -9,7 +8,6 @@ import MinistriesPage from "app/[lang]/app-components/ministries-component"
 export default function SocialConcernsPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
       <PageHeader
         title="Social Concerns Ministries"
         subtitle="A group of church members selected annually to lead our social ministries"

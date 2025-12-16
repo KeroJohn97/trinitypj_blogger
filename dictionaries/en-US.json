@@ -1,23 +1,15 @@
 {
-    "common": {
-        "siteName": "Trinity Methodist Church Petaling Jaya",
-        "actions": {
-            "save": "Save",
-            "cancel": "Cancel",
-            "delete": "Delete"
-        },
-        "nav": {
-            "home": "Home",
-            "about": "About",
-            "profile": "Profile"
-        }
+    "nav": {
+        "imNew": "I'm New",
+        "bulletin": "Bulletin",
+        "calendar": "Calendar",
+        "connect": "Connect & Serve"
     },
     "home": {
-        "heroTitle": "Welcome to the future",
-        "heroSubtitle": "We build great software."
-    },
-    "contact": {
-        "title": "Get in touch",
-        "description": "Fill out the form below."
+        "explore": {
+            "title": "Explore Our Church",
+            "description": "Discover the various ways you can connect, grow, and serve with us",
+            "action": "Learn More"
+        }
     }
 }

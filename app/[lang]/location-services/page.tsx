@@ -1,5 +1,4 @@
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { Bus, Car, Clock, Mail, MapPin, Phone, Users } from "lucide-react"
@@ -8,8 +7,6 @@ import Link from "next/link"
 export default function LocationServicesPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       <PageHeader title="Location & Services" subtitle="Join us this Sunday in the heart of Petaling Jaya" />
 
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">

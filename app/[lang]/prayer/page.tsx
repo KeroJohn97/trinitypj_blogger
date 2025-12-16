@@ -1,5 +1,4 @@
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { PrayerGroupsTable } from "app/[lang]/app-components/prayer-groups-table"
 
 import prayer from "@/../assets/prayer.jpg"
@@ -7,8 +6,6 @@ import prayer from "@/../assets/prayer.jpg"
 export default function PrayerPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       <section
         className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
         style={{ backgroundImage: `url(${prayer.src})` }}

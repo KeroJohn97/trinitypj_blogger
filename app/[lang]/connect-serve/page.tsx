@@ -1,5 +1,4 @@
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,8 +7,6 @@ import { formCategories } from "@/lib/data"
 export default function MinistryFormsPage() {
   return (
     <main className="bg-background min-h-screen">
-      <Navigation />
-
       <PageHeader
         title="Connect & Serve"
         subtitle="Your next step in community, service, and spiritual growth starts here"

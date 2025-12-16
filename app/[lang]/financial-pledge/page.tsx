@@ -1,16 +1,13 @@
 "use client"
 
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 import { Building, Check, Copy, CreditCard, Mail } from "lucide-react"
-import Image from "next/image"
 import React, { useState } from "react"
 
 export default function FinancialPledgePage() {
   return (
     <div className="min-h-screen bg-gray-50 font-sans text-gray-800">
-      <Navigation />
       <PageHeader
         title="Financial Pledge"
         subtitle="Support the mission and ministry of Trinity Methodist Church Petaling Jaya"

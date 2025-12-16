@@ -2,12 +2,10 @@
 
 import { Footer } from "@/components/footer"
 import { Gallery } from "@/components/gallery"
-import { Navigation } from "@/components/navigation"
 
 export default function GalleryPage() {
   return (
     <div>
-      <Navigation />
       <div className="min-h-screen py-16">
         {/* Hero Section */}
         <section className="bg-gradient-to-br from-emerald-50 to-white py-20">

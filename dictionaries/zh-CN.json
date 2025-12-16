@@ -1,1 +1,15 @@
-{}
+{
+    "nav": {
+        "imNew": "我是新来的",
+        "bulletin": "次序单",
+        "calendar": "日历",
+        "connect": "联系与服事"
+    },
+    "home": {
+        "explore": {
+            "title": "探索我们的教会",
+            "description": "探索在此建立连结、灵命成长与参与服事的各种途径",
+            "action": "了解更多"
+        }
+    }
+}

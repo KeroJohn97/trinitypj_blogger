@@ -1,5 +1,4 @@
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 import { MediaItem, StaggeredMediaGallery } from "@/components/staggered-media-gallery"
 import { Card, CardContent } from "@/components/ui/card"
@@ -37,8 +36,6 @@ const items: MediaItem[] = [
 export default function EvangelismPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       <PageHeader
         title="Evangelism Ministry"
         subtitle="Evangelising is obeying the commandments of the Lord as found in Matthew 28:19-20, “Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, and teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age."

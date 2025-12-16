@@ -1,7 +1,6 @@
 "use client"
 
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 import { ministries } from "@/lib/ministries-data"
 import MinistriesPage from "app/[lang]/app-components/ministries-component"
@@ -188,7 +187,6 @@ const GroupsTopicCloud = () => {
 
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
       <PageHeader title="Ministries & Groups" subtitle="Find your place to connect, serve, and grow" />
       <div className="min-h-screen bg-gray-50 p-4 font-[Inter] md:p-8 lg:p-12">
         {/* TABS */}

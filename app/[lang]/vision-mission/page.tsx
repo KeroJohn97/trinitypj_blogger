@@ -1,5 +1,4 @@
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 
 const visionImages = [
@@ -50,8 +49,6 @@ const visionImages = [
 export default function VisionMissionPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       <PageHeader
         title="Vision & Mission"
         subtitle="Guided by God's love, we strive to make disciples, serve others, and transform our community"

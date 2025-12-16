@@ -1,5 +1,4 @@
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { BookOpen, Calendar, HeartHandshake, Music, Users } from "lucide-react"
 
 const seniorColumns = [
@@ -73,8 +72,6 @@ const activities = [
 export default function LCECPage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       <section
         className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
         style={{ backgroundImage: `url('https://trinitypj.com/wp-content/uploads/LCEC-2025-scaled.jpg')` }}

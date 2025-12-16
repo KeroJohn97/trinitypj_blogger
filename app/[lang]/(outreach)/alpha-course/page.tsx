@@ -1,6 +1,5 @@
 import { ExpandableArticle } from "@/components/expandable-article"
 import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { PageHeader } from "@/components/page-header"
 import { MediaItem, StaggeredMediaGallery } from "@/components/staggered-media-gallery"
 import { Card, CardContent } from "@/components/ui/card"
@@ -71,8 +70,6 @@ const advertisingItems: MediaItem[] = [
 export default function AlphaCoursePage() {
   return (
     <div className="bg-background min-h-screen">
-      <Navigation />
-
       <PageHeader
         title="Alpha Course"
         subtitle="Alpha is a series of interactive sessions that explore the basics of the Christian faith"
