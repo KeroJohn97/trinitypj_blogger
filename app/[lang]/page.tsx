@@ -30,7 +30,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         />
 
         <RevealOnScroll priority={true}>
-          <HeroSection />
+          <HeroSection dict={dict.hero} />
         </RevealOnScroll>
 
         <RevealOnScroll>

@@ -28,5 +28,17 @@
             "description": "Discover the various ways you can connect, grow, and serve with us",
             "action": "Learn More"
         }
+    },
+    "hero": {
+        "title": "Welcome to Trinity Methodist Church PJ",
+        "vision": {
+            "line1": "Everyone a disciple, rooted and built up in Jesus Christ",
+            "line2": "Every family discipled for Jesus Christ",
+            "line3": "Everyone united in ministry for Jesus Christ"
+        },
+        "getDirections": "Get Directions",
+        "watchLive": "Watch Live Stream",
+        "videoTitle": "YouTube Video",
+        "videoDesc": "A YouTube video player inside a dialog"
     }
 }

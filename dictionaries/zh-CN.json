@@ -28,5 +28,17 @@
             "description": "探索在此建立连结、灵命成长与参与服事的各种途径",
             "action": "了解更多"
         }
+    },
+    "hero": {
+        "title": "欢迎来到八打灵再也卫理公会三一堂",
+        "vision": {
+            "line1": "人人作门徒，在耶稣基督里生根建造",
+            "line2": "家家受造就，归于耶稣基督",
+            "line3": "人人同心事奉，为耶稣基督"
+        },
+        "getDirections": "获取路线",
+        "watchLive": "观看直播",
+        "videoTitle": "YouTube 视频",
+        "videoDesc": "YouTube 视频播放弹窗"
     }
 }
