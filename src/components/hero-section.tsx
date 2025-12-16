@@ -1,7 +1,7 @@
 import church from "@/../assets/church.jpg"
 import { Button } from "@/components/ui/button"
-import HomeCarousel from "app/app-components/home-carousel"
-import YoutubeButton from "app/app-components/youtube-button"
+import HomeCarousel from "app/[lang]/app-components/home-carousel"
+import YoutubeButton from "app/[lang]/app-components/youtube-button"
 
 // make sure to import YoutubeButton and HomeCarousel here
 

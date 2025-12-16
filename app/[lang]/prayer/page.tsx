@@ -1,6 +1,6 @@
 import { Footer } from "@/components/footer"
 import { Navigation } from "@/components/navigation"
-import { PrayerGroupsTable } from "app/app-components/prayer-groups-table"
+import { PrayerGroupsTable } from "app/[lang]/app-components/prayer-groups-table"
 
 import prayer from "@/../assets/prayer.jpg"
 

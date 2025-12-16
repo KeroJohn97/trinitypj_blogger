@@ -1,0 +1,23 @@
+{
+    "common": {
+        "siteName": "Trinity Methodist Church Petaling Jaya",
+        "actions": {
+            "save": "Save",
+            "cancel": "Cancel",
+            "delete": "Delete"
+        },
+        "nav": {
+            "home": "Home",
+            "about": "About",
+            "profile": "Profile"
+        }
+    },
+    "home": {
+        "heroTitle": "Welcome to the future",
+        "heroSubtitle": "We build great software."
+    },
+    "contact": {
+        "title": "Get in touch",
+        "description": "Fill out the form below."
+    }
+}

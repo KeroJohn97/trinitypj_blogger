@@ -2,11 +2,11 @@
 
 import logo from "@/../assets/logo.jpg"
 import { Button } from "@/components/ui/button"
-// 1. Add SheetHeader and SheetTitle to imports
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
 
 const navigationItems = [
@@ -25,6 +25,22 @@ const navigationItems = [
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+  const router = useRouter()
+
+  // --- Language Switcher Logic ---
+  // 1. Get current language from URL (default to en-US)
+  const currentLang = pathname?.split("/")[1] || "en-US"
+
+  // 2. Handle the switch while preserving the rest of the URL
+  const switchLanguage = (newLocale: string) => {
+    if (!pathname) return
+    const segments = pathname.split("/")
+    segments[1] = newLocale // Swap the locale segment
+    const newPath = segments.join("/")
+    router.push(newPath)
+  }
+  // -------------------------------
 
   return (
     <nav className="border-border/10 sticky top-0 z-50 border-b bg-white shadow-sm">
@@ -35,7 +51,7 @@ export function Navigation() {
             <Image src={logo} alt="Logo" height={40} width={120} className="h-10 w-auto object-contain" priority />
           </Link>
 
-          {/* Desktop */}
+          {/* Desktop Navigation */}
           <div className="hidden items-center space-x-6 md:flex">
             {navigationItems.map((item) => (
               <Link
@@ -50,9 +66,33 @@ export function Navigation() {
             <Button asChild size="sm" className="ml-4">
               <Link href="/connect-serve">Connect & Serve</Link>
             </Button>
+
+            {/* --- Desktop Language Toggle --- */}
+            <div className="ml-4 flex items-center gap-2 border-l pl-4 text-sm">
+              <button
+                onClick={() => switchLanguage("en-US")}
+                disabled={currentLang === "en-US"}
+                className={`cursor-pointer font-medium transition-colors ${
+                  currentLang === "en-US" ? "text-black underline" : "text-gray-400 hover:text-gray-600"
+                }`}
+              >
+                EN
+              </button>
+              <span className="text-gray-300">/</span>
+              <button
+                onClick={() => switchLanguage("zh-CN")}
+                disabled={currentLang === "zh-CN"}
+                className={`cursor-pointer font-medium transition-colors ${
+                  currentLang === "zh-CN" ? "text-black underline" : "text-gray-400 hover:text-gray-600"
+                }`}
+              >
+                中文
+              </button>
+            </div>
+            {/* ------------------------------- */}
           </div>
 
-          {/* Mobile */}
+          {/* Mobile Navigation */}
           <div className="flex items-center md:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
@@ -62,8 +102,6 @@ export function Navigation() {
               </SheetTrigger>
 
               <SheetContent side="right" className="bg-white">
-                {/* 2. FIX: Added SheetHeader and SheetTitle. 
-                    "sr-only" makes it visible ONLY to screen readers. */}
                 <SheetHeader>
                   <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
                 </SheetHeader>
@@ -84,6 +122,36 @@ export function Navigation() {
                       <Link href="/connect-serve">Connect & Serve</Link>
                     </Button>
                   </SheetClose>
+
+                  {/* --- Mobile Language Toggle --- */}
+                  <div className="mt-8 border-t pt-6">
+                    <p className="mb-3 text-sm font-semibold text-gray-500">Language</p>
+                    <div className="flex gap-4">
+                      <Button
+                        variant={currentLang === "en-US" ? "default" : "outline"}
+                        size="sm"
+                        className="w-full"
+                        onClick={() => {
+                          switchLanguage("en-US")
+                          setIsOpen(false)
+                        }}
+                      >
+                        English
+                      </Button>
+                      <Button
+                        variant={currentLang === "zh-CN" ? "default" : "outline"}
+                        size="sm"
+                        className="w-full"
+                        onClick={() => {
+                          switchLanguage("zh-CN")
+                          setIsOpen(false)
+                        }}
+                      >
+                        中文
+                      </Button>
+                    </div>
+                  </div>
+                  {/* ------------------------------ */}
                 </div>
               </SheetContent>
             </Sheet>

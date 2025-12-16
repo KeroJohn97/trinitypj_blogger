@@ -7,11 +7,16 @@ import { TemporaryBanner } from "@/components/temporary-banner"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { quickLinks } from "@/lib/data"
+import { getDictionary } from "dictionaries"
 import Link from "next/link"
 import NoticeCarousel from "./app-components/notice-carousel"
 
-export default async function HomePage() {
+export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   await new Promise((resolve) => setTimeout(resolve, 500))
+
+  const { lang } = await params
+
+  const dict = await getDictionary(lang as "en-US" | "zh-CN")
 
   return (
     <div className="bg-background flex min-h-screen flex-col">
