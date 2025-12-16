@@ -1,4 +1,3 @@
-import { Footer } from "@/components/footer"
 import { HeroSection } from "@/components/hero-section"
 import { OngoingEvents } from "@/components/ongoing-events"
 import { RevealOnScroll } from "@/components/reveal-on-scroll"
@@ -82,8 +81,6 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   )
 }

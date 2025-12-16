@@ -1,7 +1,6 @@
 "use client"
 
 import smallGroup from "@/../assets/small-group.png"
-import { Footer } from "@/components/footer"
 import Table from "@/components/table"
 import {
   chineseMinistryColumns,
@@ -84,7 +83,6 @@ export default function SmallGroupsPage() {
       </div>
 
       <p className="mb-16"></p>
-      <Footer />
     </div>
   )
 }

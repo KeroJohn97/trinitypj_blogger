@@ -1,4 +1,3 @@
-import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
 import { VerseCard } from "@/components/verse-card"
 
@@ -132,8 +131,6 @@ export default function MissionsPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }

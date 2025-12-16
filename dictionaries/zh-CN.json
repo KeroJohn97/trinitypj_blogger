@@ -5,6 +5,23 @@
         "calendar": "日历",
         "connect": "联系与服事"
     },
+    "footer": {
+        "tagline": "建立门徒的教会",
+        "serviceTimes": {
+            "title": "崇拜时间",
+            "sunday": "主日崇拜",
+            "english": "英语 - 早上 9:00 及 下午 5:00",
+            "chinese": "中文 - 早上 9:00",
+            "sundaySchool": "主日学 - 早上 11:00",
+            "myf": "卫理青年团契 (MYF) - 早上 11:00"
+        },
+        "copyright": "八打灵再也卫理公会三一堂。 版权所有。",
+        "social": {
+            "facebook": "Facebook",
+            "instagram": "Instagram",
+            "youtube": "YouTube"
+        }
+    },
     "home": {
         "explore": {
             "title": "探索我们的教会",

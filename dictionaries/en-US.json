@@ -5,6 +5,23 @@
         "calendar": "Calendar",
         "connect": "Connect & Serve"
     },
+    "footer": {
+        "tagline": "A DISCIPLE MAKING CHURCH",
+        "serviceTimes": {
+            "title": "Service Times",
+            "sunday": "Sunday Services",
+            "english": "English - 9:00am & 5:00pm",
+            "chinese": "Chinese - 9:00am",
+            "sundaySchool": "Sunday School - 11:00am",
+            "myf": "Methodist Youth Fellowship (MYF) - 11:00am"
+        },
+        "copyright": "Trinity Methodist Church Petaling Jaya. All rights reserved.",
+        "social": {
+            "facebook": "Facebook",
+            "instagram": "Instagram",
+            "youtube": "YouTube"
+        }
+    },
     "home": {
         "explore": {
             "title": "Explore Our Church",

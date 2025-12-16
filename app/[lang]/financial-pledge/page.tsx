@@ -1,6 +1,5 @@
 "use client"
 
-import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
 import { Building, Check, Copy, CreditCard, Mail } from "lucide-react"
 import React, { useState } from "react"
@@ -142,8 +141,6 @@ export default function FinancialPledgePage() {
           </PaymentCard>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

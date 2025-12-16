@@ -1,6 +1,5 @@
 "use client"
 
-import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
 import { ministries } from "@/lib/ministries-data"
 import MinistriesPage from "app/[lang]/app-components/ministries-component"
@@ -218,7 +217,6 @@ const GroupsTopicCloud = () => {
           {currentTab?.content}
         </div>
       </div>
-      <Footer />
     </div>
   )
 }

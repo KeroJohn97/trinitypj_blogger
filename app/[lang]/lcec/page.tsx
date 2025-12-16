@@ -1,4 +1,3 @@
-import { Footer } from "@/components/footer"
 import { BookOpen, Calendar, HeartHandshake, Music, Users } from "lucide-react"
 
 const seniorColumns = [
@@ -87,8 +86,6 @@ export default function LCECPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }

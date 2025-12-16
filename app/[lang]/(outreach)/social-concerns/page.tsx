@@ -1,4 +1,3 @@
-import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
 import { Separator } from "@/components/ui/separator"
 import { VerseCard } from "@/components/verse-card"
@@ -80,7 +79,6 @@ export default function SocialConcernsPage() {
           knowing it is pleasing to Him who rules over all.
         </p>
       </div>
-      <Footer />
     </div>
   )
 }

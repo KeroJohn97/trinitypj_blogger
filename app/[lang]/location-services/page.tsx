@@ -1,4 +1,3 @@
-import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
 import { Card, CardContent } from "@/components/ui/card"
 import { Bus, Car, Clock, Mail, MapPin, Phone, Users } from "lucide-react"
@@ -290,7 +289,6 @@ export default function LocationServicesPage() {
           </CardContent>
         </Card>
       </div>
-      <Footer />
     </div>
   )
 }

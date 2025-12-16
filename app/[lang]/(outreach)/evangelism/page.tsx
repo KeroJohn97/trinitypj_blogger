@@ -1,4 +1,3 @@
-import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
 import { MediaItem, StaggeredMediaGallery } from "@/components/staggered-media-gallery"
 import { Card, CardContent } from "@/components/ui/card"
@@ -172,8 +171,6 @@ export default function EvangelismPage() {
           </Card>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }

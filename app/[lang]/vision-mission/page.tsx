@@ -1,4 +1,3 @@
-import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
 
 const visionImages = [
@@ -92,8 +91,6 @@ export default function VisionMissionPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }

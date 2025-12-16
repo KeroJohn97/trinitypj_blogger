@@ -1,4 +1,3 @@
-import { Footer } from "@/components/footer"
 import { PrayerGroupsTable } from "app/[lang]/app-components/prayer-groups-table"
 
 import prayer from "@/../assets/prayer.jpg"
@@ -66,8 +65,6 @@ export default function PrayerPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   )
 }

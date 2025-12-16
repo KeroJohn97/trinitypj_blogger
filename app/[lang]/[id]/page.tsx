@@ -1,4 +1,3 @@
-import { Footer } from "@/components/footer"
 import GoogleFormEmbed from "@/components/google-form-embed"
 import { formCategories } from "@/lib/data"
 
@@ -13,7 +12,6 @@ export default async function GoogleFormsPage({ params }: { params: Promise<{ id
         {category.formLink && (
           <GoogleFormEmbed title={category.title} description={category.description} formLink={category.formLink!} />
         )}
-        <Footer />
       </>
     )
   )

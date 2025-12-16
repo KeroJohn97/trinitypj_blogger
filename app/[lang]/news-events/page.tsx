@@ -1,6 +1,5 @@
 "use client"
 
-import { Footer } from "@/components/footer"
 import NewsGrid from "@/components/news-grid"
 import { PageHeader } from "@/components/page-header"
 import { useState } from "react"
@@ -21,7 +20,6 @@ export default function NewsEventsPage() {
       </div>
 
       <p className="mb-16"></p>
-      <Footer />
     </div>
   )
 }

@@ -1,6 +1,5 @@
 "use client"
 
-import { Footer } from "@/components/footer"
 import { Gallery } from "@/components/gallery"
 
 export default function GalleryPage() {
@@ -30,7 +29,6 @@ export default function GalleryPage() {
           </div>
         </section>
       </div>
-      <Footer />
     </div>
   )
 }

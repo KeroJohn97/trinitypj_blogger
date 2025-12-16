@@ -1,4 +1,3 @@
-import { Footer } from "@/components/footer"
 import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -50,8 +49,6 @@ export default function MinistryFormsPage() {
           })}
         </div>
       </section>
-
-      <Footer />
     </main>
   )
 }
