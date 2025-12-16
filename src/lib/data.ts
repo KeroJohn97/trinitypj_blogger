@@ -1,31 +1,27 @@
-import { Calendar, CircleDollarSign, DollarSign, HandHeart, Heart, MapPin, Users } from "lucide-react"
+import { Calendar, DollarSign, HandHeart, Heart, MapPin, Users } from "lucide-react"
 
 export const quickLinks = [
   {
-    title: "News & Events",
-    description: "Experience our warm and inclusive community",
+    id: "news", // Matches JSON key
     href: "/news-events",
     icon: Heart,
   },
   {
-    title: "Vision & Mission",
-    description: "Discover our purpose and calling",
+    id: "vision",
     href: "/vision-mission",
     icon: Users,
   },
   {
-    title: "Ministries & Groups",
-    description: "Find us and explore our church ministries",
+    id: "ministries",
     href: "/ministries-groups",
     icon: MapPin,
   },
   {
-    title: "Alpha Course",
-    description: "Join our restoration initiative",
+    id: "alpha",
     href: "/alpha-course",
     icon: Calendar,
   },
-]
+] as const
 
 export const formCategories = [
   {

@@ -28,7 +28,25 @@
             "description": "探索在此建立连结、灵命成长与参与服事的各种途径",
             "action": "了解更多"
         },
-        "highlights": "焦点活动"
+        "highlights": "焦点活动",
+        "quickLinks": {
+            "news": {
+                "title": "新闻与活动",
+                "description": "体验我们热情与包容的社群"
+            },
+            "vision": {
+                "title": "愿景与使命",
+                "description": "探索我们的目标与呼召"
+            },
+            "ministries": {
+                "title": "事工与小组",
+                "description": "寻找并探索我们的教会事工"
+            },
+            "alpha": {
+                "title": "启发课程",
+                "description": "加入我们的复兴计划"
+            }
+        }
     },
     "hero": {
         "title": "欢迎来到八打灵再也卫理公会三一堂",

@@ -56,27 +56,38 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
             </RevealOnScroll>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-              {quickLinks.map((feature, index) => (
-                <RevealOnScroll key={feature.title} delay={index * 0.1} className="h-full">
+              {quickLinks.map((feature, index) => {
+              // LOOKUP TRANSLATION HERE
+              // We cast 'feature.id' to specific keys to satisfy TypeScript
+              const key = feature.id as keyof typeof dict.home.quickLinks
+              const content = dict.home.quickLinks[key]
+
+              return (
+                <RevealOnScroll key={feature.id} delay={index * 0.1} className="h-full">
                   <Card className="group h-full transition-shadow duration-300 hover:shadow-lg">
                     <CardContent className="flex h-full flex-col items-center p-6 text-center">
                       <div className="bg-primary/10 group-hover:bg-primary/20 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
                         <feature.icon className="text-primary h-6 w-6" />
                       </div>
-
-                      {/* Note: Ideally, feature.title and description should also come from dict */}
-                      <h3 className="text-foreground mb-2 font-semibold">{feature.title}</h3>
-                      <p className="text-muted-foreground mb-4 flex-1 text-sm">{feature.description}</p>
-
+                      
+                      {/* Use Translated Content */}
+                      <h3 className="text-foreground mb-2 font-semibold">
+                        {content.title}
+                      </h3>
+                      <p className="text-muted-foreground mb-4 flex-1 text-sm">
+                        {content.description}
+                      </p>
+                      
                       <Button asChild variant="outline" size="sm" className="mt-auto">
                         <Link href={feature.href}>
-                          {dict.home.explore.action} {/* <--- Translated "Learn More" */}
+                          {dict.home.explore.action} {/* "Learn More" */}
                         </Link>
                       </Button>
                     </CardContent>
                   </Card>
                 </RevealOnScroll>
-              ))}
+              )
+            })}
             </div>
           </div>
         </section>
