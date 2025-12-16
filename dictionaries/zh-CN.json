@@ -41,5 +41,32 @@
         "watchLive": "观看直播",
         "videoTitle": "YouTube 视频",
         "videoDesc": "YouTube 视频播放弹窗"
+    },
+    "ongoingEvents": {
+        "title": "参与其中",
+        "subtitle": "每个人都有连结、成长与服事的空间",
+        "learnMore": "了解更多",
+        "items": {
+            "sundayServices": {
+                "title": "主日崇拜",
+                "description": "每逢周日早上，与我们一同敬拜、学习与团契。",
+                "category": "敬拜"
+            },
+            "alpha": {
+                "title": "启发课程",
+                "description": "在一个开放友善的环境中，探索基督教信仰的基础。",
+                "category": "教育"
+            },
+            "smallGroups": {
+                "title": "小组团契",
+                "description": "在小组中与人连结、研读圣经，并一同经历生命。",
+                "category": "团契"
+            },
+            "prayer": {
+                "title": "祷告会",
+                "description": "加入我们，为教会、社区与国家代祷。",
+                "category": "祷告"
+            }
+        }
     }
 }

@@ -41,5 +41,32 @@
         "watchLive": "Watch Live Stream",
         "videoTitle": "YouTube Video",
         "videoDesc": "A YouTube video player inside a dialog"
+    },
+    "ongoingEvents": {
+        "title": "Get Involved",
+        "subtitle": "There is a place for everyone to connect, grow, and serve",
+        "learnMore": "Learn More",
+        "items": {
+            "sundayServices": {
+                "title": "Sunday Services",
+                "description": "Join us for worship, teaching, and community every Sunday morning.",
+                "category": "Worship"
+            },
+            "alpha": {
+                "title": "Alpha Course",
+                "description": "Explore the basics of the Christian faith in an open, friendly environment.",
+                "category": "Education"
+            },
+            "smallGroups": {
+                "title": "Small Groups",
+                "description": "Connect with others, study the Bible, and do life together in a smaller setting.",
+                "category": "Community"
+            },
+            "prayer": {
+                "title": "Prayer Meetings",
+                "description": "Join us as we intercede for our church, community, and nation.",
+                "category": "Prayer"
+            }
+        }
     }
 }

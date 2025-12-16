@@ -38,7 +38,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </RevealOnScroll>
 
         <RevealOnScroll>
-          <OngoingEvents />
+          <OngoingEvents dict={dict.ongoingEvents} />
         </RevealOnScroll>
 
         {/* Explore Section */}
