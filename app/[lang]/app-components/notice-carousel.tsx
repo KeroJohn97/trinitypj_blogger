@@ -15,7 +15,7 @@ import * as React from "react"
 interface NoticeEvent {
   id: number
   image: string
-  alt: string // Kept for accessibility (screen readers)
+  alt: string
 }
 
 const DEFAULT_EVENTS = [
@@ -31,7 +31,15 @@ const DEFAULT_EVENTS = [
   },
 ]
 
-export default function NoticeCarousel({ events = DEFAULT_EVENTS }: { events?: NoticeEvent[] }) {
+// Define the dictionary structure
+interface NoticeCarouselProps {
+  events?: NoticeEvent[]
+  dict: {
+    highlights: string
+  }
+}
+
+export default function NoticeCarousel({ events = DEFAULT_EVENTS, dict }: NoticeCarouselProps) {
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
   const [count, setCount] = React.useState(0)
@@ -50,7 +58,8 @@ export default function NoticeCarousel({ events = DEFAULT_EVENTS }: { events?: N
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-12">
       <div className="mb-6 flex items-center justify-center">
-        <h2 className="text-center text-3xl font-bold tracking-tight lg:text-4xl">Highlights</h2>
+        {/* Translated Title */}
+        <h2 className="text-center text-3xl font-bold tracking-tight lg:text-4xl">{dict.highlights}</h2>
       </div>
 
       <div className="group relative overflow-hidden rounded-2xl shadow-xl ring-1 ring-black/5">
@@ -58,10 +67,6 @@ export default function NoticeCarousel({ events = DEFAULT_EVENTS }: { events?: N
           <CarouselContent>
             {events.map((event, index) => (
               <CarouselItem key={event.id}>
-                {/* Adjusted heights: 
-                   You can change these pixel values if you want the images 
-                   to be shorter since there is no text to accommodate.
-                */}
                 <div className="relative h-[300px] w-full sm:h-[400px] lg:h-[450px]">
                   <Image
                     src={event.image}
@@ -70,17 +75,12 @@ export default function NoticeCarousel({ events = DEFAULT_EVENTS }: { events?: N
                     className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                     priority={index === 0}
                   />
-
-                  {/* Text Overlay removed completely */}
-
-                  {/* Optional: Subtle bottom gradient so white dots are visible on light images */}
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/50 to-transparent" />
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
 
-          {/* Navigation */}
           <div className="hidden opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:block">
             <CarouselPrevious className="left-4 h-10 w-10 border-none bg-black/30 text-white backdrop-blur hover:bg-black/50" />
             <CarouselNext className="right-4 h-10 w-10 border-none bg-black/30 text-white backdrop-blur hover:bg-black/50" />

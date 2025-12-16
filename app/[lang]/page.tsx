@@ -34,7 +34,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </RevealOnScroll>
 
         <RevealOnScroll>
-          <NoticeCarousel />
+          <NoticeCarousel dict={dict.home} />
         </RevealOnScroll>
 
         <RevealOnScroll>
