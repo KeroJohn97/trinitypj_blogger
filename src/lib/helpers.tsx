@@ -8,7 +8,7 @@ export function formatEmail(text: string): (string | JSX.Element)[] {
   return text.split(emailRegex).map((part, index) => {
     if (emailRegex.test(part)) {
       return (
-        <a key={index} href={`mailto:${part}`} className="text-red-700 underline hover:text-red-800">
+        <a key={index} href={`mailto:${part}`} className="text-emerald-700 underline hover:text-emerald-800">
           {part}
         </a>
       )
