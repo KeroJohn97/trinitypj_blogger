@@ -3,7 +3,7 @@
 import logo from "@/../assets/logo.jpg"
 import { Button } from "@/components/ui/button"
 // 1. Add SheetHeader and SheetTitle to imports
-import { Sheet, SheetClose, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -14,6 +14,11 @@ const navigationItems = [
   {
     name: "Bulletin",
     href: "https://drive.google.com/file/d/1hWNuf_mfG2Jykg4dEk59RwwJubyPpynA/view",
+    target: "_blank",
+  },
+  {
+    name: "Calendar",
+    href: "https://drive.google.com/file/d/1KqUtMRxhW4SWLvmEI1LgLdYh2R--gTjy/view",
     target: "_blank",
   },
 ]
