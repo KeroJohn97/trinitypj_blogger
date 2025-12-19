@@ -86,5 +86,106 @@
                 "category": "祷告"
             }
         }
+    },
+    "locationServices": {
+        "header": {
+            "title": "聚会时间与地点",
+            "subtitle": "欢迎本周日来到八打灵再也市中心参与我们的聚会"
+        },
+        "services": {
+            "title": "每周崇拜",
+            "subtitle": "每逢周日，我们聚集一同敬拜、学习与团契。",
+            "english": {
+                "tag": "英语",
+                "title": "英语崇拜",
+                "morning": {
+                    "time": "早上 9:00",
+                    "label": "主日崇拜",
+                    "desc": "传统圣诗与当代诗歌"
+                },
+                "evening": {
+                    "time": "下午 5:00",
+                    "label": "传统崇拜",
+                    "desc": "仅唱圣诗"
+                }
+            },
+            "chinese": {
+                "title": "中文崇拜",
+                "time": "早上 9:00",
+                "desc": "全程以华语进行。",
+                "attendees": "约 100 人出席"
+            },
+            "youth": {
+                "title": "少年团契",
+                "time": "早上 11:00",
+                "desc": "卫理少年团契 (MYF)，适合 13-18 岁。",
+                "attendees": "约 40 人出席"
+            }
+        },
+        "findUs": {
+            "title": "寻找我们",
+            "churchName": "八打灵再也卫理公会三一堂",
+            "address": "6 Jalan 5/37, 46000 Petaling Jaya, Selangor, Malaysia",
+            "openMaps": "在 Google Maps 打开",
+            "phoneLabel": "电话",
+            "emailLabel": "电邮",
+            "officeHours": {
+                "title": "办公时间",
+                "weekdays": "周一至周五: 9:00 AM - 5:00 PM",
+                "saturday": "周六: 9:00 AM - 1:00 PM",
+                "sunday": "周日: 休息 (仅限崇拜聚会)"
+            }
+        },
+        "transport": {
+            "title": "交通指南",
+            "car": {
+                "title": "自驾",
+                "desc": "教会范围内提供免费停车位。",
+                "tip": "提示：周末期间，Jalan 5/37 沿路也可停车。"
+            },
+            "public": {
+                "title": "公共交通",
+                "lrt": {
+                    "label": "LRT: Taman Jaya 站",
+                    "desc": "从车站乘车/Grab 约 6 分钟"
+                },
+                "bus1": {
+                    "label": "巴士站: PJ Church (PJ472)",
+                    "walk": "步行 8 分钟"
+                },
+                "bus2": {
+                    "label": "巴士站: KWSP Petaling Jaya",
+                    "walk": "步行 8 分钟"
+                }
+            },
+            "visitor": {
+                "title": "首次来访？",
+                "desc": "请在大门口寻找身穿<bold>绿色背心</bold>的招待团队，他们将协助您入座！"
+            }
+        },
+        "ministries": {
+            "title": "其他连结方式",
+            "subtitle": "除了主日崇拜，我们还有适合各个年龄层的事工。",
+            "items": {
+                "kids": {
+                    "title": "儿童事工",
+                    "desc": "3-12 岁 • 每周日"
+                },
+                "adults": {
+                    "title": "成人查经班",
+                    "desc": "每周小组聚会"
+                },
+                "outreach": {
+                    "title": "社区关怀",
+                    "desc": "服事我们的邻舍"
+                }
+            }
+        },
+        "cta": {
+            "title": "还有疑问？",
+            "desc": "我们非常乐意协助您规划首次来访，或回答您关于本教会的任何疑问。",
+            "planVisit": "规划行程",
+            "emailUs": "发送电邮"
+        }
     }
 }

@@ -86,5 +86,106 @@
                 "category": "Prayer"
             }
         }
+    },
+    "locationServices": {
+        "header": {
+            "title": "Location & Services",
+            "subtitle": "Join us this Sunday in the heart of Petaling Jaya"
+        },
+        "services": {
+            "title": "Weekly Services",
+            "subtitle": "We gather every Sunday for worship, teaching, and community.",
+            "english": {
+                "tag": "ENGLISH",
+                "title": "English Services",
+                "morning": {
+                    "time": "9:00 AM",
+                    "label": "Main Service",
+                    "desc": "Hymns & Contemporary Songs"
+                },
+                "evening": {
+                    "time": "5:00 PM",
+                    "label": "Traditional Service",
+                    "desc": "Hymns Only"
+                }
+            },
+            "chinese": {
+                "title": "Chinese Service",
+                "time": "9:00 AM",
+                "desc": "Service conducted in Mandarin.",
+                "attendees": "~100 attendees"
+            },
+            "youth": {
+                "title": "Youth Fellowship",
+                "time": "11:00 AM",
+                "desc": "Methodist Youth Fellowship (MYF) for ages 13-18.",
+                "attendees": "~40 attendees"
+            }
+        },
+        "findUs": {
+            "title": "Find Us",
+            "churchName": "Trinity Methodist Church PJ",
+            "address": "6 Jalan 5/37, 46000 Petaling Jaya, Selangor, Malaysia",
+            "openMaps": "Open in Google Maps",
+            "phoneLabel": "Phone",
+            "emailLabel": "Email",
+            "officeHours": {
+                "title": "Office Hours",
+                "weekdays": "Monday - Friday: 9:00 AM - 5:00 PM",
+                "saturday": "Saturday: 9:00 AM - 1:00 PM",
+                "sunday": "Sunday: Closed (Worship Services Only)"
+            }
+        },
+        "transport": {
+            "title": "Getting Here",
+            "car": {
+                "title": "By Car",
+                "desc": "Free parking available within the church compound.",
+                "tip": "Tip: Additional street parking is available along Jalan 5/37 on weekends."
+            },
+            "public": {
+                "title": "Public Transport",
+                "lrt": {
+                    "label": "LRT: Taman Jaya Station",
+                    "desc": "6 mins drive / Grab ride from station"
+                },
+                "bus1": {
+                    "label": "Bus Stop: PJ Church (PJ472)",
+                    "walk": "8 mins walk"
+                },
+                "bus2": {
+                    "label": "Bus Stop: KWSP Petaling Jaya",
+                    "walk": "8 mins walk"
+                }
+            },
+            "visitor": {
+                "title": "First-time visitor?",
+                "desc": "Look for our welcome team in <bold>green vest</bold> at the main entrance. They will help you find a seat!"
+            }
+        },
+        "ministries": {
+            "title": "Other Ways to Connect",
+            "subtitle": "Beyond Sunday services, we have ministries for every age group.",
+            "items": {
+                "kids": {
+                    "title": "Children's Ministry",
+                    "desc": "Ages 3-12 • Sundays"
+                },
+                "adults": {
+                    "title": "Adult Bible Study",
+                    "desc": "Weekly Small Groups"
+                },
+                "outreach": {
+                    "title": "Community Outreach",
+                    "desc": "Serving our neighbors"
+                }
+            }
+        },
+        "cta": {
+            "title": "Still have questions?",
+            "desc": "We'd love to help you plan your first visit or answer any questions you have about our community.",
+            "planVisit": "Plan Your Visit",
+            "emailUs": "Email Us"
+        }
     }
 }
