@@ -187,5 +187,33 @@
             "planVisit": "规划行程",
             "emailUs": "发送电邮"
         }
+    },
+    "connectServe": {
+        "header": {
+            "title": "联系与服事",
+            "subtitle": "您在社区生活、服事参与和灵命成长的新起点"
+        },
+        "items": {
+            "form-serve": {
+                "title": "参与服事",
+                "description": "发掘并运用您的恩赐与才干，在教会各项事工中服事",
+                "button": "志愿服事"
+            },
+            "form-prayer": {
+                "title": "代祷事项",
+                "description": "与教会家人分享您的代祷需要，让我们为您守望祷告",
+                "button": "提交代祷事项"
+            },
+            "form-newHere": {
+                "title": "新朋友？",
+                "description": "欢迎！我们希望能更认识您，并协助您融入我们的社群",
+                "button": "联系我们"
+            },
+            "form-pledge": {
+                "title": "金钱奉献",
+                "description": "凭信心顺服教会的元首——上帝，相信祂必赐福并供应我一切所需",
+                "button": "填写认献"
+            }
+        }
     }
 }
