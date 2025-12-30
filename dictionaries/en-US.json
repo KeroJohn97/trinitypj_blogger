@@ -420,5 +420,59 @@
             "title": "News & Events",
             "subtitle": "Stay connected with our latest updates, upcoming gatherings, and opportunities to grow together"
         }
+    },
+    "ministriesGroups": {
+        "header": {
+            "title": "Ministries & Groups",
+            "subtitle": "Find your place to connect, serve, and grow"
+        },
+        "tabs": {
+            "ministries": "Ministries",
+            "groups": "Groups"
+        },
+        "groupsTab": {
+            "title": "Group Directory",
+            "subtitle": "Click a group to view its details.",
+            "emptyState": {
+                "title": "Select a Group",
+                "desc": "Choose a group from the left to view more details."
+            }
+        },
+        "ministriesTab": {
+            "title": "Church Ministry",
+            "subtitle": "Click a ministry to view details."
+        },
+        "groupsData": [
+            {
+                "id": 1,
+                "name": "Methodist Senior Fellowship",
+                "time": "Saturday, 11:00 AM",
+                "location": "TLS Sanctuary Activity Room"
+            },
+            {
+                "id": 2,
+                "name": "Methodist Adult Fellowship",
+                "time": "Fridays, 10:00 AM",
+                "location": "Church Library"
+            },
+            {
+                "id": 3,
+                "name": "Methodist Women",
+                "time": "Saturdays, 8:00 AM",
+                "location": "Fellowship Hall"
+            },
+            {
+                "id": 4,
+                "name": "Methodist Youth Fellowship",
+                "time": "Thursdays, 6:30 PM",
+                "location": "Zoom & In-Person"
+            },
+            {
+                "id": 5,
+                "name": "Kindergarten",
+                "time": "Sundays, 12:30 PM",
+                "location": "Church Annex 101"
+            }
+        ]
     }
 }
