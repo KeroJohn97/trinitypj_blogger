@@ -414,5 +414,11 @@
             "cf3": "Core Values 3",
             "cf4": "Core Values 4"
         }
+    },
+    "newsEvents": {
+        "header": {
+            "title": "News & Events",
+            "subtitle": "Stay connected with our latest updates, upcoming gatherings, and opportunities to grow together"
+        }
     }
 }
