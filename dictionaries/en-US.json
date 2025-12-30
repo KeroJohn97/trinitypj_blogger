@@ -401,5 +401,18 @@
                 }
             ]
         }
+    },
+    "visionMission": {
+        "header": {
+            "title": "Vision & Mission",
+            "subtitle": "Guided by God's love, we strive to make disciples, serve others, and transform our community"
+        },
+        "images": {
+            "main": "TMCPJ Vision and Mission Poster",
+            "cf1": "Core Values 1",
+            "cf2": "Core Values 2",
+            "cf3": "Core Values 3",
+            "cf4": "Core Values 4"
+        }
     }
 }

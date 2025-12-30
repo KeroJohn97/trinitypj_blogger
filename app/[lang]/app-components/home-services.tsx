@@ -4,7 +4,7 @@ import Image from "next/image"
 const HomeServices = () => {
   return (
     <div className="my-8">
-        <Image src={worship} alt="Worship Service Time" className="mx-auto rounded-lg" />
+      <Image src={worship} alt="Worship Service Time" className="mx-auto rounded-lg" />
     </div>
   )
 }
