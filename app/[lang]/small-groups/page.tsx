@@ -1,5 +1,3 @@
-"use client"
-
 import smallGroup from "@/../assets/small-group.png"
 import Table from "@/components/table"
 import {
@@ -20,10 +18,12 @@ import {
   subangShahAlamColumns,
   subangShahAlamData,
 } from "@/lib/data"
-import { useState } from "react"
+import { getDictionary } from "dictionaries"
 
-export default function SmallGroupsPage() {
-  const [galleryVisible, setGalleryVisible] = useState(true)
+export default async function SmallGroupsPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params
+  const dict = await getDictionary(lang as "en-US" | "zh-CN")
+  const t = dict.smallGroups
 
   return (
     <div className="bg-background min-h-screen">
@@ -35,31 +35,25 @@ export default function SmallGroupsPage() {
       >
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative px-6 text-center text-white">
-          <h1 className="text-4xl font-bold">Small Groups</h1>
-          <p className="mt-3 text-lg"> Check out what some of our small groups have been up to!</p>
+          <h1 className="text-4xl font-bold">{t.hero.title}</h1>
+          <p className="mt-3 text-lg">{t.hero.subtitle}</p>
         </div>
       </section>
 
-      {/* <!-- Added animated photo gallery section --> */}
+      {/* */}
       <section id="animated-gallery" className="bg-card overflow-hidden py-12">
         <div className="container mx-auto px-4">
           <div className="mb-16 text-center">
             <h2 className="mb-4 text-3xl font-black tracking-tight text-balance sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
-              TOGETHER WE GROW
+              {t.intro.title}
             </h2>
-            <p className="text-muted-foreground mx-auto max-w-2xl text-xl">
-              Small groups have always been a part of our Methodist heritage, for the nurturing and continual spiritual
-              growth of the church. It is through Small Groups that we can reach the most people in the most meaningful
-              way as well as to enable us to provide all the essential elements for caring, spiritual growth and
-              witnessing. Through the Small Groups Ministry we make disciples, identify leaders and give people the
-              relationship and accountability they need.
-            </p>
+            <p className="text-muted-foreground mx-auto max-w-2xl text-xl">{t.intro.desc}</p>
           </div>
           <div className="flex-1">
             <div className="relative overflow-hidden rounded-md">
               <img
                 src="https://trinitypj.com/wp-content/uploads/SG-Bkt-Damansara-1030x636.jpg"
-                alt="MYF - 2023"
+                alt="Small Group Gathering"
                 className="h-full w-full object-cover"
               />
             </div>
@@ -67,22 +61,17 @@ export default function SmallGroupsPage() {
         </div>
       </section>
 
-      <div className="mx-12">
-        <Table columns={pjDayColumns} data={pjDayData} title="Zone : Petaling Jaya (day)"></Table>
-        <Table columns={pjNightColumns} data={pjNightData} title="Zone : Petaling Jaya (night)"></Table>
-        <Table columns={puchongColumns} data={puchongData} title="Zone : Puchong"></Table>
-        <Table columns={subangShahAlamColumns} data={subangShahAlamData} title="Zone : Subang-Shah Alam"></Table>
-        <Table
-          columns={klColumns}
-          data={klData}
-          title="Zone : KL (Damansara Hts, Sri Hartamas, Mont Kiara, Bangsar, TTDI areas)"
-        ></Table>
-        <Table columns={chineseMinistryColumns} data={chineseMinistryData} title="Zone : Chinese Ministry"></Table>
-        <Table columns={spheresColumns} data={spheresData} title="Zone : Spheres (18 – 35 years old)"></Table>
-        <Table columns={homeFellowshipColumns} data={homeFellowshipData} title="Zone : Puchong"></Table>
+      <div className="mx-12 space-y-8 pb-16">
+        <Table columns={pjDayColumns} data={pjDayData} title={t.zones.pjDay} />
+        <Table columns={pjNightColumns} data={pjNightData} title={t.zones.pjNight} />
+        <Table columns={puchongColumns} data={puchongData} title={t.zones.puchong} />
+        <Table columns={subangShahAlamColumns} data={subangShahAlamData} title={t.zones.subang} />
+        <Table columns={klColumns} data={klData} title={t.zones.kl} />
+        <Table columns={chineseMinistryColumns} data={chineseMinistryData} title={t.zones.chinese} />
+        <Table columns={spheresColumns} data={spheresData} title={t.zones.spheres} />
+        {/* Note: I assumed the last table title was meant to be Home Fellowship based on the data variable */}
+        <Table columns={homeFellowshipColumns} data={homeFellowshipData} title={t.zones.homeFellowship} />
       </div>
-
-      <p className="mb-16"></p>
     </div>
   )
 }

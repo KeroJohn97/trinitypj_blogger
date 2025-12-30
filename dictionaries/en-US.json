@@ -305,5 +305,25 @@
             "emailSubject": "Interested in Alpha Online Program",
             "emailBody": "Hi Trinity PJ Alpha Team,\n\nI’d love to register my interest for the next Alpha program.\n\nName:\nContact:\nPreferred Language:\n\nLooking forward to hearing from you!"
         }
+    },
+    "smallGroups": {
+        "hero": {
+            "title": "Small Groups",
+            "subtitle": "Check out what some of our small groups have been up to!"
+        },
+        "intro": {
+            "title": "TOGETHER WE GROW",
+            "desc": "Small groups have always been a part of our Methodist heritage, for the nurturing and continual spiritual growth of the church. It is through Small Groups that we can reach the most people in the most meaningful way as well as to enable us to provide all the essential elements for caring, spiritual growth and witnessing. Through the Small Groups Ministry we make disciples, identify leaders and give people the relationship and accountability they need."
+        },
+        "zones": {
+            "pjDay": "Zone : Petaling Jaya (day)",
+            "pjNight": "Zone : Petaling Jaya (night)",
+            "puchong": "Zone : Puchong",
+            "subang": "Zone : Subang-Shah Alam",
+            "kl": "Zone : KL (Damansara Hts, Sri Hartamas, Mont Kiara, Bangsar, TTDI areas)",
+            "chinese": "Zone : Chinese Ministry",
+            "spheres": "Zone : Spheres (18 – 35 years old)",
+            "homeFellowship": "Zone : Puchong - Home Fellowship"
+        }
     }
 }
