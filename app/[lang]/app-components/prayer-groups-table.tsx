@@ -1,6 +1,5 @@
 "use client"
 
-import { groups } from "@/lib/data"
 import { PhoneContact } from "./phone-contact-services"
 
 export interface PrayerGroup {
@@ -17,9 +16,19 @@ export interface PrayerGroup {
 interface PrayerGroupsTableProps {
   title?: string
   description?: string
+  // New props for localization
+  headers: {
+    location: string
+    type: string
+    day: string
+    time: string
+    leader: string
+    contact: string
+  }
+  groups: PrayerGroup[]
 }
 
-export function PrayerGroupsTable({ title, description }: PrayerGroupsTableProps) {
+export function PrayerGroupsTable({ title, description, headers, groups }: PrayerGroupsTableProps) {
   return (
     <section className="w-full">
       {/* Header */}
@@ -31,12 +40,12 @@ export function PrayerGroupsTable({ title, description }: PrayerGroupsTableProps
         <table className="min-w-full border-collapse">
           <thead className="bg-primary text-left text-white">
             <tr>
-              <th className="px-6 py-3 font-medium">Location</th>
-              <th className="px-6 py-3 font-medium">Type</th>
-              <th className="px-6 py-3 font-medium">Day</th>
-              <th className="px-6 py-3 font-medium">Time</th>
-              <th className="px-6 py-3 font-medium">Leader</th>
-              <th className="px-6 py-3 font-medium">Contact</th>
+              <th className="px-6 py-3 font-medium">{headers.location}</th>
+              <th className="px-6 py-3 font-medium">{headers.type}</th>
+              <th className="px-6 py-3 font-medium">{headers.day}</th>
+              <th className="px-6 py-3 font-medium">{headers.time}</th>
+              <th className="px-6 py-3 font-medium">{headers.leader}</th>
+              <th className="px-6 py-3 font-medium">{headers.contact}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 text-gray-800">
@@ -65,10 +74,13 @@ export function PrayerGroupsTable({ title, description }: PrayerGroupsTableProps
               {group.day} • {group.time}
             </p>
             <p className="mt-1 text-sm text-gray-500">{group.location}</p>
-            <p className="mt-1 text-sm text-gray-500">Type: {group.type}</p>
-            <p className="mt-1 text-sm text-gray-500 italic">Leader: {group.leader}</p>
+            <p className="mt-1 text-sm text-gray-500">
+              {headers.type}: {group.type}
+            </p>
+            <p className="mt-1 text-sm text-gray-500 italic">
+              {headers.leader}: {group.leader}
+            </p>
             <div className="pt-2">
-              {" "}
               <PhoneContact phone={group.contact} whatsapp={true} />
             </div>
           </div>

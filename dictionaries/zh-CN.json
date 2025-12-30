@@ -325,5 +325,81 @@
             "spheres": "区域 : Spheres (18 – 35 岁)",
             "homeFellowship": "区域 : 蒲种 - 家庭团契"
         }
+    },
+    "prayer": {
+        "hero": {
+            "title": "祷告灯塔与聚会",
+            "subtitle": "加入我们，一同寻求神"
+        },
+        "lighthouses": {
+            "title": "祷告灯塔",
+            "description": "寻找附近的祷告小组或加入线上灯塔。这些聚会向所有渴望一同祷告的人开放。"
+        },
+        "meetings": {
+            "title": "祷告会",
+            "headers": {
+                "day": "日期",
+                "time": "时间",
+                "venue": "地点"
+            },
+            "items": [
+                {
+                    "day": "每周二",
+                    "time": "5:00 PM - 6:00 PM",
+                    "venue": "Google Meet 线上进行",
+                    "note": ""
+                },
+                {
+                    "day": "第四个周三",
+                    "time": "8:00 PM - 9:00 PM",
+                    "venue": "大堂 (与 LCEC、小组及家聚组长)",
+                    "note": ""
+                },
+                {
+                    "day": "第一个周六",
+                    "time": "7:00 AM - 8:30 AM",
+                    "venue": "Zoom 线上进行 (联系 012-3218016)",
+                    "note": "与马来西亚祷告祭坛联合"
+                },
+                {
+                    "day": "接下来的周六",
+                    "time": "7:00 AM - 8:30 AM",
+                    "venue": "Zoom 线上进行 (联系 012-3218016)",
+                    "note": ""
+                }
+            ]
+        },
+        "groupsTable": {
+            "headers": {
+                "location": "地点",
+                "type": "类型",
+                "day": "日期",
+                "time": "时间",
+                "leader": "领袖",
+                "contact": "联系"
+            },
+            "items": [
+                {
+                    "id": "1",
+                    "name": "PJ Section 12",
+                    "location": "PJ Section 12",
+                    "type": "实体",
+                    "day": "周三",
+                    "time": "8:30 PM",
+                    "leader": "Mr. John Doe",
+                    "contact": "012-3456789"
+                },
+                {
+                    "id": "2",
+                    "name": "线上灯塔",
+                    "location": "Zoom 平台",
+                    "type": "线上",
+                    "day": "周五",
+                    "time": "8:00 PM",
+                    "leader": "Mrs. Jane Smith",
+                    "contact": "019-8765432"
+                }
+            ]
+        }
     }
 }

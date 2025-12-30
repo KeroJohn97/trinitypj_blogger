@@ -1,8 +1,12 @@
-import { PrayerGroupsTable } from "app/[lang]/app-components/prayer-groups-table"
-
 import prayer from "@/../assets/prayer.jpg"
+import { PrayerGroupsTable } from "app/[lang]/app-components/prayer-groups-table"
+import { getDictionary } from "dictionaries"
 
-export default function PrayerPage() {
+export default async function PrayerPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params
+  const dict = await getDictionary(lang as "en-US" | "zh-CN")
+  const t = dict.prayer
+
   return (
     <div className="bg-background min-h-screen">
       <section
@@ -11,8 +15,8 @@ export default function PrayerPage() {
       >
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative px-6 text-center text-white">
-          <h1 className="text-4xl font-bold">Prayer Lighthouses & Meetings</h1>
-          <p className="mt-3 text-lg">Join us as we seek God together</p>
+          <h1 className="text-4xl font-bold">{t.hero.title}</h1>
+          <p className="mt-3 text-lg">{t.hero.subtitle}</p>
         </div>
       </section>
 
@@ -21,45 +25,36 @@ export default function PrayerPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl px-4 py-12">
             <PrayerGroupsTable
-              title="Prayer Lighthouses"
-              description="Find a prayer group near you or join an online lighthouse. These gatherings are open to everyone who desires to pray together."
+              title={t.lighthouses.title}
+              description={t.lighthouses.description}
+              headers={t.groupsTable.headers}
+              groups={t.groupsTable.items}
             />
           </div>
 
-          {<h2 className="text-primary mb-4 text-center text-2xl font-bold">Prayer Meetings</h2>}
+          <h2 className="text-primary mb-4 text-center text-2xl font-bold">{t.meetings.title}</h2>
+
           <div className="mx-auto hidden max-w-6xl bg-white px-4 pb-12 md:block">
             <table className="min-w-full border-collapse overflow-hidden rounded-xl bg-white shadow-md">
               <thead className="bg-primary text-white">
                 <tr>
-                  <th className="px-6 py-3 text-left font-medium">Day</th>
-                  <th className="px-6 py-3 text-left font-medium">Time</th>
-                  <th className="px-6 py-3 text-left font-medium">Venue</th>
+                  <th className="px-6 py-3 text-left font-medium">{t.meetings.headers.day}</th>
+                  <th className="px-6 py-3 text-left font-medium">{t.meetings.headers.time}</th>
+                  <th className="px-6 py-3 text-left font-medium">{t.meetings.headers.venue}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 text-gray-800">
-                <tr className="hover:bg-gray-50">
-                  <td className="px-6 py-3">Tuesday</td>
-                  <td className="px-6 py-3">5:00 PM - 6:00 PM</td>
-                  <td className="px-6 py-3">Via Google Meet</td>
-                </tr>
-                <tr className="hover:bg-gray-50">
-                  <td className="px-6 py-3">4th Wednesday</td>
-                  <td className="px-6 py-3">8:00 PM - 9:00 PM</td>
-                  <td className="px-6 py-3">Sanctuary (with LCEC, SG & HF Leaders)</td>
-                </tr>
-                <tr className="hover:bg-gray-50">
-                  <td className="px-6 py-3">1st Saturday</td>
-                  <td className="px-6 py-3">7:00 AM - 8:30 AM</td>
-                  <td className="px-6 py-3">
-                    Via Zoom (call 012-3218016)
-                    <div className="text-xs text-gray-500">Together with Malaysia Prayer Altar</div>
-                  </td>
-                </tr>
-                <tr className="hover:bg-gray-50">
-                  <td className="px-6 py-3">Following Saturday</td>
-                  <td className="px-6 py-3">7:00 AM - 8:30 AM</td>
-                  <td className="px-6 py-3">Via Zoom (call 012-3218016)</td>
-                </tr>
+                {t.meetings.items.map((item, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="px-6 py-3">{item.day}</td>
+                    <td className="px-6 py-3">{item.time}</td>
+                    <td className="px-6 py-3">
+                      {item.venue}
+                      {/* Render note only if it exists in the dictionary item */}
+                      {item.note && <div className="text-xs text-gray-500">{item.note}</div>}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

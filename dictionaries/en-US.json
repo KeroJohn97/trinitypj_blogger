@@ -325,5 +325,81 @@
             "spheres": "Zone : Spheres (18 – 35 years old)",
             "homeFellowship": "Zone : Puchong - Home Fellowship"
         }
+    },
+    "prayer": {
+        "hero": {
+            "title": "Prayer Lighthouses & Meetings",
+            "subtitle": "Join us as we seek God together"
+        },
+        "lighthouses": {
+            "title": "Prayer Lighthouses",
+            "description": "Find a prayer group near you or join an online lighthouse. These gatherings are open to everyone who desires to pray together."
+        },
+        "meetings": {
+            "title": "Prayer Meetings",
+            "headers": {
+                "day": "Day",
+                "time": "Time",
+                "venue": "Venue"
+            },
+            "items": [
+                {
+                    "day": "Tuesday",
+                    "time": "5:00 PM - 6:00 PM",
+                    "venue": "Via Google Meet",
+                    "note": ""
+                },
+                {
+                    "day": "4th Wednesday",
+                    "time": "8:00 PM - 9:00 PM",
+                    "venue": "Sanctuary (with LCEC, SG & HF Leaders)",
+                    "note": ""
+                },
+                {
+                    "day": "1st Saturday",
+                    "time": "7:00 AM - 8:30 AM",
+                    "venue": "Via Zoom (call 012-3218016)",
+                    "note": "Together with Malaysia Prayer Altar"
+                },
+                {
+                    "day": "Following Saturday",
+                    "time": "7:00 AM - 8:30 AM",
+                    "venue": "Via Zoom (call 012-3218016)",
+                    "note": ""
+                }
+            ]
+        },
+        "groupsTable": {
+            "headers": {
+                "location": "Location",
+                "type": "Type",
+                "day": "Day",
+                "time": "Time",
+                "leader": "Leader",
+                "contact": "Contact"
+            },
+            "items": [
+                {
+                    "id": "1",
+                    "name": "PJ Section 12",
+                    "location": "PJ Section 12",
+                    "type": "Physical",
+                    "day": "Wednesday",
+                    "time": "8:30 PM",
+                    "leader": "Mr. John Doe",
+                    "contact": "012-3456789"
+                },
+                {
+                    "id": "2",
+                    "name": "Online Lighthouse",
+                    "location": "Zoom",
+                    "type": "Online",
+                    "day": "Friday",
+                    "time": "8:00 PM",
+                    "leader": "Mrs. Jane Smith",
+                    "contact": "019-8765432"
+                }
+            ]
+        }
     }
 }
