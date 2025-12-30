@@ -1,11 +1,19 @@
-"use client" // This line must be at the very top of the file
+"use client"
 
-function DropEmailButton() {
+interface DropEmailButtonProps {
+  dict: {
+    button: string
+    emailSubject: string
+    emailBody: string
+  }
+}
+
+function DropEmailButton({ dict }: DropEmailButtonProps) {
   const dropEmail = () => {
-    const subject = encodeURIComponent("Interested in Alpha Online Program")
-    const body = encodeURIComponent(
-      `Hi Trinity PJ Alpha Team,\n\nI’d love to register my interest for the next Alpha Online program.\n\nName:\nContact:\nPreferred Language:\n\nLooking forward to hearing from you!`
-    )
+    // Use translations from props
+    const subject = encodeURIComponent(dict.emailSubject)
+    const body = encodeURIComponent(dict.emailBody)
+
     window.location.href = `mailto:alpha@trinitypj.com?subject=${subject}&body=${body}`
   }
 
@@ -14,7 +22,7 @@ function DropEmailButton() {
       onClick={dropEmail}
       className="bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer rounded-lg px-8 py-3 font-semibold transition-colors"
     >
-      Drop an Email to Us
+      {dict.button}
     </button>
   )
 }

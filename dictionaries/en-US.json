@@ -262,5 +262,48 @@
             "idLabel": "Copy ID",
             "success": "Copied"
         }
+    },
+    "alpha": {
+        "header": {
+            "title": "Alpha Course",
+            "subtitle": "Alpha is a series of interactive sessions that explore the basics of the Christian faith"
+        },
+        "faq": {
+            "who": {
+                "title": "WHO’S IT FOR?",
+                "desc": "Alpha is for anyone who’s curious to explore the big questions of life, faith and meaning. The videos are designed to encourage conversation and explore the Christian faith in a friendly, open and informal environment."
+            },
+            "how": {
+                "title": "HOW DOES IT WORK?",
+                "desc": "Typically run over twelve weeks and ends with a celebration. No two Alphas look the same, but generally they have three key things in common: food (except for Alpha Online), a short video and a discussion where you can share your thoughts. There’s no pressure and no follow up."
+            },
+            "cost": {
+                "title": "HOW MUCH IS IT?",
+                "desc": "There’s no charge for Alpha."
+            }
+        },
+        "article": {
+            "title": "Alpha: A Journey of Faith",
+            "p1": "Trinity Methodist Church PJ has been running Alpha for many years. Alpha has brought many people to the salvation grace of our Lord Jesus Christ. Alpha also gives opportunities to people to serve God with the many gifts and talents which He has uniquely given to individuals. Each year, the Alpha team sees the miracles which God performs in the participants’ lives and this brings them back to serve God in Alpha, year after year. Alpha puts us in the right course of our Christian walk and the journey through Alpha strengthens our love, faith and reliance on the Holy Spirit through the unity of the spirit with one another and prayer.",
+            "p2": "At the beginning of this year, as the Covid-19 pandemic brought a halt to our running of Alpha in church, we thank God for being able to share the gospel through Alpha Online (AO). In unity of Spirit, the AO team was set-up and we started our first AO session on Aug 15, 2020 using the Zoom platform. We had an average attendance of 16 participants with 6 pre-believers on board. Our AO team consists of 14 persons – 4 hosts, 5 helpers, 2 prayer warriors and 3 handling main room functions.",
+            "p3": "It was amazing how we saw 1 participant come to the saving grace of Christ after the video – “How can I have faith?” and another 2 participants accepted salvation after the video on “How does God guide us?” The weekend away was a 2.5-hour journey and we saw 3 participants accepted our Lord Jesus Christ as their Lord and Saviour. We praise God when we saw the amazing works of the Holy Spirit administering to the 6 participants who weren’t believers when they started the AO journey and those who were Christians re-dedicated their lives to Jesus Christ.",
+            "p4": "AO just concluded on Nov 14, 2020 with celebration and testimonies. The Alpha F&B sisters contributed home made and specially ordered cakes, cookies, scones, sweet and savoury stuff. These yummy stuffs were delivered to all AO participants and the AO team too, in a nice goody bag on Nov 14. We thank God that the goody bags were delivered in good order to all. Everyone enjoyed the goodies and the testimonies shared were inspiring and encouraging to all. We give thanks and praise to our Almighty God for His blessings in this AO.",
+            "p5": "Alpha is a journey for those who come with humble and prepared hearts, be it one who serves or as participants. It is a journey where the AO team prepares for the topic but leaves the rest to the work of the Holy Spirit. And for the participants, it is also for the Holy Spirit to work in their lives. We thank God for giving us this platform to spread the gospel and to point people to Jesus Christ who made it possible for us to have eternal life. We learned not to under-estimate the power of the Holy Spirit and we saw this so real in our first journey of AO and for sure, it will not be our last.",
+            "p6": "Let us continue to grow in the grace and knowledge of our Lord and Saviour Jesus Christ. To Him be glory both now and forever! Amen. 2 Peter 3:18"
+        },
+        "gallery": {
+            "journey": {
+                "title": "Alpha's Journey",
+                "subtitle": "Hear from our community members about the impact of the restoration project"
+            },
+            "languages": "Available in 3 Languages"
+        },
+        "cta": {
+            "title": "Show Your Interest",
+            "desc": "Want to make sure you don’t miss the next Alpha Online program? Drop us an email at alpha@trinitypj.com to register your interest!",
+            "button": "Drop an Email to Us",
+            "emailSubject": "Interested in Alpha Online Program",
+            "emailBody": "Hi Trinity PJ Alpha Team,\n\nI’d love to register my interest for the next Alpha program.\n\nName:\nContact:\nPreferred Language:\n\nLooking forward to hearing from you!"
+        }
     }
 }
