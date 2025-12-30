@@ -215,5 +215,52 @@
                 "button": "Make a Pledge"
             }
         }
+    },
+    "pledge": {
+        "header": {
+            "title": "Financial Pledge",
+            "subtitle": "Support the mission and ministry of Trinity Methodist Church Petaling Jaya"
+        },
+        "intro": "We gratefully accept tithes, offerings, and pledges to support our church's work. Please choose one of the convenient methods below.",
+        "confirmation": {
+            "title": "Proof of Transaction",
+            "desc": "If you have made an online transfer or ATM deposit, please help our finance team by emailing your transaction receipt.",
+            "button": "Email Receipt",
+            "note": "Subject: \"Your Name - Purpose of Gift\""
+        },
+        "duitnow": {
+            "title": "DuitNow",
+            "badge": "Instant",
+            "desc": "Use your bank's mobile app to transfer instantly using our ID number.",
+            "idLabel": "DuitNow ID (Business Reg No)",
+            "stepsTitle": "Steps:",
+            "steps": [
+                "Select <bold>DuitNow</bold> in your banking app.",
+                "Choose <bold>Business Registration Number</bold>.",
+                "Enter ID: <bold>15190</bold>.",
+                "Enter amount and reference (e.g., \"Tithe\")."
+            ]
+        },
+        "bankTransfer": {
+            "title": "Bank Transfer",
+            "desc": "Direct transfer via online banking or ATM deposit.",
+            "bankLabel": "Bank",
+            "nameLabel": "Account Name",
+            "numberLabel": "Account Number",
+            "noteTitle": "Note:",
+            "noteDesc": "Please state your <bold>Name</bold> and <bold>Purpose</bold> (e.g., Tithe, Pledge, Restoration Fund) in the recipient reference. If making an <bold>ATM deposit</bold>, please email the bank-in slip to admin@trinitypj.com."
+        },
+        "cheque": {
+            "title": "Cheque",
+            "payableTo": "Make cheques payable to:",
+            "backNote": "Please write the purpose on the back of the cheque (e.g., \"Sunday Offering\").",
+            "mailTo": "Mail to:",
+            "office": "Attn: Church Office Manager"
+        },
+        "copy": {
+            "label": "Copy",
+            "idLabel": "Copy ID",
+            "success": "Copied"
+        }
     }
 }

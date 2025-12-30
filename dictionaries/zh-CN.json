@@ -215,5 +215,52 @@
                 "button": "填写认献"
             }
         }
+    },
+    "pledge": {
+        "header": {
+            "title": "金钱奉献",
+            "subtitle": "支持八打灵再也卫理公会三一堂的宣教与事工"
+        },
+        "intro": "我们衷心感谢您的十一奉献、捐献与认献，以支持教会的事工。请选择以下任一便捷方式。",
+        "confirmation": {
+            "title": "转账证明",
+            "desc": "如果您已完成网银转账或 ATM 存款，请将交易收据电邮至财务部。",
+            "button": "电邮收据",
+            "note": "邮件标题：“您的姓名 - 奉献用途”"
+        },
+        "duitnow": {
+            "title": "DuitNow",
+            "badge": "即时",
+            "desc": "使用银行手机应用输入号码即时转账。",
+            "idLabel": "DuitNow ID (商业注册号)",
+            "stepsTitle": "步骤：",
+            "steps": [
+                "在银行应用中选择 <bold>DuitNow</bold>。",
+                "选择 <bold>商业注册号 (Business Registration Number)</bold>。",
+                "输入号码：<bold>15190</bold>。",
+                "输入金额与参考（如：“十一奉献”）。"
+            ]
+        },
+        "bankTransfer": {
+            "title": "银行转账",
+            "desc": "通过网上银行或 ATM 存款。",
+            "bankLabel": "银行",
+            "nameLabel": "户口名称",
+            "numberLabel": "户口号码",
+            "noteTitle": "备注：",
+            "noteDesc": "请在收款人参考中注明您的<bold>姓名</bold>与<bold>用途</bold>（如：十一奉献、认献、修葺基金）。如使用 <bold>ATM 存款</bold>，请将收据电邮至 admin@trinitypj.com。"
+        },
+        "cheque": {
+            "title": "支票",
+            "payableTo": "支票抬头请写：",
+            "backNote": "请在支票背面注明奉献用途（如：“主日奉献”）。",
+            "mailTo": "邮寄至：",
+            "office": "Attn: Church Office Manager"
+        },
+        "copy": {
+            "label": "复制",
+            "idLabel": "复制 ID",
+            "success": "已复制"
+        }
     }
 }
