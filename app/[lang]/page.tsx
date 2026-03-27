@@ -9,13 +9,13 @@ import { quickLinks } from "@/lib/data"
 import { getDictionary } from "dictionaries"
 import Link from "next/link"
 import NoticeCarousel from "./app-components/notice-carousel"
+import { getWebsiteSettings } from "@/lib/db/website"
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
-  // Await params for Next.js 15+ support
   const { lang } = await params
-
-  // Fetch the dictionary
   const dict = await getDictionary(lang as "en-US" | "zh-CN")
+
+  const siteSettings = await getWebsiteSettings()
 
   return (
     <div className="bg-background flex min-h-screen flex-col">
