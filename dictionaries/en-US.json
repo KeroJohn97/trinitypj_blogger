@@ -270,15 +270,15 @@
         },
         "faq": {
             "who": {
-                "title": "WHO’S IT FOR?",
+                "title": "WHO’S IT FOR",
                 "desc": "Alpha is for anyone who’s curious to explore the big questions of life, faith and meaning. The videos are designed to encourage conversation and explore the Christian faith in a friendly, open and informal environment."
             },
             "how": {
-                "title": "HOW DOES IT WORK?",
+                "title": "HOW DOES IT WORK",
                 "desc": "Typically run over twelve weeks and ends with a celebration. No two Alphas look the same, but generally they have three key things in common: food (except for Alpha Online), a short video and a discussion where you can share your thoughts. There’s no pressure and no follow up."
             },
             "cost": {
-                "title": "HOW MUCH IS IT?",
+                "title": "HOW MUCH IS IT",
                 "desc": "There’s no charge for Alpha."
             }
         },
