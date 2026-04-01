@@ -32,7 +32,7 @@ export const ADMIN_NAV = [
     group: "Community Life",
     items: [
       { name: "Small Groups", icon: Users, slug: "groups" },
-      { name: "Prayer Activities", icon: HeartHandshake, slug: "prayer" },
+      { name: "Prayer Gatherings", icon: HeartHandshake, slug: "prayer" },
       { name: "Ministry Spotlights", icon: ImageIcon, slug: "spotlights" },
     ],
   },

@@ -29,6 +29,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
   const [deletedIds, setDeletedIds] = useState<string[]>([])
 
   const handleDelete = (id: string) => {
+    // TODO custom dialog in the future?
     if (!confirm("Are you sure you want to delete this gathering? This will be finalized when you click Publish."))
       return
 
@@ -118,6 +119,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
         await Promise.all(deletedIds.map((id) => gatheringService.delete(id)))
       }
 
+      // TODO fetch folder
       const res = await fetch("/api/gatherings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -143,13 +145,13 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
     return (
       <div className="flex h-96 flex-col items-center justify-center text-gray-400">
         <Loader2 className="mb-4 animate-spin" size={40} />
-        <p className="text-xs font-bold tracking-widest uppercase">Loading Gatherings...</p>
+        <p className="text-xs font-bold tracking-widest uppercase">Loading Prayer Gatherings...</p>
       </div>
     )
   }
 
   if (!Array.isArray(items)) {
-    return <div className="p-8 text-red-500">Error: Gatherings data is corrupted.</div>
+    return <div className="p-8 text-red-500">Error: Prayer Gatherings data is corrupted.</div>
   }
 
   return (
@@ -158,7 +160,9 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
         {/* --- Page Header (Rendered ONCE) --- */}
         <div className="mt-8 mb-8 flex flex-col gap-6 rounded-3xl border bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div className="min-w-0">
-            <h2 className="truncate text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">Gatherings</h2>
+            <h2 className="truncate text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
+              Prayer Gatherings
+            </h2>
             <p className="mt-1 font-medium text-gray-500">Manage Prayer Meetings and Lighthouse Groups.</p>
           </div>
 
@@ -172,7 +176,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
             <button
               onClick={handlePublish}
               disabled={isSaving}
-              className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 font-bold text-white shadow-xl shadow-blue-100 transition-all hover:bg-blue-700 disabled:bg-gray-400 sm:flex-none"
+              className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3 font-bold text-white shadow-xl shadow-emerald-100 transition-all hover:bg-emerald-700 disabled:bg-gray-400 sm:flex-none"
             >
               <Save size={20} />{" "}
               <span className="whitespace-nowrap">{isSaving ? "Publishing..." : "Publish Updates"}</span>
@@ -191,8 +195,8 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
                   <div
                     className={`overflow-hidden rounded-3xl border-2 bg-white transition-all duration-300 ${
                       isEditing
-                        ? "border-blue-500 shadow-2xl ring-4 ring-blue-50"
-                        : "border-gray-100 hover:border-blue-200"
+                        ? "border-emerald-500 shadow-2xl ring-4 ring-emerald-50"
+                        : "border-gray-100 hover:border-emerald-200"
                     } ${!item.isActive && !isEditing ? "bg-gray-50 opacity-60" : ""}`}
                   >
                     {/* 1. COLLAPSED VIEW */}
@@ -235,11 +239,11 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
 
                       <div className="shrink-0">
                         {isEditing ? (
-                          <button className="hidden items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white shadow-md sm:flex">
+                          <button className="hidden items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-bold text-white shadow-md sm:flex">
                             <CheckCircle2 size={16} /> Finish
                           </button>
                         ) : (
-                          <div className="text-gray-400 transition-colors group-hover:text-blue-500">
+                          <div className="text-gray-400 transition-colors group-hover:text-emerald-500">
                             <ChevronDown size={24} />
                           </div>
                         )}
@@ -258,7 +262,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
                             <select
                               value={item.type}
                               onChange={(e) => updateItem(item.id, { type: e.target.value as any })}
-                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 font-bold outline-none focus:border-blue-500"
+                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 font-bold outline-none focus:border-emerald-500"
                             >
                               <option value="prayer">Prayer Meeting</option>
                               <option value="lighthouse">Lighthouse Group</option>
@@ -272,7 +276,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
                             <select
                               value={item.mode}
                               onChange={(e) => updateItem(item.id, { mode: e.target.value as any })}
-                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 font-bold outline-none focus:border-blue-500"
+                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 font-bold outline-none focus:border-emerald-500"
                             >
                               <option value="Physical">Physical</option>
                               <option value="Online">Online</option>
@@ -303,7 +307,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
                             <input
                               value={item.title}
                               onChange={(e) => updateItem(item.id, { title: e.target.value })}
-                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 font-bold outline-none focus:border-blue-500"
+                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 font-bold outline-none focus:border-emerald-500"
                             />
                           </div>
 
@@ -312,7 +316,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
                             <input
                               value={item.day}
                               onChange={(e) => updateItem(item.id, { day: e.target.value })}
-                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 outline-none focus:border-blue-500"
+                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 outline-none focus:border-emerald-500"
                             />
                           </div>
 
@@ -323,7 +327,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
                             <input
                               value={item.time}
                               onChange={(e) => updateItem(item.id, { time: e.target.value })}
-                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 outline-none focus:border-blue-500"
+                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 outline-none focus:border-emerald-500"
                             />
                           </div>
 
@@ -334,7 +338,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
                             <input
                               value={item.venue}
                               onChange={(e) => updateItem(item.id, { venue: e.target.value })}
-                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 outline-none focus:border-blue-500"
+                              className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 outline-none focus:border-emerald-500"
                             />
                           </div>
 
@@ -347,7 +351,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
                                 <input
                                   value={item.leader}
                                   onChange={(e) => updateItem(item.id, { leader: e.target.value })}
-                                  className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 font-bold outline-none focus:border-blue-500"
+                                  className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 font-bold outline-none focus:border-emerald-500"
                                 />
                               </div>
                               <div className="space-y-2">
@@ -357,7 +361,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
                                 <input
                                   value={item.contact}
                                   onChange={(e) => updateItem(item.id, { contact: e.target.value })}
-                                  className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 font-mono outline-none focus:border-blue-500"
+                                  className="w-full rounded-2xl border-2 border-gray-200 bg-white p-3.5 font-mono outline-none focus:border-emerald-500"
                                 />
                               </div>
                             </>
@@ -370,7 +374,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
                             <textarea
                               value={item.note}
                               onChange={(e) => updateItem(item.id, { note: e.target.value })}
-                              className="h-20 w-full resize-none rounded-2xl border-2 border-gray-200 bg-white p-3.5 italic outline-none focus:border-blue-500"
+                              className="h-20 w-full resize-none rounded-2xl border-2 border-gray-200 bg-white p-3.5 italic outline-none focus:border-emerald-500"
                             />
                           </div>
                         </div>

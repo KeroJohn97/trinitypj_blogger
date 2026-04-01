@@ -1,7 +1,7 @@
 import church from "@/../assets/church.jpg"
 import { Button } from "@/components/ui/button"
-import HomeCarousel from "app/[lang]/app-components/home-carousel"
-import YoutubeButton from "app/[lang]/app-components/youtube-button"
+import HomeCarousel from "app/[lang]/(user)/app-components/home-carousel"
+import YoutubeButton from "app/[lang]/(user)/app-components/youtube-button"
 
 // Define the structure of the dictionary required by this component
 interface HeroSectionProps {

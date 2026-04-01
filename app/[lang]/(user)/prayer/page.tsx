@@ -1,6 +1,6 @@
 import prayerImg from "@/../assets/prayer.jpg"
 import { createClient } from "@/utils/supabase/server"
-import { PrayerGroupsTable } from "app/[lang]/app-components/prayer-groups-table"
+import { PrayerGroupsTable } from "app/[lang]/(user)/app-components/prayer-groups-table"
 import { getDictionary } from "dictionaries"
 
 export default async function PrayerPage({ params }: { params: Promise<{ lang: string }> }) {
@@ -9,6 +9,7 @@ export default async function PrayerPage({ params }: { params: Promise<{ lang: s
 
   const [dict, { data: rawGatherings }] = await Promise.all([
     getDictionary(lang as "en-US" | "zh-CN"),
+    // TODO don't call create supabase utils method
     supabase.from("prayer_gathering").select("*").eq("is_active", true).order("sort_order", { ascending: true }),
   ])
 

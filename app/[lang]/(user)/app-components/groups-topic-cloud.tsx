@@ -2,12 +2,12 @@
 
 import { PageHeader } from "@/components/page-header"
 import { ministries } from "@/lib/ministries-data"
-import MinistriesPage from "app/[lang]/app-components/ministries-component"
-import KindergartenPage from "app/[lang]/ministries-groups/kindergarten"
-import AdultFellowshipPage from "app/[lang]/ministries-groups/methodist-adult-fellowship"
-import SeniorPage from "app/[lang]/ministries-groups/methodist-senior-fellowship"
-import MethodistWomenPage from "app/[lang]/ministries-groups/methodist-women"
-import MYFPage from "app/[lang]/ministries-groups/methodist-youth-fellowship"
+import MinistriesPage from "app/[lang]/(user)/app-components/ministries-component"
+import KindergartenPage from "app/[lang]/(user)/ministries-groups/kindergarten"
+import AdultFellowshipPage from "app/[lang]/(user)/ministries-groups/methodist-adult-fellowship"
+import SeniorPage from "app/[lang]/(user)/ministries-groups/methodist-senior-fellowship"
+import MethodistWomenPage from "app/[lang]/(user)/ministries-groups/methodist-women"
+import MYFPage from "app/[lang]/(user)/ministries-groups/methodist-youth-fellowship"
 import { Layers3, Users } from "lucide-react"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 

@@ -2,7 +2,7 @@ import { PageHeader } from "@/components/page-header"
 import { Separator } from "@/components/ui/separator"
 import { VerseCard } from "@/components/verse-card"
 import { socialConcerns } from "@/lib/social-concerns-data"
-import MinistriesPage from "app/[lang]/app-components/ministries-component"
+import MinistriesPage from "app/[lang]/(user)/app-components/ministries-component"
 
 export default function SocialConcernsPage() {
   return (

@@ -2,7 +2,7 @@ import { ExpandableArticle } from "@/components/expandable-article"
 import { PageHeader } from "@/components/page-header"
 import { MediaItem, StaggeredMediaGallery } from "@/components/staggered-media-gallery"
 import { Card, CardContent } from "@/components/ui/card"
-import DropEmailButton from "app/[lang]/app-components/drop-email-button"
+import DropEmailButton from "app/[lang]/(user)/app-components/drop-email-button"
 import { getDictionary } from "dictionaries"
 import { Mail } from "lucide-react"
 

@@ -1,6 +1,6 @@
 import { PageHeader } from "@/components/page-header"
 import { ministries } from "@/lib/ministries-data"
-import MinistriesPage from "app/[lang]/app-components/ministries-component"
+import MinistriesPage from "app/[lang]/(user)/app-components/ministries-component"
 
 export default function ChurchMinistryPage() {
   return (
