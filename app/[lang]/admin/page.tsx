@@ -1,207 +1,184 @@
 "use client"
+import { useEffect, useState } from "react"
+// ... Import other editors as you build them
 import { websiteService } from "@/services/website-service"
+import { DEFAULT_SITE_DATA } from "@/types/defaults"
 import { SiteData } from "@/types/website"
-import { useEffect, useRef, useState } from "react"
+import AboutUsEditor from "components/admin/editors/AboutUsEditor"
+import AlphaVideoEditor from "components/admin/editors/AlphaVideoEditor"
+import AnnouncementsEditor from "components/admin/editors/AnnouncementsEditor"
+import BulletinEditor from "components/admin/editors/BulletinEditor"
+import GeneralSettingsEditor from "components/admin/editors/GeneralSettingsEditor"
+import GivingEditor from "components/admin/editors/GivingEditor"
+import InfographicEditor from "components/admin/editors/InfographicEditor"
+import PrayerGatheringEditor from "components/admin/editors/PrayerGatheringEditor"
+import ServiceTimesEditor from "components/admin/editors/ServiceTimesEditor"
+import SmallGroupsEditor from "components/admin/editors/SmallGroupsEditor"
+import SpecialAlertsEditor from "components/admin/editors/SpecialAlertsEditor"
+import VisionEditor from "components/admin/editors/VisionEditor"
+import Sidebar from "components/admin/Sidebar"
+import { Loader2, Monitor, Smartphone } from "lucide-react"
 
-export default function WebsiteSettingsPage() {
-  const [formData, setFormData] = useState<SiteData>({
-    title: "Trinity Methodist Church Petaling Jaya",
-    primaryColor: "#2563eb",
-    logoUrl: "",
-    description: "",
-    socialLinks: { facebook: "", instagram: "", youtube: "" },
-  })
-  const [isUploading, setIsUploading] = useState(false)
-  const iframeRef = useRef<HTMLIFrameElement>(null)
+export default function AdminDashboard() {
+  const [activeTab, setActiveTab] = useState("general")
+  const [siteData, setSiteData] = useState<SiteData>(DEFAULT_SITE_DATA)
+  const [isLoading, setIsLoading] = useState(true)
+  const [previewMode, setPreviewMode] = useState<"mobile" | "desktop">("desktop")
 
-  // --- IFRAME SYNC LOGIC ---
-  const sendToIframe = () => {
-    if (iframeRef.current?.contentWindow) {
-      iframeRef.current.contentWindow.postMessage(
-        {
-          type: "WHATSAPP_BUILDER_DRAFT",
-          payload: formData,
-        },
-        "*"
-      )
-    }
-  }
-
-  // 1. Initial Load (Mount only)
+  // 1. Initial Fetch from Supabase
   useEffect(() => {
-    const loadData = async () => {
-      const data = await websiteService.getSettings()
-      if (data) setFormData(data)
+    async function loadData() {
+      try {
+        const data = await websiteService.getSettings()
+        if (data) setSiteData(data)
+      } catch (err) {
+        console.error("Fetch error:", err)
+      } finally {
+        setIsLoading(false)
+      }
     }
     loadData()
-
-    const handlePreviewReady = (e: MessageEvent) => {
-      if (e.data.type === "PREVIEW_READY") sendToIframe()
-    }
-    window.addEventListener("message", handlePreviewReady)
-    return () => window.removeEventListener("message", handlePreviewReady)
   }, [])
 
-  // 2. Sync with Preview on every data change
-  useEffect(() => {
-    sendToIframe()
-  }, [formData])
-
-  // --- HANDLERS ---
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleSocialChange = (platform: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      socialLinks: { ...prev.socialLinks, [platform]: value },
-    }))
-  }
-
-  // Find your handleSave function and change the URL
-  const handleSave = async () => {
-    try {
-      // ❌ REMOVE: /api/admin/website-settings
-      // ✅ CHANGE TO: /api/website-settings
-      const response = await fetch("/api/website-settings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      })
-
-      // Check if the response is actually JSON before parsing
-      const contentType = response.headers.get("content-type")
-      if (!contentType || !contentType.includes("application/json")) {
-        const text = await response.text()
-        console.error("Non-JSON response received:", text)
-        throw new Error("Server returned a webpage instead of data. Check your API path.")
-      }
-
-      const result = await response.json()
-      if (response.ok) alert("Settings saved!")
-    } catch (error) {
-      console.error("Save Error:", error)
+  // 2. The Switcher: Decides which "Form" to show
+  const renderEditor = () => {
+    if (isLoading) {
+      return (
+        <div className="flex h-64 flex-col items-center justify-center text-gray-400">
+          <Loader2 className="mb-4 animate-spin" size={32} />
+          <p className="text-sm font-medium">Fetching Trinity Methodist Church data...</p>
+        </div>
+      )
     }
-  }
 
-  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    // Ensure siteData isn't null before rendering sub-components
+    if (!siteData) return null
 
-    setIsUploading(true)
-    try {
-      console.log("📤 UI: Starting logo upload...")
-      const publicUrl = await websiteService.uploadLogo(file)
+    switch (activeTab) {
+      // --- Brand & Identity ---
+      case "general":
+        return <GeneralSettingsEditor initialData={siteData} />
+      case "about":
+        return <AboutUsEditor initialData={siteData.aboutUsMarkdown} />
+      case "vision":
+        return <VisionEditor />
 
-      // Create the updated object
-      const updatedData = { ...formData, logoUrl: publicUrl }
+      // --- Weekly Pulse ---
+      case "services":
+        return <ServiceTimesEditor initialData={siteData.serviceTimes} />
+      case "alerts":
+        return <SpecialAlertsEditor initialData={siteData.alert} />
+      case "bulletin":
+        return <BulletinEditor initialData={siteData.bulletinUrl} />
+      case "announcements":
+        return <AnnouncementsEditor />
 
-      // Update local UI immediately
-      setFormData(updatedData)
+      // --- Community Life ---
+      case "groups":
+        return <SmallGroupsEditor />
+      case "prayer":
+        return <PrayerGatheringEditor initialData={[]} />
 
-      // Save to database
-      console.log("💾 UI: Logo uploaded, now saving URL to DB...")
-      await websiteService.saveSettings(updatedData)
-    } catch (error) {
-      console.error("LOGO UPLOAD FLOW ERROR:", error)
-      alert("Logo upload process failed.")
-    } finally {
-      setIsUploading(false)
+      // --- Resources ---
+      case "alpha":
+        return <AlphaVideoEditor />
+      case "infographics":
+        return (
+          <div className="space-y-8">
+            <InfographicEditor title="Ministries Infographic" currentUrl={siteData.infographics.ministriesUrl} />
+            <InfographicEditor title="Fellowships Infographic" currentUrl={siteData.infographics.groupsUrl} />
+          </div>
+        )
+      case "giving":
+        return <GivingEditor />
+
+      // --- Default / Coming Soon ---
+      default:
+        return (
+          <div className="rounded-2xl border-2 border-dashed p-12 text-center">
+            <p className="text-gray-400">
+              The <b>{activeTab}</b> editor is coming soon!
+            </p>
+          </div>
+        )
     }
   }
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      {/* Sidebar Form */}
-      <div className="w-85 space-y-6 overflow-y-auto border-r bg-white p-6 shadow-xl">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-gray-800">Site Customizer</h2>
-          <button
-            onClick={handleSave}
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
-          >
-            Save Changes
-          </button>
-        </div>
+    <div className="flex h-screen overflow-hidden bg-[#F8FAFC]">
+      {/* LEFT: Sidebar Navigation */}
+      <Sidebar activeSlug={activeTab} onSelect={setActiveTab} />
 
-        <hr />
-
-        {/* Logo Section */}
-        <div className="space-y-3">
-          <label className="text-xs font-bold text-gray-400 uppercase">Brand Assets</label>
-          <div className="flex items-center gap-4">
-            <div className="flex h-20 w-20 items-center justify-center rounded-lg border-2 border-dashed border-gray-200 bg-gray-50">
-              {formData.logoUrl ? (
-                <img src={formData.logoUrl} alt="Logo" className="h-full w-full object-contain p-2" />
-              ) : (
-                <span className="text-[10px] text-gray-400">No Logo</span>
-              )}
-            </div>
-            <label className="cursor-pointer rounded-md border border-gray-300 px-3 py-2 text-xs font-semibold hover:bg-gray-50">
-              {isUploading ? "Uploading..." : "Replace Logo"}
-              <input type="file" className="hidden" onChange={handleLogoUpload} disabled={isUploading} />
-            </label>
+      {/* CENTER: The Workspace */}
+      <main className="flex min-w-0 flex-1 flex-col border-r bg-white">
+        <header className="flex h-16 shrink-0 items-center justify-between border-b bg-white/50 px-8 backdrop-blur-sm">
+          <div className="flex items-center gap-2">
+            <span className="rounded bg-blue-50 px-2 py-1 text-xs font-bold tracking-wider text-blue-600 uppercase">
+              Draft
+            </span>
+            <h1 className="text-sm font-semibold tracking-tight text-gray-600 uppercase">
+              / {activeTab.replace("-", " ")}
+            </h1>
           </div>
-        </div>
 
-        {/* Title & Color */}
-        <div className="space-y-4">
-          <div>
-            <label className="text-xs font-bold text-gray-400 uppercase">Site Identity</label>
-            <input
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              placeholder="Site Title"
-              className="mt-2 w-full rounded-md border p-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+          {/* Quick Preview Toggles (Visible on Mid-screens) */}
+          <div className="flex rounded-lg bg-gray-100 p-1 lg:hidden">
+            <button
+              onClick={() => setPreviewMode("mobile")}
+              className={`rounded p-1.5 ${previewMode === "mobile" ? "bg-white shadow-sm" : ""}`}
+            >
+              <Smartphone size={16} />
+            </button>
+            <button
+              onClick={() => setPreviewMode("desktop")}
+              className={`rounded p-1.5 ${previewMode === "desktop" ? "bg-white shadow-sm" : ""}`}
+            >
+              <Monitor size={16} />
+            </button>
+          </div>
+        </header>
+
+        <section className="custom-scrollbar flex-1 overflow-y-auto">
+          <div className="mx-auto max-w-5xl p-8 lg:p-12">{renderEditor()}</div>
+        </section>
+      </main>
+
+      {/* RIGHT: Live Preview Pane */}
+      {/*
+        <aside className="hidden w-[400px] flex-col bg-gray-50 xl:flex 2xl:w-[500px]">
+        <header className="flex h-16 items-center justify-between border-b bg-white px-6">
+          <h3 className="text-sm font-bold tracking-widest text-gray-400 uppercase">Live Preview</h3>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setPreviewMode("mobile")}
+              className={`rounded-md p-2 transition-all ${previewMode === "mobile" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-100"}`}
+            >
+              <Smartphone size={18} />
+            </button>
+            <button
+              onClick={() => setPreviewMode("desktop")}
+              className={`rounded-md p-2 transition-all ${previewMode === "desktop" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-100"}`}
+            >
+              <Monitor size={18} />
+            </button>
+          </div>
+        </header>
+
+        <div className="flex flex-1 items-start justify-center overflow-hidden p-6">
+          <div
+            className={`overflow-hidden rounded-t-3xl border-[8px] border-gray-800 bg-white shadow-2xl transition-all duration-500 ${
+              previewMode === "mobile" ? "h-[600px] w-[320px]" : "h-full w-full border-t-[12px]"
+            }`}
+          >
+            <iframe
+              src="/" // Points to your public homepage
+              className="h-full w-full border-none"
+              title="Preview"
             />
           </div>
-          <div>
-            <label className="text-xs font-bold text-gray-400 uppercase">Primary Theme Color</label>
-            <div className="mt-2 flex items-center gap-3">
-              <input
-                type="color"
-                name="primaryColor"
-                value={formData.primaryColor}
-                onChange={handleChange}
-                className="h-10 w-10 cursor-pointer overflow-hidden rounded-full border-none"
-              />
-              <span className="font-mono text-sm text-gray-600">{formData.primaryColor}</span>
-            </div>
-          </div>
         </div>
-
-        {/* Content & Social */}
-        <div className="space-y-4 pt-4">
-          <label className="text-xs font-bold text-gray-400 uppercase">Social Presence</label>
-          <input
-            placeholder="Facebook URL"
-            value={formData.socialLinks.facebook}
-            onChange={(e) => handleSocialChange("facebook", e.target.value)}
-            className="w-full rounded-md border p-2 text-sm"
-          />
-          <input
-            placeholder="Instagram URL"
-            value={formData.socialLinks.instagram}
-            onChange={(e) => handleSocialChange("instagram", e.target.value)}
-            className="w-full rounded-md border p-2 text-sm"
-          />
-        </div>
-      </div>
-
-      {/* Preview Area */}
-      <div className="flex-1 p-8">
-        <div className="relative h-full w-full overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200">
-          <div className="absolute top-0 right-0 left-0 flex h-8 items-center gap-2 border-b bg-gray-50 px-4">
-            <div className="h-3 w-3 rounded-full bg-red-400" />
-            <div className="h-3 w-3 rounded-full bg-yellow-400" />
-            <div className="h-3 w-3 rounded-full bg-green-400" />
-          </div>
-          <iframe ref={iframeRef} src="/preview" className="h-full w-full pt-8" onLoad={sendToIframe} />
-        </div>
-      </div>
+      </aside>
+        */}
     </div>
   )
 }

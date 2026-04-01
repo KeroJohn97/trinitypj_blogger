@@ -32,7 +32,7 @@ export function PrayerGroupsTable({ title, description, headers, groups }: Praye
   return (
     <section className="w-full">
       {/* Header */}
-      {title && <h2 className="text-primary mb-2 text-center text-2xl font-bold">{title}</h2>}
+      {title && <h2 className="text-primary mb-4 text-center text-3xl font-bold tracking-tight">{title}</h2>}
       {description && <p className="mx-auto mb-6 max-w-2xl text-center text-gray-600">{description}</p>}
 
       {/* Desktop Table */}
@@ -41,7 +41,6 @@ export function PrayerGroupsTable({ title, description, headers, groups }: Praye
           <thead className="bg-primary text-left text-white">
             <tr>
               <th className="px-6 py-3 font-medium">{headers.location}</th>
-              <th className="px-6 py-3 font-medium">{headers.type}</th>
               <th className="px-6 py-3 font-medium">{headers.day}</th>
               <th className="px-6 py-3 font-medium">{headers.time}</th>
               <th className="px-6 py-3 font-medium">{headers.leader}</th>
@@ -52,7 +51,6 @@ export function PrayerGroupsTable({ title, description, headers, groups }: Praye
             {groups.map((group) => (
               <tr key={group.id} className="transition hover:bg-gray-50">
                 <td className="px-6 py-3 font-medium">{group.location}</td>
-                <td className="px-6 py-3">{group.type}</td>
                 <td className="px-6 py-3">{group.day}</td>
                 <td className="px-6 py-3">{group.time}</td>
                 <td className="px-6 py-3">{group.leader}</td>
