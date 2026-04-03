@@ -75,3 +75,23 @@ ADD COLUMN sort_order INTEGER DEFAULT 0;
 
 -- Optional: Create an index to make sorting lightning fast
 CREATE INDEX idx_gathering_sort_order ON prayer_gathering (sort_order);
+
+CREATE TABLE IF NOT EXISTS small_group (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  area TEXT, -- Replacing 'venue' with 'area' for better context
+  day TEXT,
+  time TEXT,
+  is_active BOOLEAN DEFAULT true,
+  sort_order INTEGER DEFAULT 0,
+  note TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  is_featured BOOLEAN DEFAULT false
+);
+
+-- Enable RLS
+ALTER TABLE small_group ENABLE ROW LEVEL SECURITY;
+
+-- Allow public read and full access for anon (standard for our current setup)
+CREATE POLICY "Allow public read" ON small_group FOR SELECT TO anon USING (true);
+CREATE POLICY "Allow full access" ON small_group FOR ALL TO anon USING (true) WITH CHECK (true);

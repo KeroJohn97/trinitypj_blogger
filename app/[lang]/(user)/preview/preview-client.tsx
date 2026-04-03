@@ -1,6 +1,7 @@
 // app/[lang]/preview/preview-client.tsx
 "use client"
 
+import { SiteData } from "@/types/website";
 import ThemeTemplate from "components/Website/ThemeTemplate"
 import { useEffect, useState } from "react"
 

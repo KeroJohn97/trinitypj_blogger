@@ -9,7 +9,7 @@ export default async function PrayerPage({ params }: { params: Promise<{ lang: s
 
   const [dict, { data: rawGatherings }] = await Promise.all([
     getDictionary(lang as "en-US" | "zh-CN"),
-    // TODO don't call create supabase utils method
+    // TODO don't call - create supabase utils method
     supabase.from("prayer_gathering").select("*").eq("is_active", true).order("sort_order", { ascending: true }),
   ])
 

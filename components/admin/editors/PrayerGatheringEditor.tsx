@@ -19,6 +19,7 @@ import {
   Users,
 } from "lucide-react"
 import { useEffect, useState } from "react"
+import AdminHeader from "../AdminHeader"
 
 export default function PrayerGatheringEditor({ initialData }: { initialData: GatheringItem[] }) {
   const [items, setItems] = useState<GatheringItem[]>(Array.isArray(initialData) ? initialData : [])
@@ -156,34 +157,23 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
 
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <AdminHeader
+        title="Prayer Gatherings"
+        subtitle="Manage Prayer Meetings and Lighthouse Groups."
+        primaryAction={{
+          label: "Publish Updates",
+          onClick: handlePublish,
+          icon: <Save size={20} />,
+          loading: isSaving,
+          disabled: isSaving,
+        }}
+        secondaryAction={{
+          label: "Add New Gathering",
+          onClick: addItem,
+          icon: <Plus size={20} />,
+        }}
+      />
       <div className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
-        {/* --- Page Header (Rendered ONCE) --- */}
-        <div className="mt-8 mb-8 flex flex-col gap-6 rounded-3xl border bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-8">
-          <div className="min-w-0">
-            <h2 className="truncate text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
-              Prayer Gatherings
-            </h2>
-            <p className="mt-1 font-medium text-gray-500">Manage Prayer Meetings and Lighthouse Groups.</p>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            <button
-              onClick={addItem}
-              className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-gray-200 bg-gray-100 px-5 py-3 font-bold text-gray-700 transition-all hover:bg-gray-200 sm:flex-none"
-            >
-              <Plus size={20} /> <span className="whitespace-nowrap">Add New</span>
-            </button>
-            <button
-              onClick={handlePublish}
-              disabled={isSaving}
-              className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-6 py-3 font-bold text-white shadow-xl shadow-emerald-100 transition-all hover:bg-emerald-700 disabled:bg-gray-400 sm:flex-none"
-            >
-              <Save size={20} />{" "}
-              <span className="whitespace-nowrap">{isSaving ? "Publishing..." : "Publish Updates"}</span>
-            </button>
-          </div>
-        </div>
-
         {/* --- List of Gatherings (Sortable Area) --- */}
         <SortableContext items={items.map((i) => i.id)} strategy={verticalListSortingStrategy}>
           <div className="space-y-4">

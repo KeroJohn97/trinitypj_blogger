@@ -28,13 +28,19 @@ export interface AlphaVideo {
 }
 
 // Small Group / Cell Group entry
+// types/small-group.ts
 export interface SmallGroup {
   id: string
   name: string
-  leader: string
-  area: string // e.g., SS2, Section 14
-  day: string
-  time: string
+  leader_name?: string | null
+  meeting_day: string
+  meeting_time: string
+  location_area: string
+  contact_number?: string | null
+  category: string // e.g., 'Adult', 'Youth', 'Young Adult'
+  is_active: boolean
+  created_at?: string
+  is_featured: boolean
 }
 
 // Prayer Meeting entry
@@ -93,15 +99,15 @@ export interface SiteData {
 
 // types/gathering.ts
 export interface GatheringItem {
-  id: string;
-  type: 'prayer' | 'lighthouse';
-  isActive: boolean;
-  title: string;
-  day: string;
-  time: string;
-  venue: string;
-  mode: 'Physical' | 'Online' | 'Hybrid';
-  leader?: string;
-  contact?: string;
-  note?: string;
+  id: string
+  type: "prayer" | "lighthouse"
+  isActive: boolean
+  title: string
+  day: string
+  time: string
+  venue: string
+  mode: "Physical" | "Online" | "Hybrid"
+  leader?: string
+  contact?: string
+  note?: string
 }

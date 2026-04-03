@@ -1,5 +1,3 @@
-import { Footer } from "@/components/footer"
-import { Navigation } from "@/components/navigation"
 import { getDictionary } from "dictionaries"
 import "globals.css"
 import { Metadata } from "next"
@@ -35,7 +33,6 @@ export default async function RootLayout({
         {/* <Navigation dict={dict.nav} /> */}
 
         {children}
-        <Footer dict={dict.footer} />
       </body>
     </html>
   )
