@@ -22,8 +22,8 @@ import {
 import { useEffect, useState } from "react"
 import AdminHeader from "../AdminHeader"
 
-export default function PrayerGatheringEditor({ initialData }: { initialData: GatheringItem[] }) {
-  const [items, setItems] = useState<GatheringItem[]>(Array.isArray(initialData) ? initialData : [])
+export default function PrayerGatheringEditor() {
+  const [items, setItems] = useState<GatheringItem[]>([])
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
@@ -80,26 +80,17 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
     }
   }
 
-  // --- The "Constructor" (Initial Data Load) ---
+  // --- The "Constructor" ---
   useEffect(() => {
-    // If we already have initialData from the parent, don't fetch again
-    if (initialData && initialData.length > 0) {
-      setItems(initialData)
-      setIsLoading(false)
-      setHasChanges(false)
-      return
-    }
+    if (!isLoading) return
 
     async function loadGatherings() {
       try {
         const data = await gatheringService.getAll()
-
-        // 2. CRITICAL: Check if data is actually an array before setting state
         if (Array.isArray(data)) {
           setItems(data)
         } else {
-          console.error("API did not return an array:", data)
-          setItems([]) // Fallback to empty array
+          setItems([])
         }
       } catch (error) {
         console.error("Failed to load gatherings:", error)
@@ -108,8 +99,9 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
         setIsLoading(false)
       }
     }
+
     loadGatherings()
-  }, [initialData])
+  }, [isLoading]) // Add isLoading here
 
   const addItem = () => {
     const newId = crypto.randomUUID()

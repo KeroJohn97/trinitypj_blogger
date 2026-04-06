@@ -1,3 +1,4 @@
+import { NavigationGuardProvider } from "@/context/navigation-guard-context"
 import { getDictionary } from "dictionaries"
 import "globals.css"
 import { Metadata } from "next"
@@ -26,14 +27,16 @@ export default async function RootLayout({
   const dict = await getDictionary(lang as "en-US" | "zh-CN")
 
   return (
-    <html lang={lang}>
-      <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-      <body className="relative text-emerald-800">
-        {/* 4. Pass the specific 'nav' dictionary to the component */}
-        {/* <Navigation dict={dict.nav} /> */}
+    <NavigationGuardProvider>
+      <html lang={lang}>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+        <body className="relative text-emerald-800">
+          {/* 4. Pass the specific 'nav' dictionary to the component */}
+          {/* <Navigation dict={dict.nav} /> */}
 
-        {children}
-      </body>
-    </html>
+          {children}
+        </body>
+      </html>
+    </NavigationGuardProvider>
   )
 }

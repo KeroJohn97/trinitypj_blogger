@@ -1,75 +1,31 @@
 "use client"
-import { NavigationGuardProvider } from "@/context/navigation-guard-context"
-import { websiteService } from "@/services/website-service"
-import { SiteData } from "@/types/website"
-import { useEffect, useState } from "react"
-import GeneralSettingsEditor from "./editors/GeneralSettingsEditor"
-import ServiceTimesEditor from "./editors/ServiceTimesEditor"
-import SpecialAlertsEditor from "./editors/SpecialAlertsEditor"
+import { useNavigationGuard } from "@/context/navigation-guard-context"
+import { useRouter, useSearchParams } from "next/navigation"
 import Sidebar from "./Sidebar"
 
-export default function AdminLayout() {
-  const [activeTab, setActiveTab] = useState("general")
-  const [siteData, setSiteData] = useState<SiteData | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const { isDirty } = useNavigationGuard()
 
-  // Load all church data on mount
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await websiteService.getSettings()
-        if (data) setSiteData(data)
-      } catch (error) {
-        console.error("Failed to load CMS data", error)
-      } finally {
-        setIsLoading(false)
-      }
+  // Get active tab from URL: /admin?tab=groups
+  const activeTab = searchParams.get("tab") || "general"
+
+  const handleTabChange = (newTab: string) => {
+    if (isDirty) {
+      const confirmLeave = window.confirm("You have unsaved changes. Switching tabs will discard them. Continue?")
+      if (!confirmLeave) return
     }
-    fetchData()
-  }, [])
-
-  // The Dynamic Workspace Switcher
-  const renderEditor = () => {
-    if (isLoading) return <div className="animate-pulse p-10 text-gray-400">Loading Church Data...</div>
-
-    switch (activeTab) {
-      case "general":
-        return <GeneralSettingsEditor initialData={siteData} />
-      case "services":
-        return <ServiceTimesEditor initialData={siteData?.serviceTimes} />
-      case "alerts":
-        return <SpecialAlertsEditor initialData={siteData} />
-      // Add cases for all 12 items here...
-      default:
-        return <div className="p-10 text-gray-400">Select a section from the sidebar to begin.</div>
-    }
+    // Update the URL which triggers the dashboard to re-render
+    router.push(`?tab=${newTab}`)
   }
 
   return (
-    <NavigationGuardProvider>
-      <div className="flex h-screen overflow-hidden bg-gray-50">
-        {/* 1. Permanent Sidebar */}
-        <Sidebar activeSlug={activeTab} onSelect={setActiveTab} />
+    <div className="flex h-screen overflow-hidden bg-[#F8FAFC]">
+      {/* Sidebar is now persistent in the layout */}
+      <Sidebar activeSlug={activeTab} onSelect={handleTabChange} />
 
-        {/* 2. Main Editing Workspace */}
-        <main className="flex h-full flex-1 flex-col overflow-hidden bg-white shadow-inner">
-          {/* Workspace Header */}
-          <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b bg-white/80 px-8 backdrop-blur-md">
-            <h2 className="font-semibold text-gray-700 capitalize">Editing: {activeTab.replace("-", " ")}</h2>
-            <div className="flex items-center gap-4">
-              <span className="text-xs text-gray-400">Auto-save is disabled. Click "Publish" to go live.</span>
-            </div>
-          </header>
-
-          {/* Editor Container */}
-          <div className="flex-1 overflow-y-auto p-8 lg:p-12">{renderEditor()}</div>
-        </main>
-
-        {/* 3. Live Preview (Visible on Desktop) */}
-        {/* <div className="hidden 2xl:block w-[450px] border-l bg-gray-100">
-        <LivePreview formData={siteData} />
-      </div> */}
-      </div>
-    </NavigationGuardProvider>
+      <main className="flex min-w-0 flex-1 flex-col bg-white">{children}</main>
+    </div>
   )
 }
