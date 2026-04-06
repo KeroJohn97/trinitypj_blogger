@@ -1,4 +1,5 @@
 "use client"
+import { NavigationGuardProvider } from "@/context/navigation-guard-context"
 import { websiteService } from "@/services/website-service"
 import { SiteData } from "@/types/website"
 import { useEffect, useState } from "react"
@@ -45,28 +46,30 @@ export default function AdminLayout() {
   }
 
   return (
-    <div className="flex h-screen overflow-hidden bg-gray-50">
-      {/* 1. Permanent Sidebar */}
-      <Sidebar activeSlug={activeTab} onSelect={setActiveTab} />
+    <NavigationGuardProvider>
+      <div className="flex h-screen overflow-hidden bg-gray-50">
+        {/* 1. Permanent Sidebar */}
+        <Sidebar activeSlug={activeTab} onSelect={setActiveTab} />
 
-      {/* 2. Main Editing Workspace */}
-      <main className="flex h-full flex-1 flex-col overflow-hidden bg-white shadow-inner">
-        {/* Workspace Header */}
-        <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b bg-white/80 px-8 backdrop-blur-md">
-          <h2 className="font-semibold text-gray-700 capitalize">Editing: {activeTab.replace("-", " ")}</h2>
-          <div className="flex items-center gap-4">
-            <span className="text-xs text-gray-400">Auto-save is disabled. Click "Publish" to go live.</span>
-          </div>
-        </header>
+        {/* 2. Main Editing Workspace */}
+        <main className="flex h-full flex-1 flex-col overflow-hidden bg-white shadow-inner">
+          {/* Workspace Header */}
+          <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b bg-white/80 px-8 backdrop-blur-md">
+            <h2 className="font-semibold text-gray-700 capitalize">Editing: {activeTab.replace("-", " ")}</h2>
+            <div className="flex items-center gap-4">
+              <span className="text-xs text-gray-400">Auto-save is disabled. Click "Publish" to go live.</span>
+            </div>
+          </header>
 
-        {/* Editor Container */}
-        <div className="flex-1 overflow-y-auto p-8 lg:p-12">{renderEditor()}</div>
-      </main>
+          {/* Editor Container */}
+          <div className="flex-1 overflow-y-auto p-8 lg:p-12">{renderEditor()}</div>
+        </main>
 
-      {/* 3. Live Preview (Visible on Desktop) */}
-      {/* <div className="hidden 2xl:block w-[450px] border-l bg-gray-100">
+        {/* 3. Live Preview (Visible on Desktop) */}
+        {/* <div className="hidden 2xl:block w-[450px] border-l bg-gray-100">
         <LivePreview formData={siteData} />
       </div> */}
-    </div>
+      </div>
+    </NavigationGuardProvider>
   )
 }

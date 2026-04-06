@@ -11,9 +11,9 @@ export default function Sidebar({ activeSlug, onSelect }: SidebarProps) {
   return (
     <aside className="sticky top-0 flex h-screen w-64 flex-col overflow-y-auto border-r bg-white">
       {/* Header */}
-      <div className="border-b p-6">
-        <h1 className="text-lg font-bold text-blue-600">TMCPJ Portal</h1>
-        <p className="mt-1 text-xs tracking-wider text-gray-500 uppercase">Admin Dashboard</p>
+      <div className="flex h-20 flex-col justify-center border-b border-gray-100 px-6">
+        <h1 className="text-lg leading-none font-black text-blue-600">TMCPJ Portal</h1>
+        <p className="mt-1.5 text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">Admin Dashboard</p>
       </div>
 
       {/* Navigation Groups */}

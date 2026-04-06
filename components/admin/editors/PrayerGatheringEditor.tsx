@@ -1,4 +1,5 @@
 "use client"
+import { useNavigationGuard } from "@/context/navigation-guard-context"
 import { gatheringService } from "@/services/gathering-service"
 import { GatheringItem } from "@/types/website"
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
@@ -28,6 +29,27 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
   const [isSaving, setIsSaving] = useState(false)
   const sensors = useSensors(useSensor(PointerSensor), useSensor(KeyboardSensor))
   const [deletedIds, setDeletedIds] = useState<string[]>([])
+  const { setIsDirty } = useNavigationGuard()
+  const [hasChanges, setHasChanges] = useState(false)
+
+  // Sync local changes to global navigation guard
+  useEffect(() => {
+    setIsDirty(hasChanges)
+    // Cleanup on unmount
+    return () => setIsDirty(false)
+  }, [hasChanges, setIsDirty])
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasChanges) {
+        e.preventDefault()
+        e.returnValue = "" // Required for Chrome/Firefox
+      }
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload)
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload)
+  }, [hasChanges])
 
   const handleDelete = (id: string) => {
     // TODO custom dialog in the future?
@@ -42,6 +64,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
     }
 
     setItems((prev) => prev.filter((item) => item.id !== id))
+    setHasChanges(true)
   }
 
   const handleDragEnd = (event: any) => {
@@ -51,6 +74,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
       setItems((items) => {
         const oldIndex = items.findIndex((i) => i.id === active.id)
         const newIndex = items.findIndex((i) => i.id === over.id)
+        setHasChanges(true)
         return arrayMove(items, oldIndex, newIndex)
       })
     }
@@ -62,6 +86,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
     if (initialData && initialData.length > 0) {
       setItems(initialData)
       setIsLoading(false)
+      setHasChanges(false)
       return
     }
 
@@ -103,10 +128,12 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
     }
     setItems([newItem, ...items])
     setExpandedId(newId) // Open the new item immediately for editing
+    setHasChanges(true)
   }
 
   const updateItem = (id: string, updates: Partial<GatheringItem>) => {
     setItems(items.map((item) => (item.id === id ? { ...item, ...updates } : item)))
+    setHasChanges(true)
   }
 
   const toggleExpand = (id: string) => {
@@ -139,6 +166,7 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
       alert("Publish failed. Check console for details.")
     } finally {
       setIsSaving(false)
+      setHasChanges(false)
     }
   }
 
@@ -161,11 +189,12 @@ export default function PrayerGatheringEditor({ initialData }: { initialData: Ga
         title="Prayer Gatherings"
         subtitle="Manage Prayer Meetings and Lighthouse Groups."
         primaryAction={{
-          label: "Publish Updates",
+          label: hasChanges ? "Publish Updates" : "Saved",
           onClick: handlePublish,
-          icon: <Save size={20} />,
+          icon: <Save size={18} />,
           loading: isSaving,
-          disabled: isSaving,
+          // Add a subtle glow if there are changes
+          className: hasChanges ? "ring-4 ring-emerald-100" : "",
         }}
         secondaryAction={{
           label: "Add New Gathering",

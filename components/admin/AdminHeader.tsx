@@ -10,6 +10,7 @@ interface AdminHeaderProps {
     icon: React.ReactNode
     disabled?: boolean
     loading?: boolean
+    className?: string
   }
   secondaryAction: {
     label: string
@@ -44,7 +45,9 @@ export default function AdminHeader({ title, subtitle, primaryAction, secondaryA
             <button
               onClick={primaryAction.onClick}
               disabled={primaryAction.disabled || primaryAction.loading}
-              className="flex h-10 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-bold text-white shadow-lg shadow-emerald-100 transition-all hover:bg-emerald-700 active:scale-95 disabled:bg-gray-200 sm:h-12 sm:px-8"
+              className={`flex h-10 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-bold text-white shadow-lg shadow-emerald-100 transition-all hover:bg-emerald-700 active:scale-95 disabled:bg-gray-200 sm:h-12 sm:px-8 ${
+                primaryAction.className || ""
+              }`}
             >
               {primaryAction.loading ? (
                 <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />

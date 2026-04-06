@@ -1,8 +1,8 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 // ... Import other editors as you build them
+import { useNavigationGuard } from "@/context/navigation-guard-context"
 import { websiteService } from "@/services/website-service"
-import { DEFAULT_SITE_DATA } from "@/types/defaults"
 import { SiteData } from "@/types/website"
 import AboutUsEditor from "components/admin/editors/AboutUsEditor"
 import AlphaVideoEditor from "components/admin/editors/AlphaVideoEditor"
@@ -17,168 +17,110 @@ import SmallGroupsEditor from "components/admin/editors/SmallGroupsEditor"
 import SpecialAlertsEditor from "components/admin/editors/SpecialAlertsEditor"
 import VisionEditor from "components/admin/editors/VisionEditor"
 import Sidebar from "components/admin/Sidebar"
-import { Loader2, Monitor, Smartphone } from "lucide-react"
+import { AlertCircle, Loader2 } from "lucide-react"
+
+// --- 1. Tab Registry (Easy to expand!) ---
+const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
+  // Brand
+  general: (props) => <GeneralSettingsEditor initialData={props.data} />,
+  about: (props) => <AboutUsEditor initialData={props.data?.aboutUsMarkdown} />,
+  vision: () => <VisionEditor />,
+
+  // Weekly Pulse
+  services: (props) => <ServiceTimesEditor initialData={props.data?.serviceTimes} />,
+  alerts: (props) => <SpecialAlertsEditor initialData={props.data?.alert} />,
+  bulletin: (props) => <BulletinEditor initialData={props.data?.bulletinUrl} />,
+  announcements: () => <AnnouncementsEditor />,
+
+  // Community
+  groups: () => <SmallGroupsEditor />,
+  prayer: () => <PrayerGatheringEditor initialData={[]} />,
+
+  // Resources
+  alpha: () => <AlphaVideoEditor />,
+  giving: () => <GivingEditor />,
+  infographics: (props) => (
+    <div className="space-y-8">
+      <InfographicEditor title="Ministries" currentUrl={props.data?.infographics?.ministriesUrl} />
+      <InfographicEditor title="Fellowships" currentUrl={props.data?.infographics?.groupsUrl} />
+    </div>
+  ),
+}
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("general")
-  const [siteData, setSiteData] = useState<SiteData>(DEFAULT_SITE_DATA)
+  const [siteData, setSiteData] = useState<SiteData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [previewMode, setPreviewMode] = useState<"mobile" | "desktop">("desktop")
+  const { isDirty } = useNavigationGuard() // Listen to the guard we built!
 
-  // 1. Initial Fetch from Supabase
+  // Load Global Settings
   useEffect(() => {
-    async function loadData() {
-      try {
-        const data = await websiteService.getSettings()
-        if (data) setSiteData(data)
-      } catch (err) {
-        console.error("Fetch error:", err)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    loadData()
+    websiteService
+      .getSettings()
+      .then(setSiteData)
+      .catch(console.error)
+      .finally(() => setIsLoading(false))
   }, [])
 
-  // 2. The Switcher: Decides which "Form" to show
-  const renderEditor = () => {
-    if (isLoading) {
-      return (
-        <div className="flex h-64 flex-col items-center justify-center text-gray-400">
-          <Loader2 className="mb-4 animate-spin" size={32} />
-          <p className="text-sm font-medium">Fetching Trinity Methodist Church data...</p>
-        </div>
-      )
-    }
+  // Memoize the breadcrumb title
+  const displayTitle = useMemo(() => activeTab.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()), [activeTab])
 
-    // Ensure siteData isn't null before rendering sub-components
-    if (!siteData) return null
-
-    switch (activeTab) {
-      // --- Brand & Identity ---
-      case "general":
-        return <GeneralSettingsEditor initialData={siteData} />
-      case "about":
-        return <AboutUsEditor initialData={siteData.aboutUsMarkdown} />
-      case "vision":
-        return <VisionEditor />
-
-      // --- Weekly Pulse ---
-      case "services":
-        return <ServiceTimesEditor initialData={siteData.serviceTimes} />
-      case "alerts":
-        return <SpecialAlertsEditor initialData={siteData.alert} />
-      case "bulletin":
-        return <BulletinEditor initialData={siteData.bulletinUrl} />
-      case "announcements":
-        return <AnnouncementsEditor />
-
-      // --- Community Life ---
-      case "groups":
-        return <SmallGroupsEditor />
-      case "prayer":
-        return <PrayerGatheringEditor initialData={[]} />
-
-      // --- Resources ---
-      case "alpha":
-        return <AlphaVideoEditor />
-      case "infographics":
-        return (
-          <div className="space-y-8">
-            <InfographicEditor title="Ministries Infographic" currentUrl={siteData.infographics.ministriesUrl} />
-            <InfographicEditor title="Fellowships Infographic" currentUrl={siteData.infographics.groupsUrl} />
-          </div>
-        )
-      case "giving":
-        return <GivingEditor />
-
-      // --- Default / Coming Soon ---
-      default:
-        return (
-          <div className="rounded-2xl border-2 border-dashed p-12 text-center">
-            <p className="text-gray-400">
-              The <b>{activeTab}</b> editor is coming soon!
-            </p>
-          </div>
-        )
-    }
+  if (isLoading) {
+    return (
+      <div className="flex h-screen flex-col items-center justify-center bg-gray-50 text-gray-400">
+        <Loader2 className="mb-4 animate-spin text-blue-600" size={40} />
+        <p className="text-sm font-bold tracking-widest uppercase">Loading TMCPJ Portal...</p>
+      </div>
+    )
   }
+
+  const ActiveEditor = EDITOR_COMPONENTS[activeTab]
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#F8FAFC]">
-      {/* LEFT: Sidebar Navigation */}
       <Sidebar activeSlug={activeTab} onSelect={setActiveTab} />
 
-      {/* CENTER: The Workspace */}
-      <main className="flex min-w-0 flex-1 flex-col border-r bg-white">
-        <header className="flex h-16 shrink-0 items-center justify-between border-b bg-white/50 px-8 backdrop-blur-sm">
-          <div className="flex items-center gap-2">
-            <span className="rounded bg-blue-50 px-2 py-1 text-xs font-bold tracking-wider text-blue-600 uppercase">
-              Draft
-            </span>
-            <h1 className="text-sm font-semibold tracking-tight text-gray-600 uppercase">
-              / {activeTab.replace("-", " ")}
-            </h1>
+      <main className="flex min-w-0 flex-1 flex-col bg-white">
+        {/* SHARED HEADER */}
+        <header className="flex h-20 shrink-0 items-center justify-between border-b border-gray-100 bg-white/50 px-8 backdrop-blur-md">
+          <div className="flex items-center gap-4">
+            {/* Status Badge */}
+            <div
+              className={`flex items-center gap-2 rounded-full px-3 py-1 text-[10px] font-black tracking-widest uppercase transition-colors ${
+                isDirty ? "bg-amber-50 text-amber-600" : "bg-emerald-50 text-emerald-600"
+              }`}
+            >
+              {isDirty ? <AlertCircle size={12} /> : null}
+              {isDirty ? "Unsaved Changes" : "Live"}
+            </div>
+
+            <div className="flex items-center gap-2 text-gray-300">
+              <span className="text-xl font-light">/</span>
+              <h1 className="text-xs font-bold tracking-[0.2em] text-gray-500 uppercase">{displayTitle}</h1>
+            </div>
           </div>
 
-          {/* Quick Preview Toggles (Visible on Mid-screens) */}
-          <div className="flex rounded-lg bg-gray-100 p-1 lg:hidden">
-            <button
-              onClick={() => setPreviewMode("mobile")}
-              className={`rounded p-1.5 ${previewMode === "mobile" ? "bg-white shadow-sm" : ""}`}
-            >
-              <Smartphone size={16} />
-            </button>
-            <button
-              onClick={() => setPreviewMode("desktop")}
-              className={`rounded p-1.5 ${previewMode === "desktop" ? "bg-white shadow-sm" : ""}`}
-            >
-              <Monitor size={16} />
-            </button>
+          <div className="hidden items-center gap-4 lg:flex">
+            <p className="text-[10px] font-bold text-gray-300 uppercase">Trinity Methodist Church PJ</p>
           </div>
         </header>
 
-        <section className="custom-scrollbar flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-5xl p-8 lg:p-12">{renderEditor()}</div>
+        {/* WORKSPACE AREA */}
+        <section className="custom-scrollbar flex-1 overflow-y-auto bg-gray-50/30">
+          <div className="mx-auto max-w-5xl p-8 lg:p-12">
+            {ActiveEditor ? (
+              <ActiveEditor data={siteData} />
+            ) : (
+              <div className="rounded-3xl border-2 border-dashed border-gray-200 bg-white p-20 text-center">
+                <p className="font-medium text-gray-400">
+                  The <span className="font-bold text-gray-600">{displayTitle}</span> module is currently under
+                  maintenance.
+                </p>
+              </div>
+            )}
+          </div>
         </section>
       </main>
-
-      {/* RIGHT: Live Preview Pane */}
-      {/*
-        <aside className="hidden w-[400px] flex-col bg-gray-50 xl:flex 2xl:w-[500px]">
-        <header className="flex h-16 items-center justify-between border-b bg-white px-6">
-          <h3 className="text-sm font-bold tracking-widest text-gray-400 uppercase">Live Preview</h3>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setPreviewMode("mobile")}
-              className={`rounded-md p-2 transition-all ${previewMode === "mobile" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-100"}`}
-            >
-              <Smartphone size={18} />
-            </button>
-            <button
-              onClick={() => setPreviewMode("desktop")}
-              className={`rounded-md p-2 transition-all ${previewMode === "desktop" ? "bg-blue-600 text-white" : "text-gray-400 hover:bg-gray-100"}`}
-            >
-              <Monitor size={18} />
-            </button>
-          </div>
-        </header>
-
-        <div className="flex flex-1 items-start justify-center overflow-hidden p-6">
-          <div
-            className={`overflow-hidden rounded-t-3xl border-[8px] border-gray-800 bg-white shadow-2xl transition-all duration-500 ${
-              previewMode === "mobile" ? "h-[600px] w-[320px]" : "h-full w-full border-t-[12px]"
-            }`}
-          >
-            <iframe
-              src="/" // Points to your public homepage
-              className="h-full w-full border-none"
-              title="Preview"
-            />
-          </div>
-        </div>
-      </aside>
-        */}
     </div>
   )
 }

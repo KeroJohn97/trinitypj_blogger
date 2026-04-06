@@ -121,7 +121,7 @@
     "@vitejs/plugin-react": "^5.1.0",
     "@vitest/ui": "^4.0.6",
     "all-contributors-cli": "^6.26.1",
-    "baseline-browser-mapping": "^2.9.5",
+    "baseline-browser-mapping": "^2.10.15",
     "cross-env": "^10.1.0",
     "eslint": "^9.39.0",
     "eslint-config-next": "16.0.1",
