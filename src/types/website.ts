@@ -32,14 +32,14 @@ export interface AlphaVideo {
 export interface SmallGroup {
   id: string
   name: string
-  leader_name?: string | null
-  meeting_day: string
-  meeting_time: string
-  location_area: string
-  contact_number?: string | null
-  category: string // e.g., 'Adult', 'Youth', 'Young Adult'
   is_active: boolean
-  created_at?: string
+  language: "English" | "Chinese" | "BM"
+  zone: string // e.g., "Section 14", "SS2", "Bandar Utama"
+  leader_name: string
+  contact_number: string
+  meeting_time: string
+  meeting_day: string
+  location_area: string
   is_featured: boolean
 }
 

@@ -1,7 +1,8 @@
 "use client"
-import { ChevronDown, Loader2, Plus, Save, Star, Trash2, Users } from "lucide-react"
+import { Calendar, ChevronDown, Clock, Globe, Loader2, MapPin, Plus, Save, Star, Trash2, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 
+import { NavigationGuardProvider, useNavigationGuard } from "@/context/navigation-guard-context"
 import { SmallGroup } from "@/types/website"
 import AdminHeader from "../AdminHeader"
 
@@ -11,6 +12,25 @@ export default function SmallGroupsEditor() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [deletedIds, setDeletedIds] = useState<string[]>([])
+  const { setIsDirty } = useNavigationGuard()
+  const [hasChanges, setHasChanges] = useState(false)
+
+  useEffect(() => {
+    setIsDirty(hasChanges) // Flip the switch to "ON"
+    return () => setIsDirty(false) // Reset when leaving
+  }, [hasChanges])
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasChanges) {
+        e.preventDefault()
+        e.returnValue = "" // Required for Chrome/Firefox
+      }
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload)
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload)
+  }, [hasChanges])
 
   useEffect(() => {
     async function loadGroups() {
@@ -20,6 +40,7 @@ export default function SmallGroupsEditor() {
       setIsLoading(false)
     }
     loadGroups()
+    setHasChanges(false)
   }, [])
 
   const addGroup = () => {
@@ -27,21 +48,24 @@ export default function SmallGroupsEditor() {
     const newGroup: SmallGroup = {
       id: newId,
       name: "",
-      leader_name: "",
       meeting_day: "Friday",
       meeting_time: "8:00 PM",
       location_area: "",
       contact_number: "",
-      category: "Adult",
       is_active: true,
+      language: "English",
+      zone: "",
+      leader_name: "",
       is_featured: false,
     }
     setGroups([newGroup, ...groups])
     setExpandedId(newId)
+    setHasChanges(true)
   }
 
   const updateGroup = (id: string, updates: Partial<SmallGroup>) => {
     setGroups(groups.map((g) => (g.id === id ? { ...g, ...updates } : g)))
+    setHasChanges(true)
   }
 
   const handleDelete = (id: string) => {
@@ -53,6 +77,7 @@ export default function SmallGroupsEditor() {
     }
 
     setGroups((prev) => prev.filter((g) => g.id !== id))
+    setHasChanges(true)
   }
 
   const handlePublish = async () => {
@@ -79,6 +104,7 @@ export default function SmallGroupsEditor() {
       alert("Publishing failed.")
     } finally {
       setIsSaving(false)
+      setHasChanges(false)
     }
   }
 
@@ -90,161 +116,227 @@ export default function SmallGroupsEditor() {
     )
 
   return (
-    <div className="min-h-screen bg-gray-50/50">
-      <AdminHeader
-        title="Small Groups"
-        subtitle="Church Cell Groups & Fellowships"
-        primaryAction={{
-          label: "Publish Changes",
-          onClick: handlePublish,
-          icon: <Save size={18} />,
-          loading: isSaving,
-        }}
-        secondaryAction={{
-          label: "New Group",
-          onClick: addGroup,
-          icon: <Plus size={18} />,
-        }}
-      />
+    <NavigationGuardProvider>
+      <div className="min-h-screen bg-[#FDFDFD] text-slate-900 selection:bg-blue-100">
+        <AdminHeader
+          title="Small Groups"
+          subtitle="Management Portal"
+          primaryAction={{
+            label: hasChanges ? "Publish Updates" : "Saved",
+            onClick: handlePublish,
+            icon: <Save size={18} />,
+            loading: isSaving,
+            // Add a subtle glow if there are changes
+            className: hasChanges ? "ring-4 ring-emerald-100" : "",
+          }}
+          secondaryAction={{
+            label: "Create",
+            onClick: addGroup,
+            icon: <Plus size={16} strokeWidth={2.5} />,
+          }}
+        />
 
-      {/* The Content Container - Use pt-6 to give space below the sticky header */}
-      <main className="w-full px-4 pt-6 pb-24 sm:px-8 lg:px-12">
-        <div className="mx-auto max-w-6xl space-y-4">
-          {groups.map((group) => {
-            const isEditing = expandedId === group.id
+        <main className="mx-auto max-w-5xl px-6 pt-12 pb-32">
+          <div className="space-y-6">
+            {groups.map((group) => {
+              const isEditing = expandedId === group.id
 
-            return (
-              <div key={group.id} className="rounded-3xl border-2 border-gray-100 bg-white">
-                {/* COLLAPSED ROW (With Quick-Star) */}
+              return (
                 <div
-                  className="flex cursor-pointer items-center justify-between p-5 sm:p-6"
-                  onClick={() => setExpandedId(isEditing ? null : group.id)}
+                  key={group.id}
+                  className={`group transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+                    isEditing
+                      ? "rounded-[32px] bg-white shadow-[0_20px_50px_rgba(0,0,0,0.08)] ring-1 ring-slate-100"
+                      : "rounded-2xl bg-white shadow-sm ring-1 ring-slate-100 hover:shadow-md hover:ring-1 hover:ring-slate-200"
+                  }`}
                 >
-                  <div className="flex min-w-0 items-center gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 sm:h-12 sm:w-12">
-                      <Users size={20} />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h3 className="truncate font-bold text-gray-900">{group.name || "Unnamed Group"}</h3>
-                        {group.is_featured && <Star size={14} className="fill-amber-400 text-amber-400" />}
+                  {/* HEADER ROW */}
+                  <div
+                    className="flex cursor-pointer items-center justify-between p-6"
+                    onClick={() => setExpandedId(isEditing ? null : group.id)}
+                  >
+                    <div className="flex items-center gap-5">
+                      <div
+                        className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-colors duration-300 ${
+                          isEditing ? "bg-slate-900 text-white" : "bg-slate-50 text-slate-400 group-hover:bg-slate-100"
+                        }`}
+                      >
+                        <Users size={22} strokeWidth={1.5} />
                       </div>
-                      <p className="truncate text-xs text-gray-500">{group.location_area || "No Location Set"}</p>
+
+                      <div className="space-y-0.5">
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-base font-semibold tracking-tight text-slate-800">
+                            {group.name || "Untitled Small Group"}
+                          </h3>
+                          {group.is_featured && (
+                            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-50">
+                              <Star size={10} className="fill-amber-400 text-amber-400" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-3 text-sm text-slate-400">
+                          <span className="flex items-center gap-1.5">
+                            <MapPin size={12} /> {group.zone || group.location_area || "General"}
+                          </span>
+                          <span className="h-1 w-1 rounded-full bg-slate-200" />
+                          <span className="flex items-center gap-1.5">
+                            <Globe size={12} /> {group.language || "English"}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      className={`rounded-full p-2 transition-all duration-300 ${isEditing ? "rotate-180 bg-slate-100 text-slate-900" : "text-slate-300"}`}
+                    >
+                      <ChevronDown size={20} strokeWidth={1.5} />
                     </div>
                   </div>
-                  <ChevronDown
-                    size={20}
-                    className={`text-gray-300 transition-transform ${isEditing ? "rotate-180" : ""}`}
-                  />
-                </div>
 
-                {/* EXPANDED FORM (Option 2 Refactor) */}
-                {isEditing && (
-                  <div className="border-t border-gray-50 bg-gray-50/30 p-6 sm:p-8">
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                      {/* Name - Spans 2 cols for prominence */}
-                      <div className="space-y-2 md:col-span-2">
-                        <label className="text-[10px] font-black tracking-widest text-gray-400 uppercase">
-                          Group Name
-                        </label>
-                        <input
-                          value={group.name}
-                          onChange={(e) => updateGroup(group.id, { name: e.target.value })}
-                          className="w-full rounded-2xl border-2 border-gray-100 bg-white p-4 font-bold outline-none focus:border-blue-500"
-                        />
-                      </div>
+                  {/* EXPANDED FORM */}
+                  {isEditing && (
+                    <div className="animate-in fade-in slide-in-from-top-2 px-8 pb-8 duration-500">
+                      <div className="mb-8 h-px bg-gradient-to-r from-transparent via-slate-100 to-transparent" />
 
-                      {/* NEW: Option 2 Feature Toggle Card */}
-                      <div className="flex items-center justify-between rounded-2xl border-2 border-amber-100 bg-amber-50/50 p-4">
-                        <div className="flex items-center gap-3">
-                          <Star
-                            size={20}
-                            className={group.is_featured ? "fill-amber-500 text-amber-500" : "text-amber-300"}
-                          />
-                          <div>
-                            <p className="text-sm font-bold text-amber-900">Featured</p>
-                            <p className="text-[10px] font-bold text-amber-600/60 uppercase">Pin to Top</p>
+                      <div className="grid grid-cols-1 gap-8 md:grid-cols-6">
+                        {/* Primary Identity */}
+                        <div className="space-y-6 md:col-span-4">
+                          <div className="space-y-2">
+                            <label className="ml-1 text-[11px] font-bold tracking-[0.1em] text-slate-400 uppercase">
+                              Identity
+                            </label>
+                            <input
+                              placeholder="e.g. PJ North Lighthouse"
+                              value={group.name || ""}
+                              onChange={(e) => updateGroup(group.id, { name: e.target.value })}
+                              className="w-full rounded-2xl border border-transparent bg-slate-50/50 px-5 py-4 text-lg font-medium transition-all placeholder:text-slate-300 focus:border-blue-100 focus:bg-white focus:ring-2 focus:ring-blue-500/10 focus:outline-none"
+                            />
+                          </div>
+
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <label className="ml-1 text-[11px] font-bold tracking-[0.1em] text-slate-400 uppercase">
+                                Zone
+                              </label>
+                              <input
+                                value={group.zone || ""}
+                                onChange={(e) => updateGroup(group.id, { zone: e.target.value })}
+                                className="w-full rounded-xl border border-transparent bg-slate-50/50 px-5 py-3.5 transition-all focus:border-slate-200 focus:bg-white focus:outline-none"
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <label className="ml-1 text-[11px] font-bold tracking-[0.1em] text-slate-400 uppercase">
+                                Language
+                              </label>
+                              <select
+                                value={group.language || ""}
+                                onChange={(e) =>
+                                  updateGroup(group.id, { language: e.target.value as SmallGroup["language"] })
+                                }
+                                className="w-full appearance-none rounded-xl border border-transparent bg-slate-50/50 px-5 py-3.5 transition-all focus:border-slate-200 focus:bg-white focus:outline-none"
+                              >
+                                <option>English</option>
+                                <option>Chinese</option>
+                                <option>BM</option>
+                              </select>
+                            </div>
                           </div>
                         </div>
-                        <button
-                          onClick={() => updateGroup(group.id, { is_featured: !group.is_featured })}
-                          className={`relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ${group.is_featured ? "bg-amber-500" : "bg-gray-200"}`}
-                        >
-                          <span
-                            className={`inline-block h-5 w-5 transform rounded-full bg-white shadow-sm transition duration-200 ${group.is_featured ? "translate-x-5" : "translate-x-0"}`}
-                          />
-                        </button>
-                      </div>
 
-                      {/* Area */}
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-gray-400 uppercase">
-                          Location Area
-                        </label>
-                        <input
-                          value={group.location_area}
-                          onChange={(e) => updateGroup(group.id, { location_area: e.target.value })}
-                          className="w-full rounded-2xl border-2 border-gray-100 bg-white p-4 outline-none focus:border-blue-500"
-                        />
-                      </div>
+                        {/* Status Panel */}
+                        <div className="space-y-4 md:col-span-2">
+                          <div className="space-y-4 rounded-2xl bg-slate-50 p-5">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-semibold text-slate-500">Pinned</span>
+                              <button
+                                onClick={() => updateGroup(group.id, { is_featured: !group.is_featured })}
+                                className={`relative h-6 w-11 rounded-full transition-all ${group.is_featured ? "bg-black" : "bg-slate-200"}`}
+                              >
+                                <div
+                                  className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-all ${group.is_featured ? "left-6" : "left-1"}`}
+                                />
+                              </button>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-semibold text-slate-500">Public Visibility</span>
+                              <button
+                                onClick={() => updateGroup(group.id, { is_active: !group.is_active })}
+                                className={`relative h-6 w-11 rounded-full transition-all ${group.is_active ? "bg-slate-900" : "bg-slate-200"}`}
+                              >
+                                <div
+                                  className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-all ${group.is_active ? "left-6" : "left-1"}`}
+                                />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
 
-                      {/* Schedule Group */}
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-gray-400 uppercase">
-                          Meeting Schedule
-                        </label>
-                        <div className="flex gap-2">
-                          <input
-                            value={group.meeting_day}
-                            onChange={(e) => updateGroup(group.id, { meeting_day: e.target.value })}
-                            className="w-1/2 rounded-xl border-2 border-gray-100 bg-white p-4 outline-none focus:border-blue-500"
-                          />
-                          <input
-                            value={group.meeting_time}
-                            onChange={(e) => updateGroup(group.id, { meeting_time: e.target.value })}
-                            className="w-1/2 rounded-xl border-2 border-gray-100 bg-white p-4 outline-none focus:border-blue-500"
-                          />
+                        {/* Schedule Section */}
+                        <div className="grid grid-cols-1 gap-6 rounded-3xl border border-slate-100 bg-slate-50/30 p-6 md:col-span-6 md:grid-cols-3">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2 text-slate-400">
+                              <Calendar size={14} />
+                              <span className="text-[10px] font-bold tracking-widest uppercase">Meeting Day</span>
+                            </div>
+                            <input
+                              value={group.meeting_day || ""}
+                              onChange={(e) => updateGroup(group.id, { meeting_day: e.target.value })}
+                              className="w-full border-b border-slate-200 bg-transparent py-1 transition-all outline-none focus:border-slate-900"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2 text-slate-400">
+                              <Clock size={14} />
+                              <span className="text-[10px] font-bold tracking-widest uppercase">Start Time</span>
+                            </div>
+                            <input
+                              value={group.meeting_time || ""}
+                              onChange={(e) => updateGroup(group.id, { meeting_time: e.target.value })}
+                              className="w-full border-b border-slate-200 bg-transparent py-1 transition-all outline-none focus:border-slate-900"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2 text-slate-400">
+                              <MapPin size={14} />
+                              <span className="text-[10px] font-bold tracking-widest uppercase">Venue</span>
+                            </div>
+                            <input
+                              value={group.location_area || ""}
+                              onChange={(e) => updateGroup(group.id, { location_area: e.target.value })}
+                              className="w-full border-b border-slate-200 bg-transparent py-1 transition-all outline-none focus:border-slate-900"
+                            />
+                          </div>
                         </div>
                       </div>
 
-                      {/* Category Select */}
-                      <div className="space-y-2">
-                        <label className="text-[10px] font-black tracking-widest text-gray-400 uppercase">
-                          Category
-                        </label>
-                        <select
-                          value={group.category}
-                          onChange={(e) => updateGroup(group.id, { category: e.target.value })}
-                          className="w-full rounded-2xl border-2 border-gray-100 bg-white p-4 font-bold outline-none focus:border-blue-500"
+                      {/* Footer Actions */}
+                      <div className="mt-12 flex items-center justify-between">
+                        <button
+                          onClick={() => handleDelete(group.id)}
+                          className="group flex items-center gap-2 text-sm font-medium text-slate-400 transition-colors hover:text-red-500"
                         >
-                          <option value="Adult">Adult</option>
-                          <option value="Youth">Youth</option>
-                          <option value="Young Adult">Young Adult</option>
-                        </select>
+                          <div className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors group-hover:bg-red-50">
+                            <Trash2 size={16} />
+                          </div>
+                          Remove Small Group
+                        </button>
+
+                        <button
+                          onClick={() => setExpandedId(null)}
+                          className="rounded-2xl bg-slate-900 px-10 py-3.5 font-semibold text-white shadow-lg shadow-slate-200 transition-all hover:bg-black active:scale-[0.98]"
+                        >
+                          Finish Editing
+                        </button>
                       </div>
                     </div>
-
-                    <div className="mt-8 flex items-center justify-between border-t border-gray-100 pt-6">
-                      <button
-                        onClick={() => handleDelete(group.id)}
-                        className="flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-bold text-red-500 transition-all hover:bg-red-50"
-                      >
-                        <Trash2 size={18} /> Remove Group
-                      </button>
-                      <button
-                        onClick={() => setExpandedId(null)}
-                        className="rounded-2xl bg-gray-900 px-8 py-3 font-bold text-white transition-all hover:bg-black"
-                      >
-                        Done
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )
-          })}
-        </div>
-      </main>
-    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </main>
+      </div>
+    </NavigationGuardProvider>
   )
 }
