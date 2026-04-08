@@ -34,12 +34,12 @@ export default function VisionEditor() {
             <div className="flex-1 space-y-4">
               <input
                 placeholder="Pillar Title (e.g. Our Mission)"
-                className="w-full border-b border-transparent pb-1 text-xl font-bold outline-none focus:border-blue-500"
+                className="w-full border-b border-transparent pb-1 text-xl font-bold outline-none focus:border-emerald-500"
                 value={pillar.title}
               />
               <textarea
                 placeholder="Describe this vision pillar..."
-                className="h-24 w-full rounded-lg border-none bg-gray-50 p-3 text-sm text-gray-600 outline-none focus:ring-2 focus:ring-blue-500"
+                className="h-24 w-full rounded-lg border-none bg-gray-50 p-3 text-sm text-gray-600 outline-none focus:ring-2 focus:ring-emerald-500"
                 value={pillar.desc}
               />
             </div>
@@ -50,7 +50,7 @@ export default function VisionEditor() {
           </div>
         ))}
 
-        <button className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed py-4 font-bold text-gray-400 transition-all hover:border-blue-200 hover:text-blue-600">
+        <button className="flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-dashed py-4 font-bold text-gray-400 transition-all hover:border-emerald-200 hover:text-emerald-600">
           <Plus size={20} /> Add New Vision Pillar
         </button>
       </div>

@@ -46,7 +46,7 @@ export default async function SmallGroupsPage({ params }: { params: Promise<{ la
   }, {})
 
   return (
-    <div className="bg-background min-h-screen selection:bg-blue-100">
+    <div className="bg-background min-h-screen selection:bg-emerald-100">
       {/* Hero Section */}
       <section
         className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"

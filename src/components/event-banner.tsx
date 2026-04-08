@@ -41,7 +41,7 @@ export function EventBanner({
       case "warm":
         return "bg-gradient-to-r from-orange-500 to-pink-500"
       case "cool":
-        return "bg-gradient-to-r from-blue-500 to-purple-500"
+        return "bg-gradient-to-r from-emerald-500 to-purple-500"
       default:
         return "bg-gradient-to-r from-primary to-accent"
     }

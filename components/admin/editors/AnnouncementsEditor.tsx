@@ -14,7 +14,7 @@ export default function AnnouncementsEditor() {
           <h2 className="text-2xl font-bold text-gray-800">Weekly Announcements</h2>
           <p className="text-sm text-gray-500">Upload images for the scrolling announcement banner.</p>
         </div>
-        <button className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-bold text-white">
+        <button className="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-bold text-white">
           <Plus size={18} /> Add Announcement
         </button>
       </div>

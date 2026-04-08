@@ -52,7 +52,7 @@ export default function ServiceTimesEditor({ initialData }: { initialData: Servi
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700 disabled:bg-gray-400"
+          className="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-white transition-colors hover:bg-emerald-700 disabled:bg-gray-400"
         >
           <Save size={18} />
           {isSaving ? "Saving..." : "Publish Changes"}
@@ -78,7 +78,7 @@ export default function ServiceTimesEditor({ initialData }: { initialData: Servi
                     placeholder="e.g. 8:30 AM"
                     value={service.time}
                     onChange={(e) => updateService(service.id, "time", e.target.value)}
-                    className="w-full border-b border-transparent bg-transparent p-1 transition-all outline-none group-hover:border-gray-200 focus:border-blue-500"
+                    className="w-full border-b border-transparent bg-transparent p-1 transition-all outline-none group-hover:border-gray-200 focus:border-emerald-500"
                   />
                 </td>
                 <td className="p-4">
@@ -87,7 +87,7 @@ export default function ServiceTimesEditor({ initialData }: { initialData: Servi
                     placeholder="e.g. Traditional Service"
                     value={service.name}
                     onChange={(e) => updateService(service.id, "name", e.target.value)}
-                    className="w-full border-b border-transparent bg-transparent p-1 transition-all outline-none group-hover:border-gray-200 focus:border-blue-500"
+                    className="w-full border-b border-transparent bg-transparent p-1 transition-all outline-none group-hover:border-gray-200 focus:border-emerald-500"
                   />
                 </td>
                 <td className="p-4">
@@ -96,7 +96,7 @@ export default function ServiceTimesEditor({ initialData }: { initialData: Servi
                     placeholder="e.g. Sanctuary"
                     value={service.location}
                     onChange={(e) => updateService(service.id, "location", e.target.value)}
-                    className="w-full border-b border-transparent bg-transparent p-1 transition-all outline-none group-hover:border-gray-200 focus:border-blue-500"
+                    className="w-full border-b border-transparent bg-transparent p-1 transition-all outline-none group-hover:border-gray-200 focus:border-emerald-500"
                   />
                 </td>
                 <td className="p-4 text-right">
@@ -121,7 +121,7 @@ export default function ServiceTimesEditor({ initialData }: { initialData: Servi
         <div className="border-t bg-gray-50 p-4">
           <button
             onClick={addService}
-            className="flex items-center gap-2 text-sm font-medium text-blue-600 transition-colors hover:text-blue-800"
+            className="flex items-center gap-2 text-sm font-medium text-emerald-600 transition-colors hover:text-emerald-800"
           >
             <Plus size={18} />
             Add Another Service

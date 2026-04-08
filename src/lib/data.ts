@@ -29,7 +29,7 @@ export const formCategories = [
     icon: HandHeart,
     // Title/Desc moved to dictionary
     formLink: "https://docs.google.com/forms/d/e/1FAIpQLSeXbVhtOJzT_ifLYZ_fw7iPxk-ypdnYWtkia-WmSvJ_D0508Q/viewform",
-    color: "text-blue-600 dark:text-blue-400",
+    color: "text-emerald-600 dark:text-emerald-400",
   },
   {
     id: "form-prayer",

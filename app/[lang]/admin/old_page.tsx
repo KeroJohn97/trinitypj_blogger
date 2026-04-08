@@ -115,7 +115,7 @@ export default function WebsiteSettingsPage() {
           <h2 className="text-xl font-bold text-gray-800">Site Customizer</h2>
           <button
             onClick={handleSave}
-            className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700"
           >
             Save Changes
           </button>
@@ -150,7 +150,7 @@ export default function WebsiteSettingsPage() {
               value={formData.title}
               onChange={handleChange}
               placeholder="Site Title"
-              className="mt-2 w-full rounded-md border p-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-2 w-full rounded-md border p-2 text-sm outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
           <div>

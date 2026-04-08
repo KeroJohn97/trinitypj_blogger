@@ -65,6 +65,10 @@ export function Footer({ dict }: FooterProps) {
               © {currentYear} {dict.copyright}
             </p>
             <div className="mt-4 flex space-x-6 md:mt-0">
+              {/* The Stealth Door */}
+              <Link href="/admin/login" className="hover:text-primary text-sm text-white/50">
+                Staff Login
+              </Link>
               <Link
                 href="https://facebook.com/mytrinitypj"
                 className="text-muted-foreground hover:text-primary text-sm transition-colors"

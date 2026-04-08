@@ -117,7 +117,7 @@ export default function SmallGroupsEditor() {
 
   return (
     <NavigationGuardProvider>
-      <div className="min-h-screen bg-[#FDFDFD] text-slate-900 selection:bg-blue-100">
+      <div className="min-h-screen bg-[#FDFDFD] text-slate-900 selection:bg-emerald-100">
         <AdminHeader
           title="Small Groups"
           subtitle="Management Portal"
@@ -210,7 +210,7 @@ export default function SmallGroupsEditor() {
                               placeholder="e.g. PJ North Lighthouse"
                               value={group.name || ""}
                               onChange={(e) => updateGroup(group.id, { name: e.target.value })}
-                              className="w-full rounded-2xl border border-transparent bg-slate-50/50 px-5 py-4 text-lg font-medium transition-all placeholder:text-slate-300 focus:border-blue-100 focus:bg-white focus:ring-2 focus:ring-blue-500/10 focus:outline-none"
+                              className="w-full rounded-2xl border border-transparent bg-slate-50/50 px-5 py-4 text-lg font-medium transition-all placeholder:text-slate-300 focus:border-emerald-100 focus:bg-white focus:ring-2 focus:ring-emerald-500/10 focus:outline-none"
                             />
                           </div>
 

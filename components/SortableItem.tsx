@@ -16,7 +16,7 @@ export function SortableGatheringRow({ id, children }: { id: string; children: R
       <div
         {...attributes}
         {...listeners}
-        className="absolute top-1/2 left-[-32px] hidden -translate-y-1/2 cursor-grab p-2 text-gray-300 opacity-0 transition-all group-hover:opacity-100 hover:text-blue-500 active:cursor-grabbing lg:block"
+        className="absolute top-1/2 left-[-32px] hidden -translate-y-1/2 cursor-grab p-2 text-gray-300 opacity-0 transition-all group-hover:opacity-100 hover:text-emerald-500 active:cursor-grabbing lg:block"
       >
         <GripVertical size={20} />
       </div>

@@ -14,7 +14,7 @@ export default function BulletinEditor({ initialData }: { initialData: string })
       </div>
 
       <div className="space-y-4 rounded-xl border bg-white p-6 shadow-sm">
-        <div className="flex items-center gap-3 rounded-lg bg-blue-50 p-3 text-sm text-blue-700">
+        <div className="flex items-center gap-3 rounded-lg bg-emerald-50 p-3 text-sm text-emerald-700">
           <Info size={18} />
           <p>
             Ensure the Google Drive file permission is set to <b>"Anyone with the link can view."</b>
@@ -29,7 +29,7 @@ export default function BulletinEditor({ initialData }: { initialData: string })
               value={link}
               onChange={(e) => setLink(e.target.value)}
               placeholder="https://drive.google.com/file/d/..."
-              className="flex-1 rounded-lg border p-2 outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 rounded-lg border p-2 outline-none focus:ring-2 focus:ring-emerald-500"
             />
             {link && (
               <a href={link} target="_blank" className="rounded-lg border p-2 hover:bg-gray-50">

@@ -9,7 +9,7 @@ export default function Home() {
         <div className="text-center">
           <button
             id="mainButton"
-            className="rounded-full bg-blue-500 px-6 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-blue-600"
+            className="rounded-full bg-emerald-500 px-6 py-2 font-semibold text-white transition duration-300 ease-in-out hover:bg-emerald-600"
           >
             Click Me!
           </button>

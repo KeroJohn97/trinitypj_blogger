@@ -13,7 +13,7 @@ export default function GivingEditor() {
       <div className="grid gap-6 md:grid-cols-2">
         {/* Bank Transfer Details */}
         <div className="space-y-4 rounded-xl border bg-white p-6 shadow-sm">
-          <div className="mb-2 flex items-center gap-2 font-bold text-blue-600">
+          <div className="mb-2 flex items-center gap-2 font-bold text-emerald-600">
             <CreditCard size={20} />
             <h3>Bank Details</h3>
           </div>

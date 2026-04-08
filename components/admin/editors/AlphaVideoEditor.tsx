@@ -45,7 +45,7 @@ export default function AlphaVideoEditor() {
             <div className="flex-1 space-y-3">
               <input
                 placeholder="Session Title (e.g. Session 1: Who is Jesus?)"
-                className="w-full border-b border-transparent p-1 font-bold text-gray-800 outline-none focus:border-blue-500"
+                className="w-full border-b border-transparent p-1 font-bold text-gray-800 outline-none focus:border-emerald-500"
                 value={vid.title}
                 onChange={(e) => {
                   /* Update logic */
@@ -55,7 +55,7 @@ export default function AlphaVideoEditor() {
                 <span className="font-mono text-xs text-gray-400">youtube.com/watch?v=</span>
                 <input
                   placeholder="Video ID (e.g. hB7u7S_77S8)"
-                  className="flex-1 rounded border bg-gray-50 p-1.5 text-sm outline-none focus:ring-1 focus:ring-blue-500"
+                  className="flex-1 rounded border bg-gray-50 p-1.5 text-sm outline-none focus:ring-1 focus:ring-emerald-500"
                   value={vid.video_id}
                   onChange={(e) => {
                     /* Update logic */

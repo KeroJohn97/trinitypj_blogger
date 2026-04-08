@@ -17,13 +17,13 @@ export default function AboutUsEditor({ initialData }: { initialData: string }) 
         <div className="flex gap-2 rounded-lg bg-gray-100 p-1">
           <button
             onClick={() => setView("edit")}
-            className={`flex items-center gap-2 rounded-md px-3 py-1.5 text-sm transition-all ${view === "edit" ? "bg-white font-bold text-blue-600 shadow-sm" : "text-gray-500"}`}
+            className={`flex items-center gap-2 rounded-md px-3 py-1.5 text-sm transition-all ${view === "edit" ? "bg-white font-bold text-emerald-600 shadow-sm" : "text-gray-500"}`}
           >
             <Edit3 size={16} /> Write
           </button>
           <button
             onClick={() => setView("preview")}
-            className={`flex items-center gap-2 rounded-md px-3 py-1.5 text-sm transition-all ${view === "preview" ? "bg-white font-bold text-blue-600 shadow-sm" : "text-gray-500"}`}
+            className={`flex items-center gap-2 rounded-md px-3 py-1.5 text-sm transition-all ${view === "preview" ? "bg-white font-bold text-emerald-600 shadow-sm" : "text-gray-500"}`}
           >
             <Eye size={16} /> Preview
           </button>
@@ -49,7 +49,7 @@ export default function AboutUsEditor({ initialData }: { initialData: string }) 
           <a
             href="https://www.markdownguide.org/cheat-sheet/"
             target="_blank"
-            className="flex items-center gap-1 text-xs text-blue-600 hover:underline"
+            className="flex items-center gap-1 text-xs text-emerald-600 hover:underline"
           >
             <HelpCircle size={14} /> Markdown Guide
           </a>

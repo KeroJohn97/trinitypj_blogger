@@ -2,7 +2,8 @@
 import { websiteService } from "@/services/website-service"
 import { DEFAULT_SITE_DATA } from "@/types/defaults"
 import { SiteData } from "@/types/website"
-import { Globe, Loader2, Palette, Save, Share2 } from "lucide-react"
+import ImagePicker from "components/ImagePicker"
+import { Loader2, Palette, Save, Share2 } from "lucide-react"
 import React, { useEffect, useState } from "react"
 
 export default function GeneralSettingsEditor({ initialData }: { initialData: SiteData | null }) {
@@ -31,21 +32,22 @@ export default function GeneralSettingsEditor({ initialData }: { initialData: Si
   }
 
   // Logo Upload Flow
-  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+  const handleLogoChange = async (assetId: string) => {
+    // 1. Update the local UI state immediately so the user sees the change
+    const updatedData = { ...formData, logo_image_id: assetId }
+    setFormData(updatedData)
 
-    setIsUploading(true)
+    // 2. Persist the change to the database
+    // We save immediately so the Logo ID is locked into your site_settings table
+    setIsSaving(true)
     try {
-      const publicUrl = await websiteService.uploadLogo(file)
-      const updatedData = { ...formData, logoUrl: publicUrl }
-      setFormData(updatedData)
-      // We save immediately on logo upload so the record stays in sync with storage
       await websiteService.saveSettings(updatedData)
+      console.log("Logo reference updated successfully")
     } catch (error) {
-      alert("Logo upload failed. Check console for details.")
+      console.error("Failed to save settings after logo update:", error)
+      alert("Settings sync failed. Please try again.")
     } finally {
-      setIsUploading(false)
+      setIsSaving(false)
     }
   }
 
@@ -72,7 +74,7 @@ export default function GeneralSettingsEditor({ initialData }: { initialData: Si
         <button
           onClick={handleSave}
           disabled={isSaving || isUploading}
-          className="flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-2.5 font-bold text-white shadow-md transition-all hover:bg-blue-700 disabled:bg-gray-400"
+          className="flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-2.5 font-bold text-white shadow-md transition-all hover:bg-emerald-700 disabled:bg-gray-400"
         >
           {isSaving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
           {isSaving ? "Publishing..." : "Save Changes"}
@@ -82,37 +84,18 @@ export default function GeneralSettingsEditor({ initialData }: { initialData: Si
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Section 1: Visual Identity */}
         <div className="space-y-6">
-          <div className="flex items-center gap-2 text-sm font-bold tracking-wider text-blue-600 uppercase">
+          <div className="flex items-center gap-2 text-sm font-bold tracking-wider text-emerald-600 uppercase">
             <Palette size={16} /> <span>Visual Identity</span>
           </div>
 
           {/* Logo Upload Box */}
           <div className="rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 p-6">
-            <label className="mb-4 block text-center text-sm font-semibold text-gray-700">Website Logo</label>
-            <div className="flex flex-col items-center gap-4">
-              <div className="group relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-xl border bg-white shadow-sm">
-                {formData.logoUrl ? (
-                  <img src={formData.logoUrl} alt="Logo Preview" className="h-full w-full object-contain p-2" />
-                ) : (
-                  <Globe size={40} className="text-gray-200" />
-                )}
-                {isUploading && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-white/80">
-                    <Loader2 className="animate-spin text-blue-600" />
-                  </div>
-                )}
-              </div>
-              <label className="cursor-pointer rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-bold transition-colors hover:bg-gray-50">
-                {isUploading ? "Uploading..." : "Change Logo"}
-                <input
-                  type="file"
-                  className="hidden"
-                  accept="image/*"
-                  onChange={handleLogoUpload}
-                  disabled={isUploading}
-                />
-              </label>
-            </div>
+            <ImagePicker
+              label="Cover Image"
+              value={"logo"} // Foreign key to media_assets
+              onChange={handleLogoChange}
+              bucket="brand-assets" // Specific folder in Supabase
+            />
           </div>
 
           {/* Primary Color */}
@@ -135,7 +118,7 @@ export default function GeneralSettingsEditor({ initialData }: { initialData: Si
 
         {/* Section 2: Site Info & Social */}
         <div className="space-y-6">
-          <div className="flex items-center gap-2 text-sm font-bold tracking-wider text-blue-600 uppercase">
+          <div className="flex items-center gap-2 text-sm font-bold tracking-wider text-emerald-600 uppercase">
             <Share2 size={16} /> <span>Site Information</span>
           </div>
 
@@ -147,7 +130,7 @@ export default function GeneralSettingsEditor({ initialData }: { initialData: Si
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="e.g. Trinity Methodist Church PJ"
-                className="w-full rounded-xl border p-3 transition-all outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-xl border p-3 transition-all outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
 
@@ -158,7 +141,7 @@ export default function GeneralSettingsEditor({ initialData }: { initialData: Si
                 value={formData.description}
                 onChange={handleChange}
                 placeholder="A short welcome message..."
-                className="h-24 w-full rounded-xl border p-3 transition-all outline-none focus:ring-2 focus:ring-blue-500"
+                className="h-24 w-full rounded-xl border p-3 transition-all outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
 
@@ -168,19 +151,19 @@ export default function GeneralSettingsEditor({ initialData }: { initialData: Si
                 placeholder="Facebook URL"
                 value={formData.socialLinks.facebook}
                 onChange={(e) => handleSocialChange("facebook", e.target.value)}
-                className="w-full rounded-lg border p-2.5 text-sm outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border p-2.5 text-sm outline-none focus:ring-1 focus:ring-emerald-500"
               />
               <input
                 placeholder="Instagram URL"
                 value={formData.socialLinks.instagram}
                 onChange={(e) => handleSocialChange("instagram", e.target.value)}
-                className="w-full rounded-lg border p-2.5 text-sm outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border p-2.5 text-sm outline-none focus:ring-1 focus:ring-emerald-500"
               />
               <input
                 placeholder="YouTube URL"
                 value={formData.socialLinks.youtube}
                 onChange={(e) => handleSocialChange("youtube", e.target.value)}
-                className="w-full rounded-lg border p-2.5 text-sm outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border p-2.5 text-sm outline-none focus:ring-1 focus:ring-emerald-500"
               />
             </div>
           </div>

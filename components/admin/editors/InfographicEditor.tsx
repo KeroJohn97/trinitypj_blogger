@@ -7,7 +7,7 @@ export default function InfographicEditor({ title, currentUrl }: { title: string
     <div className="space-y-4 rounded-2xl border bg-white p-6 shadow-sm">
       <div className="flex items-center justify-between">
         <h3 className="font-bold text-gray-800">{title}</h3>
-        <button className="flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-800">
+        <button className="flex items-center gap-1 text-xs font-bold text-emerald-600 hover:text-emerald-800">
           <RefreshCw size={14} /> Replace Image
         </button>
       </div>

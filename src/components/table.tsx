@@ -21,7 +21,7 @@ export default function Table({ title, columns, data }: TableProps) {
         <div className="mb-8 flex items-end justify-between px-2">
           <div>
             <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">{title}</h2>
-            <div className="mt-2 h-1 w-12 rounded-full bg-blue-600" />
+            <div className="mt-2 h-1 w-12 rounded-full bg-emerald-600" />
           </div>
           <span className="text-xs font-bold tracking-widest text-slate-400 uppercase">{data.length} Groups</span>
         </div>

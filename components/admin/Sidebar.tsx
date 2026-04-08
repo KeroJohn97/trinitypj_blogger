@@ -12,7 +12,7 @@ export default function Sidebar({ activeSlug, onSelect }: SidebarProps) {
     <aside className="sticky top-0 flex h-screen w-64 flex-col overflow-y-auto border-r bg-white">
       {/* Header */}
       <div className="flex h-20 flex-col justify-center border-b border-gray-100 px-6">
-        <h1 className="text-lg leading-none font-black text-blue-600">TMCPJ Portal</h1>
+        <h1 className="text-lg leading-none font-black text-emerald-600">TMCPJ Portal</h1>
         <p className="mt-1.5 text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">Admin Dashboard</p>
       </div>
 
@@ -31,10 +31,10 @@ export default function Sidebar({ activeSlug, onSelect }: SidebarProps) {
                     key={item.slug}
                     onClick={() => onSelect(item.slug)}
                     className={`flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                      isActive ? "bg-blue-50 text-blue-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      isActive ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                     }`}
                   >
-                    <Icon size={18} className={isActive ? "text-blue-600" : "text-gray-400"} />
+                    <Icon size={18} className={isActive ? "text-emerald-600" : "text-gray-400"} />
                     {item.name}
                   </button>
                 )
@@ -47,7 +47,7 @@ export default function Sidebar({ activeSlug, onSelect }: SidebarProps) {
       {/* Footer / Profile */}
       <div className="border-t bg-gray-50 p-4">
         <div className="flex items-center gap-3 px-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-700">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700">
             TM
           </div>
           <div className="flex-1 overflow-hidden">
