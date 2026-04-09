@@ -22,6 +22,13 @@ const config: NextConfig = {
       new URL("https://bearcreek.camp/wp-content/uploads/**"),
       new URL("https://img.youtube.com/**"),
       new URL("https://trinitypj.com/wp-content/uploads/**"),
+      {
+        protocol: 'https',
+        hostname: 'anenlmpxuwzvicwypbat.supabase.co',
+        port: '',
+        // This allows all public buckets; you can restrict this to /brand-assets/** for more security
+        pathname: '/storage/v1/object/public/**', 
+      },
     ],
   },
 }

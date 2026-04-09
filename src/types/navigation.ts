@@ -1,5 +1,6 @@
 // types/navigation.ts or within your component
 import {
+  Calendar,
   Clock,
   HeartHandshake,
   Image as ImageIcon,
@@ -26,6 +27,7 @@ export const ADMIN_NAV = [
       { name: "Service Times", icon: Clock, slug: "services" },
       { name: "Special Alerts", icon: Megaphone, slug: "alerts" },
       { name: "Digital Bulletin", icon: Info, slug: "bulletin" },
+      { name: "Upcoming Activities", icon: Calendar, slug: "activities" }, // Added here
     ],
   },
   {

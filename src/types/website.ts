@@ -73,7 +73,7 @@ export interface SiteData {
   // 1. Identity & Branding
   title: string
   description: string
-  logoUrl: string
+  logo_image_id: string
   primaryColor: string
   socialLinks: SocialLinks
 

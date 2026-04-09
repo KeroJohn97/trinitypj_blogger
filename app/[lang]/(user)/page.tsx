@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { quickLinks } from "@/lib/data"
 // Ensure this path matches where you actually created the getDictionary helper
+import { getWebsiteSettings } from "@/lib/db/website"
 import { getDictionary } from "dictionaries"
 import Link from "next/link"
-import NoticeCarousel from "./app-components/notice-carousel"
-import { getWebsiteSettings } from "@/lib/db/website"
+import UpcomingActivitiesCarousel from "./app-components/upcoming-activities-carousel"
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -34,7 +34,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </RevealOnScroll>
 
         <RevealOnScroll>
-          <NoticeCarousel dict={dict.home} />
+          <UpcomingActivitiesCarousel dict={dict.home} />
         </RevealOnScroll>
 
         <RevealOnScroll>
@@ -57,37 +57,33 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
               {quickLinks.map((feature, index) => {
-              // LOOKUP TRANSLATION HERE
-              // We cast 'feature.id' to specific keys to satisfy TypeScript
-              const key = feature.id as keyof typeof dict.home.quickLinks
-              const content = dict.home.quickLinks[key]
+                // LOOKUP TRANSLATION HERE
+                // We cast 'feature.id' to specific keys to satisfy TypeScript
+                const key = feature.id as keyof typeof dict.home.quickLinks
+                const content = dict.home.quickLinks[key]
 
-              return (
-                <RevealOnScroll key={feature.id} delay={index * 0.1} className="h-full">
-                  <Card className="group h-full transition-shadow duration-300 hover:shadow-lg">
-                    <CardContent className="flex h-full flex-col items-center p-6 text-center">
-                      <div className="bg-primary/10 group-hover:bg-primary/20 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
-                        <feature.icon className="text-primary h-6 w-6" />
-                      </div>
-                      
-                      {/* Use Translated Content */}
-                      <h3 className="text-foreground mb-2 font-semibold">
-                        {content.title}
-                      </h3>
-                      <p className="text-muted-foreground mb-4 flex-1 text-sm">
-                        {content.description}
-                      </p>
-                      
-                      <Button asChild variant="outline" size="sm" className="mt-auto">
-                        <Link href={feature.href}>
-                          {dict.home.explore.action} {/* "Learn More" */}
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </RevealOnScroll>
-              )
-            })}
+                return (
+                  <RevealOnScroll key={feature.id} delay={index * 0.1} className="h-full">
+                    <Card className="group h-full transition-shadow duration-300 hover:shadow-lg">
+                      <CardContent className="flex h-full flex-col items-center p-6 text-center">
+                        <div className="bg-primary/10 group-hover:bg-primary/20 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
+                          <feature.icon className="text-primary h-6 w-6" />
+                        </div>
+
+                        {/* Use Translated Content */}
+                        <h3 className="text-foreground mb-2 font-semibold">{content.title}</h3>
+                        <p className="text-muted-foreground mb-4 flex-1 text-sm">{content.description}</p>
+
+                        <Button asChild variant="outline" size="sm" className="mt-auto">
+                          <Link href={feature.href}>
+                            {dict.home.explore.action} {/* "Learn More" */}
+                          </Link>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </RevealOnScroll>
+                )
+              })}
             </div>
           </div>
         </section>

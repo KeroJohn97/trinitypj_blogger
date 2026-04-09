@@ -1,11 +1,15 @@
 "use client"
 
-import * as React from "react"
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
+import * as React from "react"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+
+type CarouselArrowProps = React.ComponentProps<typeof Button> & {
+  iconClassName?: string // New prop for arrow color/styling
+}
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -174,9 +178,10 @@ function CarouselPrevious({
   className,
   variant = "outline",
   size = "icon",
+  iconClassName, // Destructure the new prop
   ...props
-}: React.ComponentProps<typeof Button>) {
-  const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+}: CarouselArrowProps) {
+  const { orientation, scrollPrev } = useCarousel()
 
   return (
     <Button
@@ -184,16 +189,16 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "absolute z-10 size-8 rounded-full", // Added z-index to ensure visibility
         orientation === "horizontal"
-          ? "top-1/2 -left-12 -translate-y-1/2"
+          ? "top-1/2 left-4 -translate-y-1/2" // Moved INSIDE the container (left-4)
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft />
+      <ArrowLeft className={cn("size-4", iconClassName)} />
       <span className="sr-only">Previous slide</span>
     </Button>
   )
@@ -203,9 +208,10 @@ function CarouselNext({
   className,
   variant = "outline",
   size = "icon",
+  iconClassName, // Destructure the new prop
   ...props
-}: React.ComponentProps<typeof Button>) {
-  const { orientation, scrollNext, canScrollNext } = useCarousel()
+}: CarouselArrowProps) {
+  const { orientation, scrollNext } = useCarousel()
 
   return (
     <Button
@@ -213,16 +219,16 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full",
+        "absolute z-10 size-8 rounded-full", // Added z-index to ensure visibility
         orientation === "horizontal"
-          ? "top-1/2 -right-12 -translate-y-1/2"
+          ? "top-1/2 right-4 -translate-y-1/2" // Moved INSIDE the container (right-4)
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight />
+      <ArrowRight className={cn("size-4", iconClassName)} />
       <span className="sr-only">Next slide</span>
     </Button>
   )
@@ -257,4 +263,4 @@ function CarouselIndicators({ className, ...props }: React.ComponentProps<"div">
   )
 }
 
-export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, CarouselIndicators }
+export { Carousel, CarouselContent, CarouselIndicators, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi }

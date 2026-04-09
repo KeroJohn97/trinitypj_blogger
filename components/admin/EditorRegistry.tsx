@@ -12,6 +12,7 @@ import SmallGroupsEditor from "components/admin/editors/SmallGroupsEditor"
 import SpecialAlertsEditor from "components/admin/editors/SpecialAlertsEditor"
 import VisionEditor from "components/admin/editors/VisionEditor"
 import React from "react"
+import UpcomingActivityEditor from "./editors/UpcomingActivityEditor"
 
 // --- Tab Registry (Easy to expand!) ---
 export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
@@ -25,6 +26,7 @@ export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
   alerts: (props) => <SpecialAlertsEditor initialData={props.data?.alert} />,
   bulletin: (props) => <BulletinEditor initialData={props.data?.bulletinUrl} />,
   announcements: () => <AnnouncementsEditor />,
+  activities: () => <UpcomingActivityEditor />,
 
   // Community
   groups: () => <SmallGroupsEditor />,
