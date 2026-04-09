@@ -115,7 +115,7 @@ export default function ImagePicker({ label, value, onChange, bucket = "brand-as
             <div className="pointer-events-none absolute inset-0 z-10 shadow-[inset_0_0_40px_rgba(0,0,0,0.05)]" />
             <img
               src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${selectedAsset.storage_path}`}
-              className="cubic-bezier(0.4, 0, 0.2, 1) h-full w-full object-cover transition-transform duration-1000 group-hover:scale-[1.03]"
+              className="cubic-bezier(0.4, 0, 0.2, 1) h-full w-full object-contain transition-transform duration-1000 group-hover:scale-[1.03]"
               alt="Selected asset"
             />
 
@@ -244,7 +244,7 @@ export default function ImagePicker({ label, value, onChange, bucket = "brand-as
                       >
                         <img
                           src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${asset.storage_path}`}
-                          className="h-full w-full object-cover"
+                          className="h-full w-full object-contain"
                         />
                         <div
                           className={`absolute inset-0 flex items-center justify-center transition-all ${

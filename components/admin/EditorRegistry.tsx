@@ -17,7 +17,7 @@ import UpcomingActivityEditor from "./editors/UpcomingActivityEditor"
 // --- Tab Registry (Easy to expand!) ---
 export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
   // Brand
-  general: (props) => <GeneralSettingsEditor initialData={props.data} />,
+  general: (props) => <GeneralSettingsEditor />,
   about: (props) => <AboutUsEditor initialData={props.data?.aboutUsMarkdown} />,
   vision: () => <VisionEditor />,
 

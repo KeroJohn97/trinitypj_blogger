@@ -111,3 +111,35 @@ export interface GatheringItem {
   contact?: string
   note?: string
 }
+
+// Assuming a default state if no data exists
+export const DEFAULT_SITE_DATA: SiteData = {
+  title: "",
+  description: "",
+  primaryColor: "#10b981",
+  logo_image_id: "",
+  socialLinks: { facebook: "", instagram: "", youtube: "" },
+  serviceTimes: [],
+  bulletinUrl: "",
+  announcements: [],
+  aboutUsMarkdown: "",
+  visionPillars: [],
+  alphaVideos: [],
+  smallGroups: [],
+  infographics: {
+    ministriesUrl: "",
+    groupsUrl: "",
+  },
+  alert: {
+    active: false,
+    text: "",
+    type: "info",
+  },
+  giving: {
+    bankName: "string",
+    accountName: "string",
+    accountNumber: "string",
+    portalUrl: "string",
+    qrCodeUrl: "string",
+  },
+}
