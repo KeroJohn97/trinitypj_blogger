@@ -11,7 +11,10 @@ interface ServiceTime {
   location: string
 }
 
+import { useDialog } from "@/context/dialog-context"
+
 export default function ServiceTimesEditor({ initialData }: { initialData: ServiceTime[] | undefined }) {
+  const { alert } = useDialog()
   const [services, setServices] = useState<ServiceTime[]>(initialData || [])
   const [isSaving, setIsSaving] = useState(false)
 
@@ -34,9 +37,9 @@ export default function ServiceTimesEditor({ initialData }: { initialData: Servi
       // We assume your websiteService.saveSettings handles the full SiteData object
       // You may need to fetch the current formData first or pass it as a prop
       await websiteService.saveSettings({ serviceTimes: services } as any)
-      alert("Service times updated!")
+      await alert("Service times updated!", "Success")
     } catch (error) {
-      alert("Failed to save service times.")
+      await alert("Failed to save service times.", "Error")
     } finally {
       setIsSaving(false)
     }

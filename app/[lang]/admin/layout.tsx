@@ -1,3 +1,4 @@
+import { DialogProvider } from "@/context/dialog-context"
 import { NavigationGuardProvider } from "@/context/navigation-guard-context"
 import { getDictionary } from "dictionaries"
 import "globals.css"
@@ -28,15 +29,17 @@ export default async function RootLayout({
 
   return (
     <NavigationGuardProvider>
-      <html lang={lang}>
-        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-        <body className="relative text-emerald-800">
-          {/* 4. Pass the specific 'nav' dictionary to the component */}
-          {/* <Navigation dict={dict.nav} /> */}
+      <DialogProvider>
+        <html lang={lang}>
+          <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+          <body className="relative text-emerald-800">
+            {/* 4. Pass the specific 'nav' dictionary to the component */}
+            {/* <Navigation dict={dict.nav} /> */}
 
-          {children}
-        </body>
-      </html>
+            {children}
+          </body>
+        </html>
+      </DialogProvider>
     </NavigationGuardProvider>
   )
 }

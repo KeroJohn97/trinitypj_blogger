@@ -3,8 +3,10 @@
 import { websiteService } from "@/services/website-service"
 import { AlertTriangle, Info, Megaphone, Save } from "lucide-react"
 import { useState } from "react"
+import { useDialog } from "@/context/dialog-context"
 
 export default function SpecialAlertsEditor({ initialData }: { initialData: any }) {
+  const { alert } = useDialog()
   const [isEnabled, setIsEnabled] = useState(initialData?.alert_active || false)
   const [message, setMessage] = useState(initialData?.alert_text || "")
   const [type, setType] = useState(initialData?.alert_type || "info")
@@ -18,9 +20,9 @@ export default function SpecialAlertsEditor({ initialData }: { initialData: any 
         alert_text: message,
         alert_type: type,
       } as any)
-      alert("Alert settings updated live!")
+      await alert("Alert settings updated live!", "Success")
     } catch (error) {
-      alert("Failed to update alert.")
+      await alert("Failed to update alert.", "Error")
     } finally {
       setIsSaving(false)
     }

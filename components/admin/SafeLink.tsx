@@ -1,5 +1,6 @@
 // components/admin/SafeLink.tsx
 "use client"
+import { useDialog } from "@/context/dialog-context"
 import { useNavigationGuard } from "@/context/navigation-guard-context"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -12,14 +13,16 @@ interface SafeLinkProps {
 
 export function SafeLink({ href, children, className }: SafeLinkProps) {
   const router = useRouter()
-  const { isDirty } = useNavigationGuard()
+  const { isDirty, setIsDirty } = useNavigationGuard()
+  const { confirm } = useDialog()
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = async (e: React.MouseEvent) => {
     if (isDirty) {
-      const confirmLeave = window.confirm("You have unsaved changes. Are you sure you want to leave this page?")
-      if (!confirmLeave) {
-        e.preventDefault()
-        return
+      e.preventDefault()
+      const confirmLeave = await confirm("You have unsaved changes. Are you sure you want to leave this page?", "Unsaved Changes", true)
+      if (confirmLeave) {
+        setIsDirty(false)
+        router.push(href)
       }
     }
   }

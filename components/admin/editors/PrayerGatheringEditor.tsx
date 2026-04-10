@@ -21,8 +21,10 @@ import {
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import AdminHeader from "../AdminHeader"
+import { useDialog } from "@/context/dialog-context"
 
 export default function PrayerGatheringEditor() {
+  const { confirm, alert } = useDialog()
   const [items, setItems] = useState<GatheringItem[]>([])
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -51,10 +53,10 @@ export default function PrayerGatheringEditor() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload)
   }, [hasChanges])
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     // TODO custom dialog in the future?
-    if (!confirm("Are you sure you want to delete this gathering? This will be finalized when you click Publish."))
-      return
+    const isConfirmed = await confirm("Are you sure you want to delete this gathering? This will be finalized when you click Publish.", "Confirm Deletion", true)
+    if (!isConfirmed) return
 
     // If the ID is a real UUID (not a fresh temporary one), track it for deletion
     // Fresh items usually don't exist in the DB yet, so no need to delete them there
@@ -149,13 +151,13 @@ export default function PrayerGatheringEditor() {
       const result: any = await res.json()
 
       if (result.success) {
-        alert("Gatherings published successfully!")
+        await alert("Gatherings published successfully!", "Success")
       } else {
         throw new Error(result.error)
       }
     } catch (error) {
       console.error("Publish failed:", error)
-      alert("Publish failed. Check console for details.")
+      await alert("Publish failed. Check console for details.", "Error")
     } finally {
       setIsSaving(false)
       setHasChanges(false)

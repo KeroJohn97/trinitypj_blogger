@@ -1,4 +1,5 @@
 "use client"
+import { useDialog } from "@/context/dialog-context"
 import { useNavigationGuard } from "@/context/navigation-guard-context"
 import { useRouter, useSearchParams } from "next/navigation"
 import Sidebar from "./Sidebar"
@@ -6,15 +7,17 @@ import Sidebar from "./Sidebar"
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const { isDirty } = useNavigationGuard()
+  const { isDirty, setIsDirty } = useNavigationGuard()
+  const { confirm } = useDialog()
 
   // Get active tab from URL: /admin?tab=groups
   const activeTab = searchParams.get("tab") || "general"
 
-  const handleTabChange = (newTab: string) => {
+  const handleTabChange = async (newTab: string) => {
     if (isDirty) {
-      const confirmLeave = window.confirm("You have unsaved changes. Switching tabs will discard them. Continue?")
+      const confirmLeave = await confirm("You have unsaved changes. Switching tabs will discard them. Continue?", "Unsaved Changes", true)
       if (!confirmLeave) return
+      setIsDirty(false)
     }
     // Update the URL which triggers the dashboard to re-render
     router.push(`?tab=${newTab}`)

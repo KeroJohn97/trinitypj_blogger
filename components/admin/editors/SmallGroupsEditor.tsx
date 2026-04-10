@@ -5,8 +5,10 @@ import { useEffect, useState } from "react"
 import { NavigationGuardProvider, useNavigationGuard } from "@/context/navigation-guard-context"
 import { SmallGroup } from "@/types/website"
 import AdminHeader from "../AdminHeader"
+import { useDialog } from "@/context/dialog-context"
 
 export default function SmallGroupsEditor() {
+  const { confirm, alert } = useDialog()
   const [groups, setGroups] = useState<SmallGroup[]>([])
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -68,8 +70,9 @@ export default function SmallGroupsEditor() {
     setHasChanges(true)
   }
 
-  const handleDelete = (id: string) => {
-    if (!confirm("Are you sure? This group will be permanently removed when you publish.")) return
+  const handleDelete = async (id: string) => {
+    const isConfirmed = await confirm("Are you sure? This group will be permanently removed when you publish.", "Confirm Deletion", true)
+    if (!isConfirmed) return
 
     // If it's a real record (not a temp one), queue it for API deletion
     if (!id.startsWith("temp-")) {
@@ -97,11 +100,11 @@ export default function SmallGroupsEditor() {
 
       if (res.ok) {
         setDeletedIds([]) // Clear queue
-        alert("Small Groups published successfully!")
+        await alert("Small Groups published successfully!", "Success")
       }
     } catch (e) {
       console.error(e)
-      alert("Publishing failed.")
+      await alert("Publishing failed.", "Error")
     } finally {
       setIsSaving(false)
       setHasChanges(false)

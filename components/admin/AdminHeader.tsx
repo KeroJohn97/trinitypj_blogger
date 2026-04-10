@@ -1,4 +1,6 @@
 "use client"
+import { cn } from "@/lib/utils"
+import { Loader2 } from "lucide-react"
 import React from "react"
 
 interface AdminHeaderProps {
@@ -18,47 +20,42 @@ interface AdminHeaderProps {
     icon: React.ReactNode
   }
 }
-
 export default function AdminHeader({ title, subtitle, primaryAction, secondaryAction }: AdminHeaderProps) {
   return (
-    /* Higher Z-Index (z-50) ensures it stays on top of the list cards */
-    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-2xl">
-      <div className="w-full px-4 py-4 sm:px-8 sm:py-6 lg:px-12">
-        <div className="flex items-center justify-between gap-4">
-          {/* Title Section */}
-          <div className="min-w-0">
-            <h1 className="truncate text-xl font-black tracking-tight text-gray-900 sm:text-2xl">{title}</h1>
-            <p className="hidden text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase sm:block">{subtitle}</p>
-          </div>
+    <div className="sticky top-0 z-30 -mx-4 bg-white/80 px-4 backdrop-blur-md transition-all md:-mx-8 md:px-8">
+      <div className="flex flex-col gap-6 border-b border-slate-100 py-6 md:flex-row md:items-end md:justify-between md:py-8">
+        {/* IDENTITY SECTION */}
+        <div className="space-y-1.5">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">{title}</h2>
+          <p className="text-sm font-medium text-slate-500 md:text-base">{subtitle}</p>
+        </div>
 
-          {/* Action Section - Ensure icons are always visible */}
-          <div className="flex items-center gap-2 sm:gap-3">
+        {/* ACTION SECTION */}
+        <div className="flex flex-col gap-3 sm:flex-row">
+          {secondaryAction && (
             <button
               onClick={secondaryAction.onClick}
-              className="flex h-10 items-center justify-center gap-2 rounded-xl border-2 border-gray-100 bg-white px-3 text-sm font-bold text-gray-600 transition-all hover:bg-gray-50 active:scale-95 sm:h-12 sm:px-6"
+              className="flex flex-1 items-center justify-center gap-2 rounded-[18px] bg-white px-5 py-3.5 text-sm font-bold text-slate-900 shadow-sm ring-1 ring-slate-200 transition-all hover:bg-slate-50 active:scale-95 sm:flex-none md:py-4"
             >
-              {secondaryAction.icon}
-              <span className="hidden md:inline">{secondaryAction.label}</span>
-              <span className="md:hidden">Add</span> {/* Fallback text for mobile */}
+              <span className="text-emerald-500">{secondaryAction.icon}</span>
+              {secondaryAction.label}
             </button>
+          )}
 
-            <button
-              onClick={primaryAction.onClick}
-              disabled={primaryAction.disabled || primaryAction.loading}
-              className={`flex h-10 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-bold text-white shadow-lg shadow-emerald-100 transition-all hover:bg-emerald-700 active:scale-95 disabled:bg-gray-200 sm:h-12 sm:px-8 ${
-                primaryAction.className || ""
-              }`}
-            >
-              {primaryAction.loading ? (
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-              ) : (
-                primaryAction.icon
-              )}
-              <span className="whitespace-nowrap">{primaryAction.loading ? "Saving..." : primaryAction.label}</span>
-            </button>
-          </div>
+          <button
+            onClick={primaryAction.onClick}
+            disabled={primaryAction.disabled || primaryAction.loading}
+            className={cn(
+              "flex flex-1 items-center justify-center gap-3 rounded-[18px] px-8 py-3.5 text-sm font-bold text-white shadow-xl transition-all active:scale-95 disabled:opacity-30 sm:flex-none md:py-4",
+              /* Use provided className or default to the Slate/Emerald logic we had */
+              primaryAction.className || "bg-slate-900 shadow-slate-200"
+            )}
+          >
+            {primaryAction.loading ? <Loader2 className="animate-spin" size={18} /> : primaryAction.icon}
+            {primaryAction.loading ? "Processing..." : primaryAction.label}
+          </button>
         </div>
       </div>
-    </header>
+    </div>
   )
 }

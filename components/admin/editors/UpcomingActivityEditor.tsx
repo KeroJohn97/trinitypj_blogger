@@ -3,11 +3,14 @@ import { NavigationGuardProvider, useNavigationGuard } from "@/context/navigatio
 import { UpcomingActivity } from "@/interface/upcoming-activity"
 import { activityService } from "@/services/activity-service"
 import ImagePicker from "components/ImagePicker"
-import { AlertCircle, Hash, Loader2, Plus, Save, Trash2, Type } from "lucide-react"
+import { Hash, Loader2, Plus, Save, Trash2, Type } from "lucide-react"
 import { useEffect, useMemo, useState } from "react"
+import AdminHeader from "../AdminHeader"
 import EmptyState from "../EmptyState"
+import { useDialog } from "@/context/dialog-context"
 
 export default function UpcomingActivityEditor() {
+  const { confirm, alert } = useDialog()
   const [items, setItems] = useState<UpcomingActivity[]>([])
   const [originalItems, setOriginalItems] = useState<UpcomingActivity[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -62,8 +65,36 @@ export default function UpcomingActivityEditor() {
     setItems([...items, newEntry])
   }
 
-  const handleRemove = (id: number) => {
-    setItems(items.filter((item) => item.id !== id))
+  const handleDelete = async (id: number) => {
+    // 1. If it's a new item (negative ID) not yet in DB, just filter it out locally
+    if (id < 0) {
+      setItems(items.filter((item) => item.id !== id))
+      return
+    }
+
+    // 2. Otherwise, it's in the DB. Confirm with the user first.
+    const isConfirmed = await confirm("Are you sure you want to delete this activity?", "Confirm Deletion", true)
+    if (!isConfirmed) return
+
+    try {
+      setIsSaving(true) // Reuse the saving state for the loader
+
+      // 3. Call the service
+      await activityService.delete(id)
+      
+
+      // 4. Update local state so it disappears from the UI
+      const updatedItems = items.filter((item) => item.id !== id)
+      setItems(updatedItems)
+      setOriginalItems(updatedItems)
+
+      console.log("Activity deleted successfully")
+    } catch (error: any) {
+      console.error("Deletion failed:", error)
+      await alert(`Delete Error: ${error.message}`, "Error")
+    } finally {
+      setIsSaving(false)
+    }
   }
 
   const handleUpdate = (id: number, updates: Partial<UpcomingActivity>) => {
@@ -73,30 +104,40 @@ export default function UpcomingActivityEditor() {
   const handlePublish = async () => {
     setIsSaving(true)
     try {
-      const payload = items.map((item, index) => {
-        if (item.id < 0) {
-          const { id, ...newItem } = item
-          return { ...newItem, sort_order: index }
+      // 1. Map and sanitize the payload
+      const sanitizedPayload = items.map((item, index) => {
+        // Destructure to separate the joined data (media_assets) from the actual columns
+        // We also pull out 'id' separately to handle the 'newItem' logic
+        const { media_assets, id, ...cleanData } = item
+
+        const sort_order = index
+
+        if (id < 0) {
+          // New Item: Remove the temporary negative ID
+          return { ...cleanData, sort_order }
         }
-        return { ...item, sort_order: index }
+
+        // Existing Item: Keep the ID but ensure media_assets is gone
+        return { id, ...cleanData, sort_order }
       })
 
-      const toUpdate = payload.filter((i: any) => i.id)
-      const toInsert = payload.filter((i: any) => !i.id)
+      const toUpdate = sanitizedPayload.filter((i: any) => i.id)
+      const toInsert = sanitizedPayload.filter((i: any) => !i.id)
 
+      // 2. Database operations with clean data
       if (toInsert.length > 0) await activityService.create(toInsert as any)
       if (toUpdate.length > 0) await activityService.updateOrder(toUpdate as any)
 
+      // 3. Refresh and Sync
       const freshData = await activityService.getAll()
-
-      // CRITICAL: Reset the dirty state after success
       setItems(freshData)
       setOriginalItems(freshData)
 
-      alert("Activities published successfully!")
+      await alert("Activities published successfully!", "Success")
     } catch (error: any) {
       console.error("Publishing failed:", error)
-      alert(`Database Error: ${error.message}`)
+      // Providing more context for the alert
+      await alert(`Database Error: ${error.message || "Failed to sync with schema cache"}`, "Error")
     } finally {
       setIsSaving(false)
     }
@@ -113,41 +154,25 @@ export default function UpcomingActivityEditor() {
   return (
     <NavigationGuardProvider>
       <div className="animate-in fade-in mx-auto max-w-6xl space-y-8 px-4 py-6 duration-700 md:space-y-12 md:px-6 md:py-10">
-        {/* RESPONSIVE HEADER */}
-        <div className="flex flex-col gap-6 border-b border-slate-100 pb-8 md:flex-row md:items-end md:justify-between">
-          <div className="space-y-2">
-            <div className="flex flex-wrap items-center gap-3">
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">Upcoming Activities</h2>
-              {isDirty && (
-                <span className="flex animate-pulse items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1 text-[9px] font-black tracking-widest text-amber-600 uppercase ring-1 ring-amber-200 md:text-[10px]">
-                  <AlertCircle size={12} /> Unsaved
-                </span>
-              )}
-            </div>
-            <p className="text-sm font-medium text-slate-500 md:text-base">Manage your promotional carousel.</p>
-          </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <button
-              onClick={handleAdd}
-              className="flex flex-1 items-center justify-center gap-2 rounded-[18px] bg-white px-5 py-3.5 text-sm font-bold text-slate-900 shadow-sm ring-1 ring-slate-200 transition-all hover:bg-slate-50 active:scale-95 sm:flex-none md:py-4"
-            >
-              <Plus size={18} className="text-emerald-500" />
-              Add Notice
-            </button>
-
-            <button
-              onClick={handlePublish}
-              disabled={isSaving || !isDirty}
-              className={`flex flex-1 items-center justify-center gap-3 rounded-[18px] px-8 py-3.5 text-sm font-bold text-white shadow-xl transition-all active:scale-95 disabled:opacity-30 sm:flex-none md:py-4 ${
-                isDirty ? "bg-emerald-600 shadow-emerald-100" : "bg-slate-900"
-              }`}
-            >
-              {isSaving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
-              {isSaving ? "Saving..." : "Publish Changes"}
-            </button>
-          </div>
-        </div>
+        {/* STICKY HEADER WRAPPER */}
+        <AdminHeader
+          title="Upcoming Activities"
+          subtitle="Manage your promotional carousel."
+          primaryAction={{
+            label: "Publish Changes",
+            onClick: handlePublish,
+            icon: <Save size={18} />,
+            loading: isSaving,
+            disabled: !isDirty,
+            // We keep your "Elite" dynamic color logic here
+            className: isDirty ? "bg-emerald-600 shadow-emerald-100" : "bg-slate-900 shadow-slate-200",
+          }}
+          secondaryAction={{
+            label: "Add Notice",
+            onClick: handleAdd,
+            icon: <Plus size={18} />,
+          }}
+        />
 
         {/* RESPONSIVE GRID */}
         {items.length === 0 ? (
@@ -186,7 +211,7 @@ export default function UpcomingActivityEditor() {
                       <Hash size={10} /> POS: {index + 1}
                     </div>
                     <button
-                      onClick={() => handleRemove(item.id)}
+                      onClick={() => handleDelete(item.id)}
                       className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-300 transition-all hover:bg-red-50 hover:text-red-500 md:h-11 md:w-11 md:rounded-2xl"
                     >
                       <Trash2 size={20} />
