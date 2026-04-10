@@ -27,6 +27,11 @@ export default function UpcomingActivitiesCarousel({ dict }: ActivityCarouselPro
 
   const [activities, setActivities] = React.useState<UpcomingActivity[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
+  const [imageErrors, setImageErrors] = React.useState<Record<number, boolean>>({})
+
+  const handleImageError = (id: number) => {
+    setImageErrors((prev) => ({ ...prev, [id]: true }))
+  }
 
   React.useEffect(() => {
     const fetchActivities = async () => {
@@ -52,7 +57,15 @@ export default function UpcomingActivitiesCarousel({ dict }: ActivityCarouselPro
 
   const getSupabaseUrl = (path?: string) => {
     if (!path) return null
-    return `${process.env.NEXT_publishC_SUPABASE_URL}/storage/v1/object/public/${path}`
+    const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    if (!baseUrl || !baseUrl.startsWith("http")) return null
+    
+    try {
+      const url = new URL(`/storage/v1/object/public/${path}`, baseUrl)
+      return url.toString()
+    } catch (e) {
+      return null
+    }
   }
 
   if (isLoading) return <CarouselSkeleton />
@@ -77,7 +90,7 @@ export default function UpcomingActivitiesCarousel({ dict }: ActivityCarouselPro
                   The object-contain ensures the full notice is visible.
                 */}
                   <div className="relative flex h-[400px] w-full items-center justify-center overflow-hidden bg-transparent sm:h-[500px] lg:h-[550px]">
-                    {imageUrl ? (
+                    {imageUrl && !imageErrors[activity.id] ? (
                       <div className="relative h-full w-full p-6 md:p-10">
                         <Image
                           src={imageUrl}
@@ -86,6 +99,7 @@ export default function UpcomingActivitiesCarousel({ dict }: ActivityCarouselPro
                           className="object-contain transition-transform duration-[2000ms] ease-out group-hover:scale-[1.03]"
                           priority={index === 0}
                           sizes="(max-width: 1280px) 100vw, 1280px"
+                          onError={() => handleImageError(activity.id)}
                         />
                       </div>
                     ) : (

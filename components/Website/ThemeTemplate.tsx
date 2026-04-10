@@ -3,6 +3,7 @@
 import { HeroSection } from "@/components/hero-section"
 import { TemporaryBanner } from "@/components/temporary-banner"
 import { hexToHslValues } from "@/lib/utils"
+import { SiteData } from "@/types/website"
 
 const fallbackDict = {
   hero: { title: "", description: "" },
@@ -17,7 +18,7 @@ export default function ThemeTemplate({ data, dict }: { data: SiteData; dict: an
     { id: 2, title: "New Mobile App Update", category: "Product", date: "March 20, 2026" },
   ]
 
-  const links: Record<string, string> = data?.socialLinks ?? {}
+  const links = (data?.socialLinks as unknown as Record<string, string | null | undefined>) ?? {}
 
   const activeDict = dict || fallbackDict
 

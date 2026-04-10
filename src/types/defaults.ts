@@ -4,7 +4,7 @@ import { SiteData } from "@/types/website"
 export const DEFAULT_SITE_DATA: SiteData = {
   title: "",
   description: "",
-  logoUrl: "",
+  logo_image_id: "",
   primaryColor: "#2563eb",
   socialLinks: { facebook: "", instagram: "", youtube: "" },
 

@@ -164,9 +164,11 @@ export default function EvangelismPage() {
               <p className="text-muted-foreground mx-auto mb-6 max-w-2xl">
                 Drop us an email at alpha@trinitypj.com to register your interest!
               </p>
-              <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <DropEmailButton />
-              </div>
+                <DropEmailButton dict={{ 
+                  button: "Email Us", 
+                  emailSubject: "Evangelism Ministry Inquiry", 
+                  emailBody: "I would like to find out more about the Evangelism Ministry." 
+                }} />
             </CardContent>
           </Card>
         </div>
