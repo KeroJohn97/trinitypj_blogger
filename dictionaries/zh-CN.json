@@ -238,7 +238,14 @@
                 "在银行应用中选择 <bold>DuitNow</bold>。",
                 "选择 <bold>商业注册号 (Business Registration Number)</bold>。",
                 "输入号码：<bold>15190</bold>。",
-                "输入金额与参考（如：“十一奉献”）。"
+                "输入金额与参考说明（如：“十一奉献”）。"
+            ],
+            "scanSteps": [
+                "打开您的银行应用程序，然后选择 <bold>扫描二维码 (Scan QR)</bold> 功能。",
+                "扫描上方的 DuitNow 二维码。",
+                "确认收款人名称为 <bold>TRINITY METHODIST CHURCH PETALING JAYA</bold>。",
+                "输入您的奉献金额与参考说明（如：“十一奉献”）。",
+                "将交易收据连同奉献用途电邮至 <bold>accounts@trinitypj.com</bold>。"
             ]
         },
         "bankTransfer": {
@@ -248,7 +255,7 @@
             "nameLabel": "户口名称",
             "numberLabel": "户口号码",
             "noteTitle": "备注：",
-            "noteDesc": "请在收款人参考中注明您的<bold>姓名</bold>与<bold>用途</bold>（如：十一奉献、认献、修葺基金）。如使用 <bold>ATM 存款</bold>，请将收据电邮至 admin@trinitypj.com。"
+            "noteDesc": "请在收款人参考中注明您的<bold>姓名</bold>与<bold>用途</bold>（如：十一奉献、认献、修葺基金）。如使用 <bold>ATM 存款</bold>，请将收据电邮至 accounts@trinitypj.com。"
         },
         "cheque": {
             "title": "支票",

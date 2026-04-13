@@ -1,7 +1,7 @@
 "use client"
 
 import { PageHeader } from "@/components/page-header"
-import { ministries } from "@/lib/ministries-data"
+
 import MinistriesPage from "app/[lang]/(user)/app-components/ministries-component"
 import KindergartenPage from "app/[lang]/(user)/ministries-groups/kindergarten"
 import AdultFellowshipPage from "app/[lang]/(user)/ministries-groups/methodist-adult-fellowship"
@@ -37,6 +37,7 @@ interface DictionaryProps {
 
 interface GroupsTopicCloudProps {
   dict: DictionaryProps
+  ministries: any[]
 }
 
 /* --------------------------- COMPONENT MAP --------------------------- */
@@ -126,19 +127,19 @@ const GroupsTabContent = ({ groups, text }: { groups: GroupData[]; text: Diction
 }
 
 /* --------------------------- MINISTRIES TAB --------------------------- */
-const MinistriesTabContent = ({ text }: { text: DictionaryProps["ministriesTab"] }) => {
+const MinistriesTabContent = ({ text, ministries }: { text: DictionaryProps["ministriesTab"]; ministries: any[] }) => {
   return (
     <div className="mt-8 flex min-h-[400px] flex-col items-center justify-center rounded-xl bg-white p-8 shadow-lg">
       <h3 className="mb-3 text-xl font-bold text-gray-800 sm:text-2xl">{text.title}</h3>
       <p className="mb-4 text-xs text-gray-500">{text.subtitle}</p>
-      {/* Assuming MinistriesPage handles its own data or is static for now */}
+      {/* MinistriesPage handles its own data or is dynamic */}
       <MinistriesPage ministries={ministries} />
     </div>
   )
 }
 
 /* ---------------------------- MAIN COMPONENT ---------------------------- */
-const GroupsTopicCloud = ({ dict }: GroupsTopicCloudProps) => {
+const GroupsTopicCloud = ({ dict, ministries }: GroupsTopicCloudProps) => {
   const [activeTab, setActiveTab] = useState("ministries") // Use keys "ministries" | "groups"
 
   const tabs = [
@@ -146,7 +147,7 @@ const GroupsTopicCloud = ({ dict }: GroupsTopicCloudProps) => {
       id: "ministries",
       label: dict.tabs.ministries,
       icon: Layers3,
-      content: <MinistriesTabContent text={dict.ministriesTab} />,
+      content: <MinistriesTabContent text={dict.ministriesTab} ministries={ministries} />,
     },
     {
       id: "groups",

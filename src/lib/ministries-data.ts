@@ -1,4 +1,7 @@
-export const ministries = [
+import { MediaAssetService } from "@/services/media-asset-service"
+
+export const STATIC_MINISTRIES = [
+
   {
     id: "boys-brigade",
     name: "Boys' Brigade",
@@ -350,5 +353,43 @@ export const ministries = [
     description:
       "Visiting the parishioners is a pivotal part of pastoral oversight in TMC PJ. Visitations are made on a weekly basis.\n\nVisitations are primarily for those who are aged, unwell and homebound. A time of worship is shared with those visited and, as is appropriate, the Holy Communion will also be celebrated and served. These visitations provide an opportunity for pastoral care to be issued and the connection between those visited and the community of faith be kept.\n\nVisitations are also made beyond the scheduled times, such as for those outside the community of faith after their needs are made known, especially for prayer, for the sharing of the Gospel or simply to lend comfort in times of crisis. As Jesus visited different ones in their homes, the Visitation Ministry seeks to “bring Christ” to the lives and homes of those visited.",
     photos: ["https://trinitypj.com/wp-content/uploads/Visitations-Ministry.jpg"],
-  },
+  }
 ]
+
+export async function getMinistries() {
+  const mediaMap = await MediaAssetService.getMediaMap()
+
+  return STATIC_MINISTRIES.map((ministry) => {
+    // 1. Map simple photos
+    const mappedPhotos = ministry.photos?.map((url) => {
+      return MediaAssetService.getUrl(url, mediaMap)
+    })
+
+    // 2. Map PDF / Attachments
+    const mappedPdf = ministry.pdf
+      ? { ...ministry.pdf, src: MediaAssetService.getUrl(ministry.pdf.src, mediaMap) }
+      : undefined
+
+    const mappedAttachment = ministry.attachment
+      ? {
+          ...ministry.attachment,
+          src: MediaAssetService.getUrl(ministry.attachment.src, mediaMap),
+        }
+      : undefined
+
+    // 3. Map Library thumbnails and sources
+    const mappedLibrary = ministry.library?.map((item) => ({
+      ...item,
+      thumb: item.thumb ? MediaAssetService.getUrl(item.thumb, mediaMap) : undefined,
+      src: MediaAssetService.getUrl(item.src, mediaMap),
+    }))
+
+    return {
+      ...ministry,
+      ...(mappedPhotos && { photos: mappedPhotos }),
+      ...(mappedPdf && { pdf: mappedPdf }),
+      ...(mappedAttachment && { attachment: mappedAttachment }),
+      ...(mappedLibrary && { library: mappedLibrary }),
+    }
+  })
+}

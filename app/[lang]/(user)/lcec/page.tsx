@@ -68,12 +68,17 @@ const activities = [
   },
 ]
 
-export default function LCECPage() {
+import { MediaAssetService } from "@/services/media-asset-service"
+
+export default async function LCECPage() {
+  const mediaMap = await MediaAssetService.getMediaMap()
+  const bannerUrl = MediaAssetService.getUrl("https://trinitypj.com/wp-content/uploads/LCEC-2025-scaled.jpg", mediaMap)
+  const chartUrl = MediaAssetService.getUrl("https://trinitypj.com/wp-content/uploads/2025-LCEC-v2-01-scaled.jpg", mediaMap)
   return (
     <div className="bg-background min-h-screen">
       <section
         className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: `url('https://trinitypj.com/wp-content/uploads/LCEC-2025-scaled.jpg')` }}
+        style={{ backgroundImage: `url('${bannerUrl}')` }}
       >
         <div className="absolute inset-0 bg-black/30" />
       </section>
@@ -82,7 +87,7 @@ export default function LCECPage() {
       <section className="py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg text-muted-foreground mb-12 px-12">
-            <img src={`https://trinitypj.com/wp-content/uploads/2025-LCEC-v2-01-scaled.jpg`} alt="LCEC 2025" />
+            <img src={chartUrl} alt="LCEC 2025" />
           </div>
         </div>
       </section>

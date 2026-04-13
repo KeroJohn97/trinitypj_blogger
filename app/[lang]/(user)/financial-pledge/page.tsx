@@ -1,12 +1,20 @@
+import duitnowQr from "@/../assets/duitnow-qr.png"
 import { PageHeader } from "@/components/page-header"
 import { getDictionary } from "dictionaries"
 import { Building, CreditCard, Mail } from "lucide-react"
+import Image from "next/image"
 import { CopyButton } from "../app-components/copy-button"
+
+
+import { MediaAssetService } from "@/services/media-asset-service"
 
 export default async function FinancialPledgePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
   const dict = await getDictionary(lang as "en-US" | "zh-CN")
   const t = dict.pledge
+  
+  const mediaMap = await MediaAssetService.getMediaMap()
+  const givingBanner = MediaAssetService.getUrl("https://trinitypj.com/wp-content/uploads/TMCPJ-Giving.png", mediaMap)
 
   // Helper to render text with <bold> tags
   const renderRichText = (text: string) => {
@@ -19,7 +27,7 @@ export default async function FinancialPledgePage({ params }: { params: Promise<
       <PageHeader title={t.header.title} subtitle={t.header.subtitle} />
       <div className="mt-12 mb-4 flex w-auto items-center justify-center">
         {/* You can also use Next/Image here for optimization if configured */}
-        <img src="https://trinitypj.com/wp-content/uploads/TMCPJ-Giving.png" alt="Giving" />
+        <img src={givingBanner} alt="Giving" />
       </div>
 
       <main className="mx-auto -mt-8 max-w-5xl px-4 py-12">
@@ -34,7 +42,7 @@ export default async function FinancialPledgePage({ params }: { params: Promise<
           <p className="mb-4 text-yellow-800">{t.confirmation.desc}</p>
           <div className="flex flex-col items-start gap-4 md:flex-row md:items-center">
             <a
-              href="mailto:admin@trinitypj.com"
+              href="mailto:accounts@trinitypj.com"
               className="inline-flex items-center gap-2 rounded-lg bg-yellow-600 px-5 py-2.5 font-medium text-white transition-colors hover:bg-yellow-700"
             >
               <Mail className="h-4 w-4" />
@@ -42,7 +50,7 @@ export default async function FinancialPledgePage({ params }: { params: Promise<
             </a>
             <span className="text-sm text-yellow-700">
               {/* Note: I kept the email hardcoded, but the label "Send to" is implicit in context or can be added */}
-              Send to: <strong>admin@trinitypj.com</strong> <br className="hidden md:inline" />({t.confirmation.note})
+              Send to: <strong>accounts@trinitypj.com</strong> <br className="hidden md:inline" />({t.confirmation.note})
             </span>
           </div>
         </div>
@@ -72,6 +80,18 @@ export default async function FinancialPledgePage({ params }: { params: Promise<
                 </p>
                 <ol className="list-decimal space-y-1 pl-4">
                   {t.duitnow.steps.map((step, i) => (
+                    <li key={i}>{renderRichText(step)}</li>
+                  ))}
+                </ol>
+              </div>
+
+                <Image src={duitnowQr} alt={'DuitNow Qr Code'} placeholder="blur" className="h-auto w-full max-w-4xl px-8" />
+               <div className="space-y-2 text-sm text-gray-600">
+                <p>
+                  <strong>{t.duitnow.stepsTitle}</strong>
+                </p>
+                <ol className="list-decimal space-y-1 pl-4">
+                  {t.duitnow.scanSteps.map((step, i) => (
                     <li key={i}>{renderRichText(step)}</li>
                   ))}
                 </ol>

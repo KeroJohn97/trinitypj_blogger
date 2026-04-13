@@ -226,7 +226,7 @@
             "title": "Proof of Transaction",
             "desc": "If you have made an online transfer or ATM deposit, please help our finance team by emailing your transaction receipt.",
             "button": "Email Receipt",
-            "note": "Subject: \"Your Name - Purpose of Gift\""
+            "note": "Subject: \"Your Name - Purpose of Give\""
         },
         "duitnow": {
             "title": "DuitNow",
@@ -239,6 +239,13 @@
                 "Choose <bold>Business Registration Number</bold>.",
                 "Enter ID: <bold>15190</bold>.",
                 "Enter amount and reference (e.g., \"Tithe\")."
+            ],
+            "scanSteps": [
+                "Open your banking app and select the <bold>Scan QR</bold> feature.",
+                "Scan the DuitNow QR code above.",
+                "Verify the recipient name is <bold>TRINITY METHODIST CHURCH PETALING JAYA</bold>.",
+                "Enter the amount and your reference (e.g., \"Tithe\").",
+                "Email the transaction receipt along with the purpose of your giving to <bold>accounts@trinitypj.com</bold>."
             ]
         },
         "bankTransfer": {
@@ -248,7 +255,7 @@
             "nameLabel": "Account Name",
             "numberLabel": "Account Number",
             "noteTitle": "Note:",
-            "noteDesc": "Please state your <bold>Name</bold> and <bold>Purpose</bold> (e.g., Tithe, Pledge, Restoration Fund) in the recipient reference. If making an <bold>ATM deposit</bold>, please email the bank-in slip to admin@trinitypj.com."
+            "noteDesc": "Please state your <bold>Name</bold> and <bold>Purpose</bold> (e.g., Tithe, Pledge, Restoration Fund) in the recipient reference. If making an <bold>ATM deposit</bold>, please email the bank-in slip to accounts@trinitypj.com."
         },
         "cheque": {
             "title": "Cheque",

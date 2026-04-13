@@ -13,6 +13,7 @@ import SpecialAlertsEditor from "components/admin/editors/SpecialAlertsEditor"
 import VisionEditor from "components/admin/editors/VisionEditor"
 import React from "react"
 import UpcomingActivityEditor from "./editors/UpcomingActivityEditor"
+import MediaAssetsEditor from "./editors/MediaAssetsEditor"
 
 // --- Tab Registry (Easy to expand!) ---
 export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
@@ -20,6 +21,7 @@ export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
   general: (props) => <GeneralSettingsEditor />,
   about: (props) => <AboutUsEditor initialData={props.data?.aboutUsMarkdown} />,
   vision: () => <VisionEditor />,
+  "media-assets": () => <MediaAssetsEditor />,
 
   // Weekly Pulse
   services: (props) => <ServiceTimesEditor initialData={props.data?.serviceTimes} />,

@@ -19,6 +19,7 @@ export const ADMIN_NAV = [
       { name: "General Settings", icon: LayoutDashboard, slug: "general" },
       { name: "About Us (Editor)", icon: Type, slug: "about" },
       { name: "Vision & Mission", icon: ImageIcon, slug: "vision" },
+      { name: "Media Assets", icon: ImageIcon, slug: "media-assets" },
     ],
   },
   {
