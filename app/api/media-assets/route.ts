@@ -54,6 +54,16 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: "Cannot delete this asset. It is currently set as the primary Website Logo in General Settings." }, { status: 409 })
   }
 
+  // Check if it's used in lcec_settings (Banner or Chart)
+  const { count: lcecCount } = await supabase
+    .from("lcec_settings")
+    .select("*", { count: 'exact', head: true })
+    .or(`banner_image_id.eq.${id},chart_image_id.eq.${id}`)
+
+  if (lcecCount && lcecCount > 0) {
+    return NextResponse.json({ error: "Cannot delete this asset. It is currently set as an image on the LCEC Page. Please change it there first." }, { status: 409 })
+  }
+
   // Fallback to strict Postgres constraint (Just in case)
   const { error } = await supabase.from("media_assets").delete().eq("id", id)
 

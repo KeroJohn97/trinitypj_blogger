@@ -111,7 +111,8 @@ export default function MediaAssetsEditor() {
         // Reload library to get the newly created asset
         await loadData()
       } else {
-        throw new Error("Failed to save media asset metadata")
+        const body:any = await res.json().catch(() => ({}))
+        throw new Error(body.error || "Failed to save media asset metadata")
       }
     } catch (error: any) {
       console.error(error)
@@ -158,8 +159,7 @@ export default function MediaAssetsEditor() {
         const original = originalItems.find(o => o.id === item.id)
         return original && (original.filename !== item.filename || original.alt_text !== item.alt_text)
       }).map(item => ({
-        id: item.id,
-        filename: item.filename,
+        ...item,
         alt_text: item.alt_text || null
       }))
 
@@ -181,7 +181,8 @@ export default function MediaAssetsEditor() {
         setOriginalItems(freshData)
         await alert("Media Assets updated successfully!", "Success")
       } else {
-        throw new Error("Failed to update media assets")
+        const body:any = await res.json().catch(() => ({}))
+        throw new Error(body.error || "Failed to update media assets")
       }
     } catch (error: any) {
       console.error("Publishing failed:", error)

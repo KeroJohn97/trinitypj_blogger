@@ -68,12 +68,14 @@ const activities = [
   },
 ]
 
-import { MediaAssetService } from "@/services/media-asset-service"
+import { lcecService } from "@/services/lcec-service"
 
 export default async function LCECPage() {
-  const mediaMap = await MediaAssetService.getMediaMap()
-  const bannerUrl = MediaAssetService.getUrl("https://trinitypj.com/wp-content/uploads/LCEC-2025-scaled.jpg", mediaMap)
-  const chartUrl = MediaAssetService.getUrl("https://trinitypj.com/wp-content/uploads/2025-LCEC-v2-01-scaled.jpg", mediaMap)
+  const settings = await lcecService.getSettings()
+  
+  // Dynamic images from DB with legacy URL fallbacks
+  const bannerUrl = settings?.bannerUrl || "https://trinitypj.com/wp-content/uploads/LCEC-2025-scaled.jpg"
+  const chartUrl = settings?.chartUrl || "https://trinitypj.com/wp-content/uploads/2025-LCEC-v2-01-scaled.jpg"
   return (
     <div className="bg-background min-h-screen">
       <section

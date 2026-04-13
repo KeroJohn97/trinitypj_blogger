@@ -11,6 +11,7 @@ import ServiceTimesEditor from "components/admin/editors/ServiceTimesEditor"
 import SmallGroupsEditor from "components/admin/editors/SmallGroupsEditor"
 import SpecialAlertsEditor from "components/admin/editors/SpecialAlertsEditor"
 import VisionEditor from "components/admin/editors/VisionEditor"
+import LCECPageEditor from "components/admin/editors/LCECPageEditor"
 import React from "react"
 import UpcomingActivityEditor from "./editors/UpcomingActivityEditor"
 import MediaAssetsEditor from "./editors/MediaAssetsEditor"
@@ -22,6 +23,7 @@ export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
   about: (props) => <AboutUsEditor initialData={props.data?.aboutUsMarkdown} />,
   vision: () => <VisionEditor />,
   "media-assets": () => <MediaAssetsEditor />,
+  "lcec-page": () => <LCECPageEditor />,
 
   // Weekly Pulse
   services: (props) => <ServiceTimesEditor initialData={props.data?.serviceTimes} />,

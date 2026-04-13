@@ -34,6 +34,11 @@ export function Navigation({ dict }: NavigationProps) {
   // 3. Move navigationItems INSIDE the component to use 'dict' and 'currentLang'
   const navigationItems = [
     {
+      name: "LCEC",
+      href: getLocalizedHref("/lcec"),
+      target: "_self",
+    },
+    {
       name: dict.imNew, // Use translation
       href: getLocalizedHref("/location-services"), // Use localized path
       target: "_self",
