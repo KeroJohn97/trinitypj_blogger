@@ -14,7 +14,7 @@ interface AdminHeaderProps {
     loading?: boolean
     className?: string
   }
-  secondaryAction: {
+  secondaryAction?: {
     label: string
     onClick: () => void
     icon: React.ReactNode

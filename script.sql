@@ -1,3 +1,7 @@
+-- Ensure extensions are active
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Create a dedicated table for the Announcements feed
 CREATE TABLE announcements (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -11,20 +15,6 @@ CREATE TABLE announcements (
 -- Policy for ANON access (Since we are skipping Auth for now)
 ALTER TABLE announcements ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow anon access" ON announcements FOR ALL TO anon USING (true) WITH CHECK (true);
-
--- Create a dedicated table for the Alpha videos
-CREATE TABLE alpha_videos (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  video_id TEXT NOT NULL, -- The YouTube ID (e.g., 'hB7u7S_77S8')
-  title TEXT NOT NULL,
-  description TEXT,
-  sort_order SERIAL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- Enable RLS
-ALTER TABLE alpha_videos ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Allow anon access" ON alpha_videos FOR ALL TO anon USING (true) WITH CHECK (true);
 
 -- Create a dedicated table for the Small groups
 CREATE TABLE small_groups (
@@ -85,7 +75,7 @@ CREATE TABLE IF NOT EXISTS small_group (
   is_active BOOLEAN DEFAULT true,
   sort_order INTEGER DEFAULT 0,
   note TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   is_featured BOOLEAN DEFAULT false
 );
 
@@ -95,3 +85,85 @@ ALTER TABLE small_group ENABLE ROW LEVEL SECURITY;
 -- Allow public read and full access for anon (standard for our current setup)
 CREATE POLICY "Allow public read" ON small_group FOR SELECT TO anon USING (true);
 CREATE POLICY "Allow full access" ON small_group FOR ALL TO anon USING (true) WITH CHECK (true);
+
+-- 1. Create the LCEC Settings Table
+CREATE TABLE IF NOT EXISTS public.lcec_settings (
+  id integer PRIMARY KEY DEFAULT 1,
+  banner_image_id uuid REFERENCES public.media_assets(id) ON DELETE SET NULL,
+  chart_image_id uuid REFERENCES public.media_assets(id) ON DELETE SET NULL,
+  updated_at timestamp with time zone DEFAULT now(),
+  -- Ensure only one record ever exists
+  CONSTRAINT singleton_id CHECK (id = 1)
+);
+
+-- 2. Initialize the Singleton Row
+INSERT INTO public.lcec_settings (id)
+VALUES (1)
+ON CONFLICT (id) DO NOTHING;
+
+-- 3. Security (Optional but Recommended)
+-- Enable Row Level Security
+ALTER TABLE public.lcec_settings ENABLE ROW LEVEL SECURITY;
+
+-- Policy: Allow anyone to view the settings (needed for the public webpage)
+CREATE POLICY "Public Read LCEC Settings" 
+ON public.lcec_settings FOR SELECT 
+USING (true);
+
+-- Policy: Allow authenticated users (Admins) to manage settings
+-- Note: Adjust this policy if you have specific 'admin' roles
+CREATE POLICY "Admins Manage LCEC Settings" 
+ON public.lcec_settings FOR ALL 
+TO authenticated 
+USING (true) 
+WITH CHECK (true);
+
+-- 1. Clear out the previous restrictive policies
+DROP POLICY IF EXISTS "Public Read LCEC Settings" ON public.lcec_settings;
+DROP POLICY IF EXISTS "Admins Manage LCEC Settings" ON public.lcec_settings;
+DROP POLICY IF EXISTS "Allow public read" ON public.lcec_settings;
+DROP POLICY IF EXISTS "Allow all access for dev" ON public.lcec_settings;
+
+-- 2. Create a Universal Access Policy (Safe for Dev/Test)
+-- This allows both 'authenticated' (logged in) and 'anon' (API keys) to manage the table
+CREATE POLICY "Universal Access" 
+ON public.lcec_settings 
+FOR ALL 
+TO anon, authenticated 
+USING (true) 
+WITH CHECK (true);
+
+-- 3. Ensure RLS is still active (but now permitted by the policy above)
+ALTER TABLE public.lcec_settings ENABLE ROW LEVEL SECURITY;
+
+-- Create the Alpha Media Repository
+CREATE TABLE IF NOT EXISTS public.alpha_media (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  category text NOT NULL CHECK (category IN ('journey', 'advertising')),
+  type text NOT NULL CHECK (type IN ('video', 'image')),
+  youtube_id text,
+  image_id uuid REFERENCES public.media_assets(id) ON DELETE SET NULL,
+  title text,
+  description text,
+  language text CHECK (language IN ('en', 'zh', 'ms')),
+  reg_qr_id_physical uuid REFERENCES public.media_assets(id) ON DELETE SET NULL,
+  reg_qr_id_online uuid REFERENCES public.media_assets(id) ON DELETE SET NULL,
+  sort_order integer DEFAULT 0,
+  created_at timestamp with time zone DEFAULT now()
+);
+
+-- Enable Security
+ALTER TABLE public.alpha_media ENABLE ROW LEVEL SECURITY;
+
+-- Allow Global Access for Management
+CREATE POLICY "Universal Access Alpha" 
+ON public.alpha_media FOR ALL 
+TO anon, authenticated 
+USING (true) 
+WITH CHECK (true);
+
+-- 1. Ensure the generator extension is active (Consolidated above)
+-- 2. Force the 'id' column to generate UUIDs automatically for new rows (Consolidated above)
+-- 3. Security Check (already a Primary Key)
+ALTER TABLE public.alpha_media 
+ALTER COLUMN id SET NOT NULL;

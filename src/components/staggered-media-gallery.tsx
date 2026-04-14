@@ -13,6 +13,9 @@ export type MediaItem = {
   description?: string
   category?: string
   date?: string
+  language?: "en" | "zh" | "ms"
+  registrationQrSrcPhysical?: string
+  registrationQrSrcOnline?: string
 }
 
 interface StaggeredMediaGalleryProps {

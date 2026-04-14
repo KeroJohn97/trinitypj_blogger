@@ -1,20 +1,20 @@
 // components/admin/EditorRegistry.tsx
 import AboutUsEditor from "components/admin/editors/AboutUsEditor"
-import AlphaVideoEditor from "components/admin/editors/AlphaVideoEditor"
+import AlphaMediaEditor from "components/admin/editors/AlphaMediaEditor"
 import AnnouncementsEditor from "components/admin/editors/AnnouncementsEditor"
 import BulletinEditor from "components/admin/editors/BulletinEditor"
 import GeneralSettingsEditor from "components/admin/editors/GeneralSettingsEditor"
 import GivingEditor from "components/admin/editors/GivingEditor"
 import InfographicEditor from "components/admin/editors/InfographicEditor"
+import LCECPageEditor from "components/admin/editors/LCECPageEditor"
 import PrayerGatheringEditor from "components/admin/editors/PrayerGatheringEditor"
 import ServiceTimesEditor from "components/admin/editors/ServiceTimesEditor"
 import SmallGroupsEditor from "components/admin/editors/SmallGroupsEditor"
 import SpecialAlertsEditor from "components/admin/editors/SpecialAlertsEditor"
 import VisionEditor from "components/admin/editors/VisionEditor"
-import LCECPageEditor from "components/admin/editors/LCECPageEditor"
 import React from "react"
-import UpcomingActivityEditor from "./editors/UpcomingActivityEditor"
 import MediaAssetsEditor from "./editors/MediaAssetsEditor"
+import UpcomingActivityEditor from "./editors/UpcomingActivityEditor"
 
 // --- Tab Registry (Easy to expand!) ---
 export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
@@ -37,7 +37,7 @@ export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
   prayer: () => <PrayerGatheringEditor />,
 
   // Resources
-  alpha: () => <AlphaVideoEditor />,
+  alpha: () => <AlphaMediaEditor />,
   giving: () => <GivingEditor />,
   infographics: (props) => (
     <div className="space-y-8">

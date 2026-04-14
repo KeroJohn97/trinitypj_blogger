@@ -14,9 +14,16 @@ interface ImagePickerProps {
   value?: string
   onChange: (assetId: string | "") => void
   bucket?: string
+  aspectRatio?: "video" | "square" | "portrait" | "auto"
 }
 
-export default function ImagePicker({ label, value, onChange, bucket = "brand-assets" }: ImagePickerProps) {
+export default function ImagePicker({ 
+  label, 
+  value, 
+  onChange, 
+  bucket = "brand-assets",
+  aspectRatio = "video"
+}: ImagePickerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<"upload" | "library">("upload")
   const [library, setLibrary] = useState<MediaAsset[]>([])
@@ -83,8 +90,15 @@ export default function ImagePicker({ label, value, onChange, bucket = "brand-as
     setSelectedAsset(null)
   }
 
+  const aspectClasses = {
+    video: "aspect-video",
+    square: "aspect-square",
+    portrait: "aspect-[3/4]",
+    auto: "aspect-auto h-full"
+  }
+
   return (
-    <div className="group/picker space-y-2.5">
+    <div className="group/picker h-full flex flex-col space-y-2.5">
       <div className="flex items-center justify-between px-1">
         <label className="text-[11px] font-bold tracking-widest text-slate-400 uppercase">{label}</label>
         {selectedAsset && (
@@ -103,7 +117,7 @@ export default function ImagePicker({ label, value, onChange, bucket = "brand-as
           setIsOpen(true)
           fetchLibrary()
         }}
-        className={`group relative aspect-video w-full cursor-pointer overflow-hidden rounded-[32px] transition-all duration-500 ease-out ${
+        className={`group relative ${aspectClasses[aspectRatio]} w-full cursor-pointer overflow-hidden rounded-[32px] transition-all duration-500 ease-out ${
           selectedAsset
             ? "bg-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50"
             : "border-2 border-dashed border-slate-200 bg-[#F8FAFC] hover:border-emerald-400/50 hover:bg-emerald-50/20"
@@ -157,15 +171,15 @@ export default function ImagePicker({ label, value, onChange, bucket = "brand-as
 
       {/* MODAL */}
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8">
+        <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-8">
           <div
             className="animate-in fade-in absolute inset-0 bg-slate-900/60 backdrop-blur-xl duration-500"
             onClick={() => setIsOpen(false)}
           />
 
-          <div className="animate-in zoom-in-95 slide-in-from-bottom-4 relative flex h-full max-h-[700px] w-full max-w-5xl flex-col overflow-hidden rounded-[32px] bg-white shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] duration-500">
+          <div className="animate-in slide-in-from-bottom shadow-2xl relative flex h-[90vh] sm:h-full sm:max-h-[800px] w-full max-w-5xl flex-col overflow-hidden rounded-t-[32px] sm:rounded-[40px] bg-white duration-500">
             {/* MODAL HEADER */}
-            <div className="flex items-center justify-between border-b border-slate-50 bg-white px-8 py-6">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-slate-100 bg-white px-6 sm:px-8 py-5 sm:py-6">
               <div className="flex items-center gap-4">
                 <div className="flex rounded-full bg-slate-100 p-1">
                   {(["upload", "library"] as const).map((tab) => (
@@ -190,7 +204,7 @@ export default function ImagePicker({ label, value, onChange, bucket = "brand-as
             </div>
 
             {/* MODAL CONTENT */}
-            <div className="flex-1 overflow-y-auto bg-slate-50/30 p-8">
+            <div className="flex-1 overflow-y-auto bg-slate-50/30 p-4 sm:p-8">
               {activeTab === "upload" ? (
                 <label className="group/upload relative flex h-full min-h-[300px] w-full cursor-pointer flex-col items-center justify-center rounded-[32px] border-2 border-dashed border-slate-200 bg-white transition-all hover:border-emerald-300 hover:bg-emerald-50/10">
                   <div className="flex flex-col items-center space-y-6">
