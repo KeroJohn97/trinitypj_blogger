@@ -18,26 +18,8 @@ export default async function AlphaCoursePage({ params }: { params: Promise<{ la
   const allMedia = await alphaService.getAll()
 
   // Categorize items
-  const journeyItems = allMedia.filter(m => m.category === "journey")
-  const advertisingItems = allMedia.filter(m => m.category === "advertising")
-
-  // Fallback to legacy static data if DB is empty
-  const displayJourney: any = journeyItems.length > 0 ? journeyItems : [
-    { id: "1", type: "video", youtubeId: "Un4kKyjmw44" },
-    { id: "2", type: "video", youtubeId: "9ib_IOjNMJs" },
-    { id: "3", type: "video", youtubeId: "oWsRQ7MwQbg" },
-    { id: "4", type: "video", youtubeId: "Fv2f4-Fact0" },
-    { id: "5", type: "video", youtubeId: "FrC5WBP5HHQ" },
-    { id: "6", type: "video", youtubeId: "hTDq8A-J0RE" },
-    { id: "7", type: "image", src: "https://trinitypj.com/wp-content/uploads/Alpha-Online-2020-1.png" },
-    { id: "8", type: "image", src: "https://trinitypj.com/wp-content/uploads/Alpha-Online-2020-2-1.png" },
-  ]
-
-  const displayAdvertising: any = advertisingItems.length > 0 ? advertisingItems : [
-    { id: "9", type: "image", src: "https://trinitypj.com/wp-content/uploads/alpha2025_16-9ppt_eng-01-2048x1151.jpg" },
-    { id: "10", type: "image", src: "https://trinitypj.com/wp-content/uploads/alpha2025_16-9ppt_chn-01-2048x1151.jpg" },
-    { id: "11", type: "image", src: "https://trinitypj.com/wp-content/uploads/alpha2025_16-9ppt_malay-01-2048x1151.jpg" },
-  ]
+  const displayJourney = allMedia.filter(m => m.category === "journey")
+  const displayAdvertising = allMedia.filter(m => m.category === "advertising")
 
   return (
     <div className="bg-background min-h-screen">

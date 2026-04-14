@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
+import { VisuallyHidden } from "radix-ui"
 import * as React from "react"
 
 export const MediaDialog = DialogPrimitive.Root
@@ -36,22 +37,30 @@ export const MediaDialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       {...props}
-      className={cn("fixed inset-0 z-50 flex items-center justify-center outline-none", className)}
+      className={cn(
+        "fixed inset-0 z-50 flex items-center justify-center outline-none p-4 sm:p-6",
+        className
+      )}
     >
-      {/* Media wrapper */}
-      <div
-        className="relative w-[90vw] max-w-[1200px] overflow-hidden rounded-xl bg-black"
-        onClick={(e) => e.stopPropagation()} // stops clicks on media from closing
-      >
-        {children}
+      <div className="relative w-full h-full flex items-center justify-center pointer-events-none">
+        <div className="pointer-events-auto relative max-w-full max-h-full flex items-center justify-center">
+          {children}
 
-        {/* Close button inside media */}
-        <MediaDialogClose className="absolute top-2 right-2 z-50 rounded-full bg-black/60 p-2 transition hover:bg-black/80">
-          <X className="h-6 w-6 text-white" />
-          <span className="sr-only">Close</span>
-        </MediaDialogClose>
+          {/* Global Close Button */}
+          <MediaDialogClose className="absolute -top-12 right-0 lg:-right-12 lg:top-0 z-50 rounded-full bg-black/20 p-2 transition hover:bg-black/40 backdrop-blur-md">
+            <X className="h-6 w-6 text-white" />
+            <span className="sr-only">Close</span>
+          </MediaDialogClose>
+        </div>
       </div>
     </DialogPrimitive.Content>
+    {/* Add this block here */}
+    <VisuallyHidden.Root>
+      <DialogPrimitive.Title>Media Preview</DialogPrimitive.Title>
+      <DialogPrimitive.Description>
+        Viewing media content in full screen.
+      </DialogPrimitive.Description>
+    </VisuallyHidden.Root>
   </MediaDialogPortal>
 ))
 

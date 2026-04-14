@@ -5,12 +5,14 @@ import ImagePicker from "components/ImagePicker"
 import { FileImage, LayoutGrid, Loader2, Plus, Save, Trash2, Video, Youtube } from "lucide-react"
 import { useEffect, useMemo, useState } from "react"
 import AdminHeader from "../AdminHeader"
+import { alphaService } from "@/services/alpha-service"
+import { scanQRCodeFromUrl } from "@/utils/qr-utils"
 
 type EditorCategory = "images" | "videos" | "posters"
 
 interface LocalMediaItem {
   id: string
-  category: EditorCategory
+  category: "journey" | "advertising"
   type: "video" | "image"
   youtubeId?: string
   image_id?: string
@@ -20,6 +22,9 @@ interface LocalMediaItem {
   language?: "en" | "zh" | "ms"
   reg_qr_id_physical?: string
   reg_qr_id_online?: string
+  reg_url_physical?: string
+  reg_url_online?: string
+  additional_image_ids?: string[]
 }
 
 export default function AlphaMediaEditor() {
@@ -41,9 +46,9 @@ export default function AlphaMediaEditor() {
     return () => setIsDirty(false)
   }, [isDirty, setIsDirty])
 
-  const loadData = async () => {
+  const loadData = async (silent: boolean = false) => {
     try {
-      setIsLoading(true)
+      if (!silent) setIsLoading(true)
       const res = await fetch("/api/alpha-media")
       const data: any = await res.json()
 
@@ -60,7 +65,7 @@ export default function AlphaMediaEditor() {
       setItems([])
       setOriginalItems([])
     } finally {
-      setIsLoading(false)
+      if (!silent) setIsLoading(false)
     }
   }
 
@@ -77,6 +82,12 @@ export default function AlphaMediaEditor() {
       image_id: "",
       title: "",
       description: "",
+      language: "en", // Default to EN for safety
+      reg_qr_id_physical: "",
+      reg_qr_id_online: "",
+      reg_url_physical: "",
+      reg_url_online: "",
+      additional_image_ids: [],
       sort_order: items.length
     }
 
@@ -112,7 +123,7 @@ export default function AlphaMediaEditor() {
   }
 
   const handleUpdate = (id: string, updates: Partial<LocalMediaItem>) => {
-    setItems(items.map(i => i.id === id ? { ...i, ...updates } : i))
+    setItems(prev => prev.map(i => i.id === id ? { ...i, ...updates } : i))
   }
 
   const handlePublish = async () => {
@@ -125,11 +136,20 @@ export default function AlphaMediaEditor() {
       })
 
       if (!res.ok) {
-        const body: any = await res.json().catch(() => ({}))
-        throw new Error(body.error || "Failed to save changes")
+        let errorMsg = "Failed to save changes"
+        try {
+          const body: any = await res.json()
+          errorMsg = body.error || errorMsg
+          if (body.detail) errorMsg += `\n\nDetail: ${body.detail}`
+          if (body.hint) errorMsg += `\n\nHint: ${body.hint}`
+        } catch (e) {
+          // If JSON parse fails, show the status text
+          errorMsg = `Server Error (${res.status}): ${res.statusText}`
+        }
+        throw new Error(errorMsg)
       }
 
-      await loadData()
+      await loadData(true)
       await alert("Alpha content updated successfully!", "Success")
     } catch (error: any) {
       await alert(error.message, "Error")
@@ -153,231 +173,309 @@ export default function AlphaMediaEditor() {
 
   return (
     <NavigationGuardProvider>
-      <div className="mx-auto max-w-6xl animate-in fade-in space-y-12 px-4 py-12 duration-1000 md:px-8">
-        {/* CINEMA HEADER */}
-        <div className="flex flex-col gap-10 border-b-2 border-slate-100 pb-12 md:flex-row md:items-end md:justify-between">
-          <div className="space-y-4">
-            <div className="flex flex-wrap items-center gap-5">
-              <h1 className="text-4xl font-black tracking-tight text-slate-900 md:text-7xl">Alpha Content</h1>
-              {isDirty ? (
-                <span className="flex animate-pulse items-center gap-2.5 rounded-full bg-amber-50 px-5 py-2 text-xs font-black tracking-widest text-amber-600 uppercase ring-2 ring-amber-100">
-                  Save Required
-                </span>
-              ) : (
-                <span className="flex items-center gap-2.5 rounded-full bg-emerald-50 px-5 py-2 text-xs font-black tracking-widest text-emerald-600 uppercase ring-2 ring-emerald-100">
-                  Live & Online
-                </span>
-              )}
-            </div>
-            <p className="max-w-2xl text-lg font-medium text-slate-500/70 leading-relaxed">
-              Curate and manage your mission-critical media assets for the Alpha Experience.
-            </p>
+      <div className="mx-auto max-w-5xl animate-in fade-in space-y-8 px-4 py-6 duration-700 md:px-0 md:py-10">
+        <AdminHeader
+          title="Alpha Content"
+          subtitle="Manage mission-critical images, videos, and advertising posters."
+          primaryAction={{
+            label: isSaving ? "Saving..." : isDirty ? "Publish Changes" : "Save Changes",
+            onClick: handlePublish,
+            icon: isSaving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />,
+            disabled: isSaving || !isDirty,
+            loading: isSaving,
+            className: isDirty ? "bg-emerald-600 shadow-emerald-100" : "bg-slate-900"
+          }}
+        />
+
+        {/* REFINED NAVIGATION */}
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex w-fit items-center gap-1 rounded-2xl bg-slate-100 p-1.5">
+            {[
+              { id: 'images', label: 'Images', icon: <FileImage size={18} /> },
+              { id: 'videos', label: 'Videos', icon: <Youtube size={18} /> },
+              { id: 'posters', label: 'Posters', icon: <LayoutGrid size={18} /> }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as EditorCategory)}
+                className={`flex items-center gap-2.5 rounded-xl px-6 py-2.5 text-sm font-bold transition-all ${activeTab === tab.id
+                  ? "bg-white text-emerald-600 shadow-sm"
+                  : "text-slate-500 hover:text-slate-700 hover:bg-white/50"
+                  }`}
+              >
+                {tab.icon} {tab.label}
+              </button>
+            ))}
           </div>
 
           <button
-            onClick={handlePublish}
-            disabled={isSaving || !isDirty}
-            className={`flex items-center justify-center gap-4 rounded-[32px] px-12 py-5 text-base font-black text-white transition-all active:scale-95 disabled:opacity-20 shadow-2xl ${
-              isDirty ? "bg-emerald-600 shadow-emerald-200" : "bg-slate-900"
-            }`}
+            onClick={handleAdd}
+            className="flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800 active:scale-95 shadow-lg shadow-slate-200"
           >
-            {isSaving ? <Loader2 className="animate-spin" size={24} /> : <Save size={24} />}
-            {isSaving ? "Saving..." : isDirty ? "Publish Changes" : "Already Live"}
+            <Plus size={18} /> Add {activeTab === "images" ? "Image" : activeTab === "videos" ? "Video" : "Poster"}
           </button>
         </div>
 
-        {/* NAVIGATION & ACTIONS */}
-        <div className="flex flex-col gap-8 sm:flex-row sm:items-center">
-        {/* Category Tabs */}
-        <div className="flex w-fit items-center gap-2 rounded-[28px] bg-slate-100 p-2 shadow-inner">
-          <button
-            onClick={() => setActiveTab("images")}
-            className={`flex items-center gap-3 rounded-[24px] px-10 py-3.5 text-sm font-black transition-all ${
-              activeTab === "images" ? "bg-white text-emerald-600 shadow-xl" : "text-slate-400 hover:text-slate-600"
-            }`}
-          >
-            <FileImage size={20} /> Images
-          </button>
-          <button
-            onClick={() => setActiveTab("videos")}
-            className={`flex items-center gap-3 rounded-[24px] px-10 py-3.5 text-sm font-black transition-all ${
-              activeTab === "videos" ? "bg-white text-emerald-600 shadow-xl" : "text-slate-400 hover:text-slate-600"
-            }`}
-          >
-            <Youtube size={20} /> Videos
-          </button>
-          <button
-            onClick={() => setActiveTab("posters")}
-            className={`flex items-center gap-3 rounded-[24px] px-10 py-3.5 text-sm font-black transition-all ${
-              activeTab === "posters" ? "bg-white text-emerald-600 shadow-xl" : "text-slate-400 hover:text-slate-600"
-            }`}
-          >
-            <LayoutGrid size={20} /> Posters
-          </button>
-        </div>
-
-          <div className="flex items-center gap-4">
-            <button
-              onClick={handleAdd}
-              className={`group flex items-center gap-3 rounded-[24px] px-8 py-4 text-sm font-black text-white transition-all hover:scale-105 active:scale-95 ${
-                activeTab === "videos" ? "bg-red-600" : "bg-slate-900"
-              }`}
-            >
-              <Plus size={20} className="transition-transform group-hover:rotate-90" />
-              Add {activeTab === "images" ? "Image" : activeTab === "videos" ? "Video" : "Poster"}
-            </button>
-          </div>
-        </div>
-
-        {/* CINEMA GRID (Single Column Focus) */}
-        <div className="grid grid-cols-1 gap-12">
+        {/* MINIMALIST GRID */}
+        <div className="space-y-6">
           {currentItems.length === 0 ? (
-            <div className="py-32 text-center rounded-[4rem] bg-slate-50 border-4 border-dashed border-slate-100">
-              <p className="text-2xl font-black text-slate-200 uppercase tracking-tighter">Your gallery is waiting...</p>
+            <div className="flex flex-col items-center justify-center py-24 rounded-3xl bg-slate-50 border border-slate-100">
+              <div className="mb-4 rounded-full bg-slate-100 p-4 text-slate-300">
+                <FileImage size={40} />
+              </div>
+              <p className="text-sm font-bold uppercase tracking-widest text-slate-400">No items found in this category</p>
             </div>
           ) : (
             currentItems.map((item, index) => (
               <div
                 key={item.id}
-                className="group relative flex flex-col overflow-hidden rounded-[4rem] bg-white ring-2 ring-slate-100 transition-all duration-700 hover:shadow-[0_60px_100px_-20px_rgba(0,0,0,0.12)] hover:ring-emerald-200"
+                className="group relative rounded-3xl border border-slate-100 bg-white p-5 transition-all"
               >
-                {/* LARGE MEDIA ROW */}
-                <div className="flex flex-col xl:flex-row">
-                  {/* Hero Media Block */}
-                  <div className="w-full xl:w-2/3 p-10">
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between px-2">
-                        <label className="text-[12px] font-black uppercase tracking-[0.3em] text-slate-400">Primary Curated Asset</label>
-                        <span className="text-[12px] font-black text-slate-300">#{(index + 1).toString().padStart(2, '0')}</span>
-                      </div>
-                      <div className="relative aspect-video overflow-hidden rounded-[3rem] bg-slate-50 shadow-2xl ring-1 ring-slate-100">
-                        {item.type === "video" ? (
-                          <div className="relative h-full w-full">
-                            {item.youtubeId ? (
-                              <img
-                                src={`https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg`}
-                                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                              />
-                            ) : (
-                              <div className="flex h-full items-center justify-center bg-slate-100">
-                                <Video className="text-slate-200" size={64} />
-                              </div>
-                            )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                          </div>
-                        ) : (
-                          <ImagePicker
-                            value={item.image_id || ""}
-                            onChange={(val) => handleUpdate(item.id, { image_id: val })}
-                            label=""
-                            aspectRatio="video"
-                          />
-                        )}
-                      </div>
+                <div className="flex flex-col gap-8 lg:flex-row">
+                  {/* MEDIA PREVIEW */}
+                  <div className={`shrink-0 overflow-hidden rounded-2xl ${activeTab === 'posters' ? 'w-full lg:w-48 xl:w-56' : 'w-full lg:w-64 xl:w-72'}`}>
+                    <div className="relative aspect-video lg:aspect-square">
+                      {item.type === "video" ? (
+                        <div className="h-full w-full">
+                          {item.youtubeId ? (
+                            <img
+                              src={`https://img.youtube.com/vi/${item.youtubeId}/mqdefault.jpg`}
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <div className="flex h-full items-center justify-center">
+                              <Video className="text-slate-200" size={32} />
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <ImagePicker
+                          value={item.image_id || ""}
+                          onChange={(val) => handleUpdate(item.id, { image_id: val })}
+                          label=""
+                          aspectRatio={activeTab === 'posters' ? "square" : "video"}
+                        />
+                      )}
                     </div>
                   </div>
 
-                  {/* High-Scale Options Block */}
-                  <div className="flex flex-1 flex-col justify-between border-t border-slate-50 p-10 xl:border-l xl:border-t-0 bg-slate-50/30">
-                    <div className="space-y-8">
-                      <div className="space-y-2">
-                        <label className="text-[12px] font-black uppercase tracking-[0.3em] text-slate-400 px-1">Identity</label>
+                  {/* FORM FIELDS */}
+                  <div className="flex flex-1 flex-col justify-between space-y-6 lg:space-y-0">
+                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+                      <div className="lg:col-span-12 xl:col-span-8 space-y-1 bg-slate-50/10 p-4 rounded-2xl">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Content Identity</label>
                         <input
                           value={item.title || ""}
                           onChange={(e) => handleUpdate(item.id, { title: e.target.value })}
-                          placeholder="What is this item titled?"
-                          className="w-full rounded-[24px] bg-white border-none px-6 py-5 text-xl font-black text-slate-900 shadow-sm outline-none ring-1 ring-slate-100 transition-all focus:ring-4 focus:ring-emerald-500/10"
+                          placeholder="Title or label..."
+                          className="w-full bg-transparent p-0 text-lg font-bold text-slate-900 outline-none placeholder:text-slate-200"
+                        />
+                        <textarea
+                          value={item.description || ""}
+                          onChange={(e) => handleUpdate(item.id, { description: e.target.value })}
+                          placeholder="Add description..."
+                          rows={2}
+                          className="w-full bg-transparent text-sm font-medium text-slate-500 outline-none placeholder:text-slate-300 resize-none"
                         />
                       </div>
 
-                      {item.category === "advertising" ? (
-                        <div className="space-y-4">
-                          <label className="text-[12px] font-black uppercase tracking-[0.3em] text-slate-400 px-1">Course Registration (QRs)</label>
-                          <div className="grid grid-cols-2 gap-6">
-                            <div className="space-y-3">
-                              <ImagePicker
-                                value={item.reg_qr_id_physical || ""}
-                                onChange={(val) => handleUpdate(item.id, { reg_qr_id_physical: val })}
-                                label=""
-                                aspectRatio="square"
-                              />
-                              <p className="text-center text-[10px] font-black uppercase tracking-widest text-slate-400">Physical</p>
+                      {/* ZONE 3: EDITORIAL CONTROLS */}
+                      {activeTab === 'posters' && (
+                        <div className="lg:col-span-4">
+                          <div className="flex flex-col space-y-6">
+                            {/* Language Selector */}
+                            <div className="flex flex-col space-y-3">
+                              <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Language Pack</label>
+                              <div className="flex flex-wrap gap-2">
+                                {["en", "zh", "ms"].map((lang) => (
+                                  <button
+                                    key={lang}
+                                    onClick={() => handleUpdate(item.id, { language: lang as any })}
+                                    className={`rounded-full px-5 py-2 text-xs font-bold uppercase tracking-widest transition-all duration-300 ${item.language === lang
+                                      ? "bg-emerald-500 text-white shadow-lg shadow-emerald-200"
+                                      : "bg-slate-50 text-slate-400 hover:bg-slate-100"
+                                      }`}
+                                  >
+                                    {lang === "en" ? "English" : lang === "zh" ? "Chinese" : "Malay"}
+                                  </button>
+                                ))}
+                              </div>
                             </div>
-                            <div className="space-y-3">
-                              <ImagePicker
-                                value={item.reg_qr_id_online || ""}
-                                onChange={(val) => handleUpdate(item.id, { reg_qr_id_online: val })}
-                                label=""
-                                aspectRatio="square"
-                              />
-                              <p className="text-center text-[10px] font-black uppercase tracking-widest text-slate-400">Online</p>
+
+                            {/* Poster Gallery */}
+                            <div className="flex flex-col space-y-4">
+                              <div className="flex items-center justify-between">
+                                <label className="text-xs font-semibold uppercase tracking-wider text-slate-400">Poster Gallery</label>
+                                <button
+                                  onClick={() => {
+                                    const current = item.additional_image_ids || []
+                                    handleUpdate(item.id, { additional_image_ids: [...current, ""] })
+                                  }}
+                                  className="flex items-center space-x-1 text-[10px] font-bold uppercase tracking-tighter text-emerald-600 hover:text-emerald-700"
+                                >
+                                  <Plus size={12} />
+                                  <span>Add Image</span>
+                                </button>
+                              </div>
+
+                              <div className="space-y-3">
+                                {(item.additional_image_ids || []).map((imgId, idx) => (
+                                  <div key={idx} className="group/gallery relative">
+                                    <ImagePicker
+                                      label=""
+                                      value={imgId}
+                                      onChange={(val) => {
+                                        const newIds = [...(item.additional_image_ids || [])]
+                                        newIds[idx] = val
+                                        handleUpdate(item.id, { additional_image_ids: newIds })
+                                      }}
+                                      aspectRatio="video"
+                                    />
+                                    <button
+                                      onClick={() => {
+                                        const newIds = (item.additional_image_ids || []).filter((_, i) => i !== idx)
+                                        handleUpdate(item.id, { additional_image_ids: newIds })
+                                      }}
+                                      className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white opacity-0 shadow-lg transition-opacity group-hover/gallery:opacity-100"
+                                    >
+                                      <Trash2 size={12} />
+                                    </button>
+                                  </div>
+                                ))}
+                                {(item.additional_image_ids || []).length === 0 && (
+                                  <div className="flex h-20 items-center justify-center rounded-2xl border-2 border-dashed border-slate-100 bg-slate-50/50">
+                                    <p className="text-[10px] font-medium text-slate-400">No additional images</p>
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
-                      ) : (
-                         <div className="space-y-2">
-                            <label className="text-[12px] font-black uppercase tracking-[0.3em] text-slate-400 px-1">Specifics</label>
-                            <div className="flex h-[80px] items-center px-6 bg-white/50 rounded-[24px] ring-1 ring-slate-100 text-sm font-bold text-slate-400">
-                               Journey Gallery Asset
-                            </div>
-                         </div>
                       )}
                     </div>
 
+                     {/* QR SECTION FOR POSTERS */}
+                     {activeTab === 'posters' && (
+                       <div className="mt-6 space-y-8 pt-6 border-t border-slate-50">
+                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                           {/* Physical QR Section */}
+                           <div className="flex flex-col space-y-4">
+                             <div className="flex items-center gap-4">
+                               <div className="h-20 w-20 shrink-0 overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-100">
+                                 <ImagePicker
+                                   value={item.reg_qr_id_physical || ""}
+                                   onChange={async (val) => {
+                                     // 1. Always update the ID first (Crucial for UI)
+                                     handleUpdate(item.id, { reg_qr_id_physical: val });
+                                     
+                                     // 2. Attempt Auto-Scan defensively
+                                     if (!val) return;
+                                     try {
+                                       const asset = await alphaService.getAsset(val);
+                                       if (asset?.storage_path) {
+                                         const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${asset.storage_path}`;
+                                         const decoded = await scanQRCodeFromUrl(url);
+                                         if (decoded) handleUpdate(item.id, { reg_url_physical: decoded });
+                                       }
+                                     } catch (err) {
+                                       console.error("[AUTO_SCAN] Error scanning physical QR:", err);
+                                     }
+                                   }}
+                                   label=""
+                                   aspectRatio="square"
+                                 />
+                               </div>
+                               <div className="space-y-1">
+                                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Physical Registration</p>
+                                 <p className="text-xs font-semibold text-slate-600">Scan code for manual signup</p>
+                               </div>
+                             </div>
+                             <div className="flex flex-col space-y-2">
+                               <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Registration Link (Physical)</label>
+                               <input 
+                                 type="text"
+                                 value={item.reg_url_physical || ""}
+                                 onChange={(e) => handleUpdate(item.id, { reg_url_physical: e.target.value })}
+                                 placeholder="Paste Form or Signup URL"
+                                 className="w-full rounded-xl bg-slate-50 px-4 py-2.5 text-xs font-semibold text-emerald-600 outline-none ring-1 ring-slate-100 focus:ring-emerald-200 transition-all"
+                               />
+                             </div>
+                           </div>
+
+                           {/* Online QR Section */}
+                           <div className="flex flex-col space-y-4">
+                             <div className="flex items-center gap-4">
+                               <div className="h-20 w-20 shrink-0 overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-100">
+                                 <ImagePicker
+                                   value={item.reg_qr_id_online || ""}
+                                   onChange={async (val) => {
+                                     // 1. Always update the ID first (Crucial for UI)
+                                     handleUpdate(item.id, { reg_qr_id_online: val });
+                                     
+                                     // 2. Attempt Auto-Scan defensively
+                                     if (!val) return;
+                                     try {
+                                       const asset = await alphaService.getAsset(val);
+                                       if (asset?.storage_path) {
+                                         const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${asset.storage_path}`;
+                                         const decoded = await scanQRCodeFromUrl(url);
+                                         if (decoded) handleUpdate(item.id, { reg_url_online: decoded });
+                                       }
+                                     } catch (err) {
+                                       console.error("[AUTO_SCAN] Error scanning online QR:", err);
+                                     }
+                                   }}
+                                   label=""
+                                   aspectRatio="square"
+                                 />
+                               </div>
+                               <div className="space-y-1">
+                                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Online Registration</p>
+                                 <p className="text-xs font-semibold text-slate-600">Scan code for online course</p>
+                               </div>
+                             </div>
+                             <div className="flex flex-col space-y-2">
+                               <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Registration Link (Online)</label>
+                               <input 
+                                 type="text"
+                                 value={item.reg_url_online || ""}
+                                 onChange={(e) => handleUpdate(item.id, { reg_url_online: e.target.value })}
+                                 placeholder="Paste Zoom or Webinar Link"
+                                 className="w-full rounded-xl bg-slate-50 px-4 py-2.5 text-xs font-semibold text-emerald-600 outline-none ring-1 ring-slate-100 focus:ring-emerald-200 transition-all"
+                               />
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                     )}
+
+                    {/* VIDEO CONFIG */}
+                    {activeTab === 'videos' && (
+                      <div className="flex items-center gap-3 bg-red-50 p-3 rounded-xl ring-1 ring-red-100 mt-4">
+                        <Youtube size={16} className="text-red-500" />
+                        <input
+                          value={item.youtubeId || ""}
+                          onChange={(e) => handleUpdate(item.id, { youtubeId: e.target.value })}
+                          placeholder="Paste YouTube Video ID"
+                          className="bg-transparent text-sm font-bold text-red-600 outline-none w-full"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* ACTIONS */}
+                  <div className="flex flex-col justify-between border-t border-slate-50 pt-6 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
                     <button
                       onClick={() => handleDelete(item.id)}
-                      className="mt-8 flex items-center justify-center gap-2 rounded-[24px] bg-red-50 py-4 text-xs font-black text-red-500 transition-all hover:bg-red-500 hover:text-white"
+                      className="flex items-center gap-2 rounded-xl p-2 text-slate-300 transition-all hover:bg-red-50 hover:text-red-500"
+                      title="Delete Item"
                     >
-                      <Trash2 size={16} /> Delete Curated Item
+                      <Trash2 size={20} />
                     </button>
+                    <div className="hidden lg:block text-[10px] font-bold text-slate-200 uppercase">
+                      ID: {item.id.slice(0, 4)}
+                    </div>
                   </div>
-                </div>
-
-                {/* EXPANDED CONTENT FOOTER */}
-                <div className="grid grid-cols-1 xl:grid-cols-2 border-t border-slate-100 bg-white">
-                   <div className="p-10 space-y-3 border-b xl:border-b-0 xl:border-r border-slate-100">
-                      <label className="text-[12px] font-black uppercase tracking-[0.3em] text-slate-400 ml-1">Context & Story</label>
-                      <textarea
-                        value={item.description || ""}
-                        onChange={(e) => handleUpdate(item.id, { description: e.target.value })}
-                        placeholder="Add some depth to this media asset..."
-                        rows={4}
-                        className="w-full rounded-[24px] bg-slate-50 border-none px-6 py-5 text-base font-medium text-slate-600 outline-none transition-all focus:bg-white focus:ring-4 focus:ring-emerald-500/5 ring-1 ring-transparent resize-none"
-                      />
-                   </div>
-                   <div className="p-10 space-y-8 bg-slate-50/20">
-                      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-                        <div className="space-y-2">
-                          <label className="text-[12px] font-black uppercase tracking-[0.3em] text-slate-400 ml-1">Type Specifics</label>
-                          <div className="rounded-[24px] bg-white p-5 shadow-sm ring-1 ring-slate-100">
-                             <p className="text-lg font-black text-slate-700">{item.type.toUpperCase()}</p>
-                             <p className="text-[10px] font-bold text-slate-400">Content category</p>
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                           <label className="text-[12px] font-black uppercase tracking-[0.3em] text-slate-400 ml-1">Configuration</label>
-                           {item.type === "video" ? (
-                              <input
-                                value={item.youtubeId || ""}
-                                onChange={(e) => handleUpdate(item.id, { youtubeId: e.target.value })}
-                                placeholder="YouTube ID"
-                                className="w-full rounded-[24px] bg-red-50 px-6 py-5 text-base font-black text-red-600 outline-none ring-2 ring-red-100"
-                              />
-                           ) : (
-                              <select
-                                value={item.language || ""}
-                                onChange={(e) => handleUpdate(item.id, { language: e.target.value as any })}
-                                className="w-full appearance-none rounded-[24px] bg-blue-50 px-6 py-5 text-base font-black text-blue-600 outline-none ring-2 ring-blue-100"
-                              >
-                                <option value="">Auto Select</option>
-                                <option value="en">English</option>
-                                <option value="zh">Mandarin</option>
-                                <option value="ms">Malay</option>
-                              </select>
-                           )}
-                        </div>
-                      </div>
-                   </div>
                 </div>
               </div>
             ))

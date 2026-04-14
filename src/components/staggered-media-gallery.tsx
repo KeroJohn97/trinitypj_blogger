@@ -14,8 +14,15 @@ export type MediaItem = {
   category?: string
   date?: string
   language?: "en" | "zh" | "ms"
+  image_id?: string
+  additional_image_ids?: string[]
+  reg_qr_id_physical?: string
+  reg_qr_id_online?: string
+  gallerySrcs?: string[]
   registrationQrSrcPhysical?: string
   registrationQrSrcOnline?: string
+  reg_url_physical?: string
+  reg_url_online?: string
 }
 
 interface StaggeredMediaGalleryProps {

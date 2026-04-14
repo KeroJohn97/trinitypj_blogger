@@ -30,6 +30,7 @@ export default function ImagePicker({
   const [selectedAsset, setSelectedAsset] = useState<MediaAsset | null>(null)
   const [isUploading, setIsUploading] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
+  const [isDragging, setIsDragging] = useState(false)
 
   useEffect(() => {
     if (value) fetchCurrentAsset(value)
@@ -53,10 +54,7 @@ export default function ImagePicker({
     return library.filter((asset) => asset.filename.toLowerCase().includes(searchTerm.toLowerCase()))
   }, [library, searchTerm])
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
+  const uploadFile = async (file: File) => {
     setIsUploading(true)
     const fileExt = file.name.split(".").pop()
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${fileExt}`
@@ -82,6 +80,29 @@ export default function ImagePicker({
       }
     }
     setIsUploading(false)
+  }
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) await uploadFile(file)
+  }
+
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (e.type === "dragover") setIsDragging(true)
+    else setIsDragging(false)
+  }
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragging(false)
+
+    const file = e.dataTransfer.files?.[0]
+    if (file && file.type.startsWith("image/")) {
+      await uploadFile(file)
+    }
   }
 
   const handleRemove = (e: React.MouseEvent) => {
@@ -117,10 +138,15 @@ export default function ImagePicker({
           setIsOpen(true)
           fetchLibrary()
         }}
+        onDragOver={handleDrag}
+        onDragLeave={handleDrag}
+        onDrop={handleDrop}
         className={`group relative ${aspectClasses[aspectRatio]} w-full cursor-pointer overflow-hidden rounded-[32px] transition-all duration-500 ease-out ${
-          selectedAsset
-            ? "bg-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/50"
-            : "border-2 border-dashed border-slate-200 bg-[#F8FAFC] hover:border-emerald-400/50 hover:bg-emerald-50/20"
+          isDragging 
+            ? "border-2 border-emerald-500 bg-emerald-50/30 scale-[0.98] ring-4 ring-emerald-500/10" 
+            : selectedAsset
+              ? "bg-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-slate-200/10 hover:ring-emerald-300 hover:shadow-xl hover:shadow-emerald-100/40"
+              : "border-2 border-dashed border-slate-200 bg-[#F8FAFC] hover:border-emerald-400/50 hover:bg-emerald-50/20 hover:shadow-lg hover:shadow-emerald-50/50"
         }`}
       >
         {selectedAsset ? (
@@ -206,7 +232,16 @@ export default function ImagePicker({
             {/* MODAL CONTENT */}
             <div className="flex-1 overflow-y-auto bg-slate-50/30 p-4 sm:p-8">
               {activeTab === "upload" ? (
-                <label className="group/upload relative flex h-full min-h-[300px] w-full cursor-pointer flex-col items-center justify-center rounded-[32px] border-2 border-dashed border-slate-200 bg-white transition-all hover:border-emerald-300 hover:bg-emerald-50/10">
+                <label 
+                  onDragOver={handleDrag}
+                  onDragLeave={handleDrag}
+                  onDrop={handleDrop}
+                  className={`group/upload relative flex h-full min-h-[300px] w-full cursor-pointer flex-col items-center justify-center rounded-[32px] border-2 border-dashed transition-all ${
+                    isDragging
+                      ? "border-emerald-500 bg-emerald-50/20 scale-[0.99]"
+                      : "border-slate-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/10"
+                  }`}
+                >
                   <div className="flex flex-col items-center space-y-6">
                     <div className="relative">
                       <div className="absolute -inset-4 animate-pulse rounded-full bg-emerald-50 opacity-0 transition-opacity group-hover/upload:opacity-100" />

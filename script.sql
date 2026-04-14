@@ -148,6 +148,9 @@ CREATE TABLE IF NOT EXISTS public.alpha_media (
   language text CHECK (language IN ('en', 'zh', 'ms')),
   reg_qr_id_physical uuid REFERENCES public.media_assets(id) ON DELETE SET NULL,
   reg_qr_id_online uuid REFERENCES public.media_assets(id) ON DELETE SET NULL,
+  reg_url_physical text,
+  reg_url_online text,
+  additional_image_ids uuid[] DEFAULT '{}',
   sort_order integer DEFAULT 0,
   created_at timestamp with time zone DEFAULT now()
 );
@@ -167,3 +170,10 @@ WITH CHECK (true);
 -- 3. Security Check (already a Primary Key)
 ALTER TABLE public.alpha_media 
 ALTER COLUMN id SET NOT NULL;
+
+-- 1. Add the additional_image_ids column as a UUID array
+ALTER TABLE public.alpha_media 
+ADD COLUMN IF NOT EXISTS additional_image_ids uuid[] DEFAULT '{}';
+
+-- 2. (Optional) Refresh the view if you are using any custom views 
+-- that include alpha_media columns.
