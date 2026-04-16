@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server"
+import { updateSession } from "@/utils/supabase/update-session"
 import { match } from "@formatjs/intl-localematcher"
 import Negotiator from "negotiator"
 import type { NextRequest } from "next/server"
@@ -20,55 +20,57 @@ function getLocale(request: NextRequest): string {
 }
 
 export async function proxy(request: NextRequest) {
-  const res = NextResponse.next()
   const pathname = request.nextUrl.pathname
 
-  // 1. Initialize Supabase Middleware Client
-  // This is required to refresh the session and check authentication
-  const supabase = createClient()
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  // 1. Sync Supabase Session and get refreshed user
+  const { res, user } = await updateSession(request)
+
+  // DEBUG: Useful for diagnosing redirection issues
+  if (pathname.includes("/admin")) {
+    console.log(`[MIDDLEWARE DEBUG] Path: ${pathname}, Authenticated: ${!!user}`)
+  }
+
 
   // 2. Determine the current locale
   const pathnameHasLocale = locales.some((locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`)
   const currentLocale = pathnameHasLocale ? pathname.split("/")[1] : getLocale(request)
 
   // 3. Define the Admin Security Logic
-  // We check if the path (with or without locale) includes "/admin"
   const isAdminPath = pathname.includes("/admin")
   const isLoginPage = pathname.includes("/admin/login")
 
-  // AUTH GUARD: If accessing admin area without a session
-  // TODO: recover the code below once admin credentials
-  // if (isAdminPath && !isLoginPage && !session) {
-  //   const redirectUrl = request.nextUrl.clone()
-  //   // Redirect to the localized login page
-  //   redirectUrl.pathname = `/${currentLocale}/admin/login`
-  //   return NextResponse.redirect(redirectUrl)
-  // }
-
-  // 4. Handle Locale Redirection (Your existing logic)
-  if (!pathnameHasLocale) {
-    request.nextUrl.pathname = `/${currentLocale}${pathname}`
-    // Note: If you return a redirect here, you must pass the 'res'
-    // to ensure Supabase cookies are preserved
-    const redirectRes = NextResponse.redirect(request.nextUrl)
-
-    // Transfer cookies from the Supabase response to the redirect response
-    // (Crucial for keeping the user logged in!)
-    res.cookies.getAll().forEach((cookie) => redirectRes.cookies.set(cookie.name, cookie.value))
-
+  // AUTH GUARD: If accessing admin area without a valid session
+  if (isAdminPath && !isLoginPage && !user) {
+    const redirectUrl = request.nextUrl.clone()
+    redirectUrl.pathname = `/${currentLocale}/admin/login`
+    
+    // Create a new redirect response but copy over any session cookies
+    const redirectRes = NextResponse.redirect(redirectUrl)
+    res.cookies.getAll().forEach((cookie) => {
+      redirectRes.cookies.set(cookie.name, cookie.value, cookie)
+    })
     return redirectRes
   }
 
-  // Return the default response with Supabase session headers
+  // 4. Handle Locale Redirection
+  if (!pathnameHasLocale) {
+    request.nextUrl.pathname = `/${currentLocale}${pathname}`
+    
+    // Create a new redirect response but copy over any session cookies
+    const redirectRes = NextResponse.redirect(request.nextUrl)
+    res.cookies.getAll().forEach((cookie) => {
+      redirectRes.cookies.set(cookie.name, cookie.value, cookie)
+    })
+    return redirectRes
+  }
+
+  // Return the synced response (NextResponse.next())
   return res
 }
 
 export const config = {
   matcher: [
-    // Skip all internal paths (_next, images, api, favicon)
+    // Skip internal paths and assets
     "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
 }

@@ -1,13 +1,16 @@
 // components/admin/Sidebar.tsx
 "use client"
 import { ADMIN_NAV } from "@/types/navigation"
+import { LogOut } from "lucide-react"
+
 
 interface SidebarProps {
   activeSlug: string
   onSelect: (slug: string) => void
+  onSignOut: () => void
 }
 
-export default function Sidebar({ activeSlug, onSelect }: SidebarProps) {
+export default function Sidebar({ activeSlug, onSelect, onSignOut }: SidebarProps) {
   return (
     <aside className="sticky top-0 flex h-screen w-64 flex-col overflow-y-auto border-r bg-white">
       {/* Header */}
@@ -44,16 +47,26 @@ export default function Sidebar({ activeSlug, onSelect }: SidebarProps) {
         ))}
       </nav>
 
-      {/* Footer / Profile */}
-      <div className="border-t bg-gray-50 p-4">
-        <div className="flex items-center gap-3 px-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700">
-            TM
+      {/* Footer / Profile & Logout */}
+      <div className="border-t bg-gray-50/50 p-4">
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-3 px-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-100 text-xs font-bold text-emerald-700 ring-2 ring-white">
+              TM
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <p className="truncate text-sm font-bold text-slate-900">Church Staff</p>
+              <p className="truncate text-[10px] font-medium tracking-wide text-slate-500">Admin Account</p>
+            </div>
           </div>
-          <div className="flex-1 overflow-hidden">
-            <p className="truncate text-sm font-medium text-gray-900">Church Staff</p>
-            <p className="truncate text-xs text-gray-500">admin@tmcpj.org</p>
-          </div>
+
+          <button
+            onClick={onSignOut}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold text-slate-500 transition-all hover:bg-red-50 hover:text-red-600 active:scale-[0.98]"
+          >
+            <LogOut size={16} className="transition-transform group-hover:-translate-x-0.5" />
+            Sign Out
+          </button>
         </div>
       </div>
     </aside>
