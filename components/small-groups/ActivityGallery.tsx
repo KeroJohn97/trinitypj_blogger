@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
-import { useEffect, useState, useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 interface GalleryItem {
   id: string
@@ -59,19 +59,6 @@ export function ActivityGallery({ items, dictionary }: ActivityGalleryProps) {
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [selectedIndex, closeLightbox, nextImage, prevImage])
-
-  if (items.length === 0) {
-    return (
-      <div className="group relative overflow-hidden rounded-[40px] shadow-2xl transition-transform duration-700 hover:scale-[1.01] animate-in fade-in duration-1000">
-        <img
-          src="https://trinitypj.com/wp-content/uploads/SG-Bkt-Damansara-1030x636.jpg"
-          alt="Small Group Gathering"
-          className="aspect-video w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-      </div>
-    )
-  }
 
   return (
     <>
@@ -157,8 +144,8 @@ export function ActivityGallery({ items, dictionary }: ActivityGalleryProps) {
                     alt={currentItem?.caption || "Activity"}
                     className="max-h-[75vh] rounded-2xl object-contain shadow-2xl"
                   />
-                  
-                  <motion.div 
+
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center"

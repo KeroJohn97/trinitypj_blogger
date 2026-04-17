@@ -10,12 +10,15 @@ import { getWebsiteSettings } from "@/lib/db/website"
 import { getDictionary } from "dictionaries"
 import Link from "next/link"
 import UpcomingActivitiesCarousel from "./app-components/upcoming-activities-carousel"
+import { LandingNoticeService } from "@/services/landing-notice-service"
+import { LandingNoticesSection } from "@/components/landing-notices-section"
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
   const dict = await getDictionary(lang as "en-US" | "zh-CN")
 
   const siteSettings = await getWebsiteSettings()
+  const notices = await LandingNoticeService.getAll()
 
   return (
     <div className="bg-background flex min-h-screen flex-col">
@@ -32,6 +35,9 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         <RevealOnScroll priority={true}>
           <HeroSection dict={dict.hero} />
         </RevealOnScroll>
+
+        {/* Dynamic Landing Spotlight Notices */}
+        <LandingNoticesSection notices={notices} />
 
         <RevealOnScroll>
           <UpcomingActivitiesCarousel dict={dict.home} />

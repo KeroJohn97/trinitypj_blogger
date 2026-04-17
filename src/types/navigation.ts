@@ -16,7 +16,7 @@ export const ADMIN_NAV = [
   {
     group: "Brand & Identity",
     items: [
-      { name: "General Settings", icon: LayoutDashboard, slug: "general" },
+      { name: "Landing Notices", icon: Megaphone, slug: "landing-notices" },
       { name: "About Us (Editor)", icon: Type, slug: "about" },
       { name: "Vision & Mission", icon: ImageIcon, slug: "vision" },
       { name: "LCEC Page", icon: ImageIcon, slug: "lcec-page" },

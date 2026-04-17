@@ -177,3 +177,29 @@ ADD COLUMN IF NOT EXISTS additional_image_ids uuid[] DEFAULT '{}';
 
 -- 2. (Optional) Refresh the view if you are using any custom views 
 -- that include alpha_media columns.
+
+-- 1. Create the landing_notices table
+CREATE TABLE IF NOT EXISTS public.landing_notices (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  description text,
+  image_id uuid REFERENCES public.media_assets(id),
+  video_url text, -- Supports YouTube/Vimeo URLs
+  link_url text,
+  link_label text DEFAULT 'Learn More',
+  sort_order integer DEFAULT 0,
+  is_active boolean DEFAULT true,
+  expiry_date timestamp with time zone,
+  created_at timestamp with time zone DEFAULT now()
+);
+
+-- 2. Enable Row Level Security (RLS)
+ALTER TABLE public.landing_notices ENABLE ROW LEVEL SECURITY;
+
+-- 3. Allow public read access (So website visitors can see the notices)
+CREATE POLICY "Allow public read access" ON public.landing_notices
+  FOR SELECT USING (true);
+
+-- 4. Allow authenticated users (Admins) to perform all actions
+CREATE POLICY "Allow admin manage access" ON public.landing_notices
+  FOR ALL TO authenticated USING (true);

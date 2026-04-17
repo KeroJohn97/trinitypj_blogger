@@ -13,6 +13,7 @@ import SmallGroupsEditor from "components/admin/editors/SmallGroupsEditor"
 import SpecialAlertsEditor from "components/admin/editors/SpecialAlertsEditor"
 import VisionEditor from "components/admin/editors/VisionEditor"
 import React from "react"
+import LandingNoticesEditor from "./editors/LandingNoticesEditor"
 import MediaAssetsEditor from "./editors/MediaAssetsEditor"
 import UpcomingActivityEditor from "./editors/UpcomingActivityEditor"
 
@@ -20,6 +21,7 @@ import UpcomingActivityEditor from "./editors/UpcomingActivityEditor"
 export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
   // Brand
   general: (props) => <GeneralSettingsEditor />,
+  "landing-notices": () => <LandingNoticesEditor />,
   about: (props) => <AboutUsEditor initialData={props.data?.aboutUsMarkdown} />,
   vision: () => <VisionEditor />,
   "media-assets": () => <MediaAssetsEditor />,

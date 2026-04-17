@@ -1,4 +1,5 @@
 import duitnowQr from "@/../assets/duitnow-qr.png"
+import givingBanner from "@/../assets/giving.png"
 import { PageHeader } from "@/components/page-header"
 import { getDictionary } from "dictionaries"
 import { Building, CreditCard, Mail } from "lucide-react"
@@ -14,7 +15,6 @@ export default async function FinancialPledgePage({ params }: { params: Promise<
   const t = dict.pledge
   
   const mediaMap = await MediaAssetService.getMediaMap()
-  const givingBanner = MediaAssetService.getUrl("https://trinitypj.com/wp-content/uploads/TMCPJ-Giving.png", mediaMap)
 
   // Helper to render text with <bold> tags
   const renderRichText = (text: string) => {
@@ -26,8 +26,7 @@ export default async function FinancialPledgePage({ params }: { params: Promise<
     <div className="min-h-screen bg-gray-50 font-sans text-gray-800">
       <PageHeader title={t.header.title} subtitle={t.header.subtitle} />
       <div className="mt-12 mb-4 flex w-auto items-center justify-center">
-        {/* You can also use Next/Image here for optimization if configured */}
-        <img src={givingBanner} alt="Giving" />
+        <Image src={givingBanner} alt="Giving" className="h-auto w-full max-w-5xl" />
       </div>
 
       <main className="mx-auto -mt-8 max-w-5xl px-4 py-12">

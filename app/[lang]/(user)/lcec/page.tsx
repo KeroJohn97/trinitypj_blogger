@@ -72,10 +72,10 @@ import { lcecService } from "@/services/lcec-service"
 
 export default async function LCECPage() {
   const settings = await lcecService.getSettings()
-  
+
   // Dynamic images from DB with legacy URL fallbacks
-  const bannerUrl = settings?.bannerUrl || "https://trinitypj.com/wp-content/uploads/LCEC-2025-scaled.jpg"
-  const chartUrl = settings?.chartUrl || "https://trinitypj.com/wp-content/uploads/2025-LCEC-v2-01-scaled.jpg"
+  const bannerUrl = settings?.bannerUrl
+  const chartUrl = settings?.chartUrl
   return (
     <div className="bg-background min-h-screen">
       <section
@@ -89,7 +89,7 @@ export default async function LCECPage() {
       <section className="py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="prose prose-lg text-muted-foreground mb-12 px-12">
-            <img src={chartUrl} alt="LCEC 2025" />
+            {chartUrl && <img src={chartUrl} alt="LCEC 2025" />}
           </div>
         </div>
       </section>
