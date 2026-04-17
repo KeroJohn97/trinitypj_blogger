@@ -11,11 +11,55 @@ interface MediaModalProps {
   item: MediaItem
   isOpen: boolean
   onClose: () => void
+  dict?: {
+    tag: string
+    titleFallback: string
+    descFallback: string
+    physical: {
+      title: string
+      desc: string
+      button: string
+    }
+    online: {
+      title: string
+      desc: string
+      button: string
+    }
+    alt: {
+      gallery: string
+      youtube: string
+      image: string
+      unavailable: string
+    }
+  }
 }
 
-export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
+export function MediaModal({ item, isOpen, onClose, dict }: MediaModalProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const isPoster = item.category === "advertising"
+
+  // Standard English fallbacks
+  const t = dict || {
+    tag: "Join The Journey",
+    titleFallback: "Alpha Course",
+    descFallback: "Explore life, faith, and meaning in a friendly environment.",
+    physical: {
+      title: "Physical Session",
+      desc: "Click the QR or link to register for the in-person event.",
+      button: "Registration Hub",
+    },
+    online: {
+      title: "Online Session",
+      desc: "Click the QR or link below to join the online Zoom course.",
+      button: "Join Online",
+    },
+    alt: {
+      gallery: "Gallery image",
+      youtube: "YouTube video",
+      image: "Image",
+      unavailable: "Image Unavailable",
+    },
+  }
 
   const allSources = useMemo(() => {
     const sources: string[] = []
@@ -65,14 +109,15 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
               <div className="relative h-full w-full">
                 <Image
                   src={allSources[activeIndex]!}
-                  alt={item.title || `Gallery image ${activeIndex + 1}`}
+                  alt={item.title || `${t.alt.gallery} ${activeIndex + 1}`}
                   fill
                   className="object-contain"
                   priority
                   onError={(e) => {
                     // Fallback for broken images
                     const target = e.target as HTMLImageElement;
-                    target.src = "https://placehold.co/600x400/f8fafc/cbd5e1?text=Image+Unavailable";
+                    const text = encodeURIComponent(t.alt.unavailable);
+                    target.src = `https://placehold.co/600x400/f8fafc/cbd5e1?text=${text}`;
                   }}
                 />
                 
@@ -110,7 +155,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
               <div className="relative aspect-video w-full bg-black shadow-2xl">
                 <iframe
                   src={`https://www.youtube.com/embed/${item.youtubeId}?autoplay=1`}
-                  title={item.title || "YouTube video"}
+                  title={item.title || t.alt.youtube}
                   allow="autoplay; encrypted-media; fullscreen"
                   allowFullScreen
                   className="h-full w-full border-0"
@@ -125,10 +170,10 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
               <div className="mb-8">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="h-1 w-12 bg-emerald-500 rounded-full" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600">Join The Journey</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600">{t.tag}</span>
                 </div>
-                <h2 className="text-3xl font-black tracking-tight text-slate-900 mb-3">{item.title || "Alpha Course"}</h2>
-                <p className="text-[13px] font-medium text-slate-500 leading-relaxed">{item.description || "Explore life, faith, and meaning in a friendly environment."}</p>
+                <h2 className="text-3xl font-black tracking-tight text-slate-900 mb-3">{item.title || t.titleFallback}</h2>
+                <p className="text-[13px] font-medium text-slate-500 leading-relaxed">{item.description || t.descFallback}</p>
               </div>
 
               <div className="space-y-6 mt-auto">
@@ -139,7 +184,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                       <div className="bg-white p-2.5 rounded-xl text-emerald-600 shadow-sm ring-1 ring-slate-100">
                         <MapPin size={18} />
                       </div>
-                      <span className="text-xs font-black uppercase tracking-widest text-slate-900">Physical Session</span>
+                      <span className="text-xs font-black uppercase tracking-widest text-slate-900">{t.physical.title}</span>
                     </div>
                     
                     <div className="flex items-center gap-5">
@@ -152,20 +197,20 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                         >
                           <img 
                             src={item.registrationQrSrcPhysical} 
-                            alt="QR Physical" 
+                            alt={t.physical.title} 
                             className="w-full h-full object-contain" 
                           />
                         </a>
                       )}
                       <div className="flex flex-col space-y-3">
-                        <p className="text-[11px] font-bold text-slate-400 leading-tight">Click the QR or link to register for the in-person event.</p>
+                        <p className="text-[11px] font-bold text-slate-400 leading-tight">{t.physical.desc}</p>
                         {item.reg_url_physical && (
                           <a 
                             href={item.reg_url_physical}
                             target="_blank"
                             className="inline-flex items-center gap-2 text-xs font-black text-emerald-600 hover:text-emerald-700 decoration-2 underline-offset-4 hover:underline"
                           >
-                            <span>Registration Hub</span>
+                            <span>{t.physical.button}</span>
                             <ExternalLink size={14} />
                           </a>
                         )}
@@ -181,7 +226,7 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                       <div className="bg-white p-2.5 rounded-xl text-slate-600 shadow-sm ring-1 ring-slate-100">
                         <Globe size={18} />
                       </div>
-                      <span className="text-xs font-black uppercase tracking-widest text-slate-900">Online Session</span>
+                      <span className="text-xs font-black uppercase tracking-widest text-slate-900">{t.online.title}</span>
                     </div>
                     
                     <div className="flex items-center gap-5">
@@ -194,20 +239,20 @@ export function MediaModal({ item, isOpen, onClose }: MediaModalProps) {
                         >
                           <img 
                             src={item.registrationQrSrcOnline} 
-                            alt="QR Online" 
+                            alt={t.online.title} 
                             className="w-full h-full object-contain" 
                           />
                         </a>
                       )}
                       <div className="flex flex-col space-y-3">
-                        <p className="text-[11px] font-bold text-slate-400 leading-tight">Click the QR or link below to join the online Zoom course.</p>
+                        <p className="text-[11px] font-bold text-slate-400 leading-tight">{t.online.desc}</p>
                         {item.reg_url_online && (
                           <a 
                             href={item.reg_url_online}
                             target="_blank"
                             className="inline-flex items-center gap-2 text-xs font-black text-slate-700 hover:text-slate-900 decoration-2 underline-offset-4 hover:underline"
                           >
-                            <span>Join Online</span>
+                            <span>{t.online.button}</span>
                             <ExternalLink size={14} />
                           </a>
                         )}

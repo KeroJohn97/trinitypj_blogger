@@ -28,9 +28,10 @@ export type MediaItem = {
 interface StaggeredMediaGalleryProps {
   items: MediaItem[]
   onItemClick?: (item: MediaItem, index: number) => void
+  dict?: any // localization dict for MediaModal
 }
 
-export function StaggeredMediaGallery({ items, onItemClick }: StaggeredMediaGalleryProps) {
+export function StaggeredMediaGallery({ items, onItemClick, dict }: StaggeredMediaGalleryProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -61,7 +62,7 @@ export function StaggeredMediaGallery({ items, onItemClick }: StaggeredMediaGall
                 <div className="relative aspect-video">
                   <Image
                     src={thumbnailSrc!}
-                    alt={item.title || (isVideo ? "YouTube video" : "Image")}
+                    alt={item.title || (isVideo ? (dict?.alt?.youtube || "YouTube video") : (dict?.alt?.image || "Image"))}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-110"
                   />
@@ -95,7 +96,14 @@ export function StaggeredMediaGallery({ items, onItemClick }: StaggeredMediaGall
       </div>
 
       {/* Only one video is passed to the modal at a time */}
-      {modalOpen && <MediaModal item={items[currentIndex]!} isOpen={modalOpen} onClose={() => setModalOpen(false)} />}
+      {modalOpen && (
+        <MediaModal 
+          item={items[currentIndex]!} 
+          isOpen={modalOpen} 
+          onClose={() => setModalOpen(false)} 
+          dict={dict}
+        />
+      )}
     </>
   )
 }

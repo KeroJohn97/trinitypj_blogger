@@ -34,7 +34,6 @@ export default async function AlphaCoursePage({ params }: { params: Promise<{ la
               {/* FAQ 1 */}
               <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">
                 {t.faq.who.title}
-                <span className="text-destructive">?</span>
               </h2>
               <div className="prose prose-lg text-muted-foreground">
                 <p className="mb-4">{t.faq.who.desc}</p>
@@ -43,7 +42,6 @@ export default async function AlphaCoursePage({ params }: { params: Promise<{ la
               {/* FAQ 2 */}
               <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">
                 {t.faq.how.title}
-                <span className="text-destructive">?</span>
               </h2>
               <div className="prose prose-lg text-muted-foreground">
                 <p className="mb-4">{t.faq.how.desc}</p>
@@ -52,7 +50,6 @@ export default async function AlphaCoursePage({ params }: { params: Promise<{ la
               {/* FAQ 3 */}
               <h2 className="text-foreground mb-2 text-3xl font-bold lg:text-4xl">
                 {t.faq.cost.title}
-                <span className="text-destructive">?</span>
               </h2>
               <div className="prose prose-lg text-muted-foreground">
                 <p className="mb-4">{t.faq.cost.desc}</p>
@@ -61,7 +58,11 @@ export default async function AlphaCoursePage({ params }: { params: Promise<{ la
 
             {/* Right Column: Article */}
             <div className="relative">
-              <ExpandableArticle previewHeight={400}>
+              <ExpandableArticle 
+                previewHeight={400}
+                expandButtonText={t.article.expand}
+                collapseButtonText={t.article.collapse}
+              >
                 <Card className="bg-primary/5 border-primary/20">
                   <CardContent className="p-8">
                     <h3 className="text-foreground mb-6 text-2xl font-bold">{t.article.title}</h3>
@@ -85,13 +86,13 @@ export default async function AlphaCoursePage({ params }: { params: Promise<{ la
               <h2 className="text-foreground mb-4 text-3xl font-bold lg:text-4xl">{t.gallery.journey.title}</h2>
               <p className="text-muted-foreground mx-auto max-w-2xl text-xl">{t.gallery.journey.subtitle}</p>
             </div>
-            <StaggeredMediaGallery items={displayJourney} />
+            <StaggeredMediaGallery items={displayJourney} dict={t.modal} />
           </div>
 
           <div className="mb-16">
             <div className="mb-12 text-center">
-              <h2 className="text-foreground mb-8 text-3xl font-bold lg:text-4xl">{t.gallery.languages}</h2>
-              <StaggeredMediaGallery items={displayAdvertising} />
+              <h2 className="text-foreground mb-4 text-3xl font-bold lg:text-4xl">{t.gallery.languages}</h2>
+              <StaggeredMediaGallery items={displayAdvertising} dict={t.modal} />
             </div>
           </div>
 

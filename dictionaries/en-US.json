@@ -277,20 +277,22 @@
         },
         "faq": {
             "who": {
-                "title": "WHO’S IT FOR",
+                "title": "WHO’S IT FOR?",
                 "desc": "Alpha is for anyone who’s curious to explore the big questions of life, faith and meaning. The videos are designed to encourage conversation and explore the Christian faith in a friendly, open and informal environment."
             },
             "how": {
-                "title": "HOW DOES IT WORK",
+                "title": "HOW DOES IT WORK?",
                 "desc": "Typically run over twelve weeks and ends with a celebration. No two Alphas look the same, but generally they have three key things in common: food (except for Alpha Online), a short video and a discussion where you can share your thoughts. There’s no pressure and no follow up."
             },
             "cost": {
-                "title": "HOW MUCH IS IT",
+                "title": "HOW MUCH IS IT?",
                 "desc": "There’s no charge for Alpha."
             }
         },
         "article": {
             "title": "Alpha: A Journey of Faith",
+            "expand": "Read More",
+            "collapse": "Show Less",
             "p1": "Trinity Methodist Church PJ has been running Alpha for many years. Alpha has brought many people to the salvation grace of our Lord Jesus Christ. Alpha also gives opportunities to people to serve God with the many gifts and talents which He has uniquely given to individuals. Each year, the Alpha team sees the miracles which God performs in the participants’ lives and this brings them back to serve God in Alpha, year after year. Alpha puts us in the right course of our Christian walk and the journey through Alpha strengthens our love, faith and reliance on the Holy Spirit through the unity of the spirit with one another and prayer.",
             "p2": "At the beginning of this year, as the Covid-19 pandemic brought a halt to our running of Alpha in church, we thank God for being able to share the gospel through Alpha Online (AO). In unity of Spirit, the AO team was set-up and we started our first AO session on Aug 15, 2020 using the Zoom platform. We had an average attendance of 16 participants with 6 pre-believers on board. Our AO team consists of 14 persons – 4 hosts, 5 helpers, 2 prayer warriors and 3 handling main room functions.",
             "p3": "It was amazing how we saw 1 participant come to the saving grace of Christ after the video – “How can I have faith?” and another 2 participants accepted salvation after the video on “How does God guide us?” The weekend away was a 2.5-hour journey and we saw 3 participants accepted our Lord Jesus Christ as their Lord and Saviour. We praise God when we saw the amazing works of the Holy Spirit administering to the 6 participants who weren’t believers when they started the AO journey and those who were Christians re-dedicated their lives to Jesus Christ.",
@@ -301,7 +303,7 @@
         "gallery": {
             "journey": {
                 "title": "Alpha's Journey",
-                "subtitle": "Hear from our community members about the impact of the restoration project"
+                "subtitle": "Hear from our community members about the impact of the Alpha Course"
             },
             "languages": "Available in 3 Languages"
         },
@@ -311,6 +313,27 @@
             "button": "Drop an Email to Us",
             "emailSubject": "Interested in Alpha Online Program",
             "emailBody": "Hi Trinity PJ Alpha Team,\n\nI’d love to register my interest for the next Alpha program.\n\nName:\nContact:\nPreferred Language:\n\nLooking forward to hearing from you!"
+        },
+        "modal": {
+            "tag": "Join The Journey",
+            "titleFallback": "Alpha Course",
+            "descFallback": "Explore life, faith, and meaning in a friendly environment.",
+            "physical": {
+                "title": "Physical Session",
+                "desc": "Click the QR or link to register for the in-person event.",
+                "button": "Registration Hub"
+            },
+            "online": {
+                "title": "Online Session",
+                "desc": "Click the QR or link below to join the online Zoom course.",
+                "button": "Join Online"
+            },
+            "alt": {
+                "gallery": "Gallery image",
+                "youtube": "YouTube video",
+                "image": "Image",
+                "unavailable": "Image Unavailable"
+            }
         }
     },
     "smallGroups": {

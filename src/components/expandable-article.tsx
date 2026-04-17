@@ -19,8 +19,8 @@ export function ExpandableArticle({
   children,
   previewHeight = 400,
   className,
-  expandButtonText = "Read More",
-  collapseButtonText = "Show Less",
+  expandButtonText,
+  collapseButtonText,
 }: ExpandableArticleProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const articleRef = useRef<HTMLDivElement>(null)
