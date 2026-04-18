@@ -15,7 +15,7 @@ const YoutubeButton = ({ dict }: YoutubeButtonProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="lg" className="bg-white font-semibold" href={"#"}>
+        <Button variant="outline" size="lg" className="bg-white font-semibold">
           <Play className="mr-2 h-4 w-4" />
           {/* Translated Text */}
           {dict.watchLive}
