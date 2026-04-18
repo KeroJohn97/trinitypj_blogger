@@ -29,30 +29,39 @@ export default function AdminLoginForm({ dict }: AdminLoginFormProps) {
 
     try {
       console.log("Login button pressed. Attempting login for:", email)
-      console.log("Supabase client initialized:", !!supabase)
-      console.log("Supabase Auth defined:", !!supabase?.auth)
+      
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+      const isPlaceholder = !supabaseUrl || supabaseUrl.includes("placeholder")
+
+      if (isPlaceholder) {
+        const devError = "Dev Error: NEXT_PUBLIC_SUPABASE_URL is missing or set to a placeholder. Check your Railway/Env variables and REBUILD the app."
+        console.error(devError)
+        setError(devError)
+        setLoading(false)
+        return
+      }
 
       const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password })
-      console.log("Auth response received. Error:", authError?.message)
-
-      if (authError || !data.session) {
+      
+      if (authError) {
         console.error("Auth error:", authError)
-        setError(authError?.message || "Invalid credentials. Access denied.")
+        setError(`Auth Error: ${authError.message}`)
+        setLoading(false)
+      } else if (!data.session) {
+        setError("Auth Error: Login succeeded but no session was returned.")
         setLoading(false)
       } else {
         // Redirection should happen now
-        // We call refresh first to ensure the middleware sees the new cookies
         await router.refresh()
         router.push(`/${lang}/admin`)
         
-        // Safety timeout to reset loading state if redirection is slow
         setTimeout(() => {
           setLoading(false)
         }, 3000)
       }
     } catch (err: any) {
-      console.error("Login error:", err)
-      setError("An unexpected connection error occurred.")
+      console.error("Critical Login error:", err)
+      setError(`Critical Error: ${err.message || "An unexpected connection error occurred."}`)
       setLoading(false)
     }
   }
