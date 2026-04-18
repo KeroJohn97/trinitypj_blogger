@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server"
+import { supabase } from "@/lib/supabase"
 
 export class MediaAssetService {
   /**
@@ -6,7 +6,6 @@ export class MediaAssetService {
    */
   static async getMediaMap(): Promise<Record<string, string>> {
     try {
-      const supabase = createClient()
       const { data, error } = await supabase
         .from("media_assets")
         .select("filename, storage_path")
