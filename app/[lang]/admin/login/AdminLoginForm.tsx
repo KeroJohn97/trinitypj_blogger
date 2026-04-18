@@ -31,7 +31,8 @@ export default function AdminLoginForm({ dict }: AdminLoginFormProps) {
       const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password })
 
       if (authError || !data.session) {
-        setError("Invalid credentials. Access denied.")
+        console.error("Auth error:", authError)
+        setError(authError?.message || "Invalid credentials. Access denied.")
         setLoading(false)
       } else {
         // Redirection should happen now
