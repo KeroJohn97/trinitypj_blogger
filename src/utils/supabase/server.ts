@@ -11,7 +11,8 @@ export function createClient() {
   return createServerClient(supabaseUrl, supabaseAnonKey, {
     global: {
       fetch: (...args) => {
-        if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !key || key === "your-anon-key-here" || key === "placeholder") {
           return Promise.resolve(new Response(JSON.stringify([]), { status: 200, headers: { 'Content-Type': 'application/json' } }))
         }
         return fetch(...args)
