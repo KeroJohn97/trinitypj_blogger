@@ -28,7 +28,12 @@ export default function AdminLoginForm({ dict }: AdminLoginFormProps) {
     setError(null)
 
     try {
+      console.log("Login button pressed. Attempting login for:", email)
+      console.log("Supabase client initialized:", !!supabase)
+      console.log("Supabase Auth defined:", !!supabase?.auth)
+
       const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password })
+      console.log("Auth response received. Error:", authError?.message)
 
       if (authError || !data.session) {
         console.error("Auth error:", authError)
