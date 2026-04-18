@@ -101,6 +101,7 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
                     {selectedImage && (
                       <MediaModal
                         item={{
+                          id: i.toString(),
                           type: "image",
                           src: selectedImage,
                         }}

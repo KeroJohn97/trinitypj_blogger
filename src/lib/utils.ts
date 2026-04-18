@@ -6,6 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function hexToHslValues(hex: string): string {
+  if (!hex) return "0 0% 0%"
   // Remove the hash if it exists
   hex = hex.replace(/^#/, "")
 

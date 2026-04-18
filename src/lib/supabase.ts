@@ -10,6 +10,16 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createBrowserClient(
   supabaseUrl || "https://placeholder.supabase.co", 
-  supabaseAnonKey || "placeholder"
+  supabaseAnonKey || "placeholder",
+  {
+    global: {
+      fetch: (...args) => {
+        if (!supabaseUrl || !supabaseAnonKey) {
+          return Promise.resolve(new Response(JSON.stringify([]), { status: 200, headers: { 'Content-Type': 'application/json' } }))
+        }
+        return fetch(...args)
+      }
+    }
+  }
 )
 
