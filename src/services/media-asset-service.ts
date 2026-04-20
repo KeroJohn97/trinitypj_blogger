@@ -8,7 +8,7 @@ export class MediaAssetService {
     try {
       const { data, error } = await supabase
         .from("media_assets")
-        .select("filename, storage_path")
+        .select("id, filename, storage_path")
 
       if (error) {
         console.warn("Could not fetch media_assets:", error.message)
@@ -18,8 +18,13 @@ export class MediaAssetService {
       const map: Record<string, string> = {}
       if (data) {
         data.forEach((item) => {
-          if (item.filename && item.storage_path) {
-            map[item.filename] = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${item.storage_path}`
+          const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${item.storage_path}`
+          
+          if (item.id) {
+            map[item.id] = publicUrl
+          }
+          if (item.filename) {
+            map[item.filename] = publicUrl
           }
         })
       }

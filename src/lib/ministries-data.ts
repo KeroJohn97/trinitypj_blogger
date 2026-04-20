@@ -1,7 +1,7 @@
-import { MediaAssetService } from "@/services/media-asset-service"
+import { ministryService } from "@/services/ministry-service"
 
+// Fallback data in case the database is empty or unreachable during development
 export const STATIC_MINISTRIES = [
-
   {
     id: "boys-brigade",
     name: "Boys' Brigade",
@@ -111,12 +111,12 @@ export const STATIC_MINISTRIES = [
       {
         question: "What is the history of the 1st Petaling Jaya Girls’ Brigade Company?",
         answer:
-          "The 1st Petaling Jaya Girls’ Life Brigade (PJGLB) Company was started on November 1960 under the leadership of Mrs Khoo Onn Soo at Trinity Methodist Church Petaling Jaya (TMCPJ). At the time of its founding, there were about 23 girls and officers, 22 of them were from Kuala Lumpur and one girl from Petaling Jaya. \n\nMrs Khoo was an active brigadier herself at the 1st Penang GB Company. She thought that it would be an excellent idea to start a GB Company at TMCPJ. She mentioned during an interview that the Lord had impressed upon her heart to “feed His sheep”. The GB meetings were then held henceforth on every Saturday, which was the day for youth activities at church. The agenda of the meetings were the typical GB meetings; beginning with prayer, followed by worship, Bible study, badge work and drills. \n\nIn 1964, Ms Rasathi Pragasam became the captain of the company. In the following year, the name of the organisation changed slightly with the omission of the word “Life”. This change was dues to the amalgamation of The Girls’ Brigade (Ireland), The Girls’ Guildry and The Girls’ Life Brigade worldwide. \n\nThere were high and low notes in terms of company membership, dipping as low as 5 girls at a single meeting in the 1980s. Through the years, there were many church members such as Mrs Lim Choon Teng, Mrs June Ng, Ms Anne Wong, Mrs Pauline Choo, Ms Aileen Khoo, Ms Rani Samuel, Mrs May Soon, Mdm Leong Sow Yoke, Mrs Magdeline Tan and many others who served in this ministry as Captains, Officers and Helpers. \n\nThe 1st PJ Girls’ Brigade spread its wings to the neighbouring Methodist Primary School in 2008. There they have their meetings every Wednesday afternoons from 1pm – 3pm. The current teacher advisors are Mdm Chua, Mrs Meena and Ms Rita. \n\nBesides the weekly Saturday meetings, 1st PJGB have our own Junior Camp, Drill Camp. Other than that, we also participate in the camps held at national level such as YLPT, YLGBSL, YLRALT, NOR, BOT1&2, the Fonomarae, the National Cadet Camp and the National Drill Camp. \n\nThe first achiever of the GB National Award, the Pioneer Pin from our local company is YL Tan Hzu Fernn in 2009. \n\nSources: Mrs Khoo Onn Soo, Mr Lim Tong Juan (the then Church Historian), LCEC Minutes (Church Archives)",
+          "The 1st Petaling Jaya Girls’ Life Brigade (PJGLB) Company was started on November 1960 under the leadership of Mrs Khoo Onn Soo at Trinity Methodist Church Petaling Jaya (TMCPJ). At the time of its founding, there were about 23 girls and officers, 22 of them were from Kuala Lumpur and one girl from Petaling Jaya...",
       },
       {
         question: "What happened during the 1st Petaling Jaya Girls’ Brigade Enrolment Sunday in 2013?",
         answer:
-          "The 1st Petaling Jaya Girls’ Brigade had their Enrolment Sunday on 28th April, 2013. Enrolment Sunday, held every year to enrol new girls, re-enrol the existing members and promote the girls to become Young Leaders. Also, this Enrolment Sunday is to get other girls interested in the activities of the Girls’ Brigade and join the Brigade. \n\nWeeks before the Enrolment Day, we, the girls of the 1st Petaling Jaya Company practised hard to show our best on this special day. Band lessons started and a relatively big number of girls had joined. This was a quite a big achievement for our Company as previously when our band was first formed, only a small number of girls joined. Dance practices were also held for their performance during worship on Enrolment Day. And there was of course parade drill practice, the highlight of the day! The Senior and Pioneer girls and two Officers took part in the parade drill. \n\nThe special day had finally arrived and everyone was excited. The day started off with the parade drill at 10.15 am. After that, it was the marching in of the girls. The programme continued with the worship session which was then followed by scripture reading and a message by Pastor Ting, the Chaplain of the 1st Petaling Jaya Company of the Girls’ Brigade. Following that was the most anticipated event of the day: the enrolment and promotion of the members! New girls were enrolled, existing members were re-emrolled and some were promoted to Young Leaders as the had completed their training and met the requirements after the Young Leaders’ Preliminary Training (YLPT). Following that was the Captain’s speech and a slideshow of the activities of our Company from November, 2012 until April, 2013 and what was coming up in the future. \n\nThen it was time for a little appreciation of the parents who attended our Enrolment. Chocolates and testimony books were given out as an appreciation. After that, we marched out and had our dismissal. Our programme was completed and our day was done at approximately 12.45 pm. \n\nI’m proud to say that this is my eighth enrolment as I had been a member since 2004. As a Young Leader of this Company I have seen the Company grow from a small group of girls to a large group of girls. I’m proud to say that I am a GB girl! \n\nYoung Leader Leong Jia Qian",
+          "The 1st Petaling Jaya Girls’ Brigade had their Enrolment Sunday on 28th April, 2013...",
       },
     ],
   },
@@ -125,7 +125,7 @@ export const STATIC_MINISTRIES = [
     name: "Christian Education",
     color: "green",
     description:
-      "The Christian Education Committee is entrusted with the functions and duties, inter-alia, to determine the policies for the Sunday School as a whole and in parts, and to give general direction to all the Christian education work of the local church, provided that the education programme of the local church shall be open to all persons. It shall be responsible for counselling with officers and teachers regarding the upgrading of the curriculum materials used by the Sunday School classes and groups and shall see that all audio-visual materials used in the Sunday School are in harmony with the standards of the Annual Conference Board of Christian Education. \n\nFor further enquiries of the latest Christian Education courses, you may contact: ce@trinitypj.com",
+      "The Christian Education Committee is entrusted with the functions and duties...",
   },
   {
     id: "church-school",
@@ -178,22 +178,22 @@ export const STATIC_MINISTRIES = [
     id: "membership",
     name: "Church Membership",
     description:
-      "To be a member of Trinity Methodist Church Petaling Jaya (TMC PJ) means pledging to work out one’s discipleship with Jesus Christ in and through the community of faith. While there are privileges afforded to a member, they are to be viewed as opportunities to further the kingdom of God and participate in the ministries of Jesus Christ, our Saviour and Lord.",
+      "To be a member of Trinity Methodist Church Petaling Jaya (TMC PJ) means pledging to work out one’s discipleship...",
     faqs: [
       {
         question: "How can I become a member of the church?",
         answer:
-          "Through one of three ways below: \n\n• By profession of faith \n• By confirmation/reaffirmation \n• By transfer (from another community of faith) \n\nWe welcome you. \n\nPrior to your joining , you will have to undergo a 15-week BCM course (Baptism-Confirmation-Membership) that covers the meaning of the Christian faith and provides an overview of the Methodist history, beliefs, organizations and missions. \n\nThis course is held twice a year (commencing in the months of February and August), in-person, usually on Saturdays from 2.30 – 4.30 pm in our church meeting rooms. \n\nThere will be a formal reception of your membership into the community of faith during a Baptismal, Confirmation & Covenant & Reception of Membership Service at the completion of the BCM course (usually early June on the 1st half of the year and early December on the 2nd half).",
+          "Through one of three ways below: \n\n• By profession of faith \n• By confirmation/reaffirmation \n• By transfer (from another community of faith)...",
       },
       {
         question: "How does Infant and Children Baptism work in our church?",
         answer:
-          "INFANT/CHILDREN BAPTISM (age 1 month – 13 years old) \n\nMethodist Churches in Malaysia practice children baptism. This is primarily founded upon the understanding of the covenant a relationship God has initiated with His people. Parents who present their children for child/infant baptism make a covenant to bring up their children in the saving knowledge of our Lord God and prepare them for the ratification of their baptism through confirmation at the age 16 or before (if parents are of the view their child is ready for such a step to be taken by him/her). \n\nInfant/Children Baptism is held twice a year (usually mid-April and mid-December).",
+          "INFANT/CHILDREN BAPTISM (age 1 month – 13 years old) \n\nMethodist Churches in Malaysia practice children baptism...",
       },
       {
         question: "What are the duties and privileges of church membership?",
         answer:
-          "In short, to be a member of the community of faith, we strongly encourage you to \n\n• Submit yourself to Christ as Lord and Saviour and making Him known in all areas of your life befitting of a disciple of Jesus Christ, \n• Meet together and regularly attend Sunday worship services, \n• Be in a small group of the community of faith, \n• Pray individually and as part of the prayer gathering to deepen of one’s relationship with God as well as to intercede for others and the church, \n• Learn through disciple classes, seminars; Bible study and training, \n• Serve Christ and one another in the various ministries of the church \n• Give tithes/pledges and use of spiritual gifts to support the church’s ministries \n• Update your latest information to membership@trinitypj.com for continual pastoral oversight by the community of faith",
+          "In short, to be a member of the community of faith, we strongly encourage you to...",
       },
       {
         question: "How do I register or get more information about church membership?",
@@ -206,12 +206,12 @@ export const STATIC_MINISTRIES = [
     id: "stewardship-finance",
     name: "Stewardship & Finance",
     description:
-      "The Stewardship and Finance committee, as per the Methodist Book of Discipline 2016, is entrusted to promote and cultivate Christian Stewardship. We are all God’s stewards – to look after God’s possessions in our care and to ensure that we do it well ie effective use of the talents God has given to us.",
+      "The Stewardship and Finance committee, as per the Methodist Book of Discipline 2016, is entrusted to promote and cultivate Christian Stewardship.",
     faqs: [
       {
         question: "What are the areas of stewardship?",
         answer:
-          "• Possessions (eg House, Car) \n• Time \n• Money \n• Spiritual Gifts ie Our talents \n\nOn yearly basis, S&F is tasked to coordinate with all the ministries of the church to compile the annual expenditure budget. S&F would challenge the chairs/captains/presidents or their reps to ensure that we budget for matters that reflects our vision and missions. \n\nWhilst we aspire to increase our giving, we need help. It is our responsibility to also encourage all members, as a disciple of Jesus Christ, to step forward and be involved in one or two ministries of the church. Let’s encourage one another to be the servant to 5 or 10 talents – whom God has found faithful to serve. If you need to find out more about the ministries, please contact sf@trinitypj.com",
+          "• Possessions (eg House, Car) \n• Time \n• Money \n• Spiritual Gifts ie Our talents...",
       },
     ],
   },
@@ -220,12 +220,12 @@ export const STATIC_MINISTRIES = [
     name: "THE CLARION",
     tagline: "The official newsletter of the TMCPJ",
     description:
-      "The Clarion is the official newsletter of the Trinity Methodist Church, Petaling Jaya (TMC PJ) and is published quarterly. TMC PJs a thriving and growing church with about 2,000 members. It has multiple worship services including a Chinese service, many ministries, home fellowships, small groups, evangelistic missions, affiliated bodies and many other activities. \n\nThe Clarion serves as a venue for those serving in the ministries to inform church members of the activities of their respective ministries, testify about God’s goodness and faithfulness and encourage church members to join them in serving in the various ministries. In addition, The Clarion encourages members who have experienced the power and goodness of God to write about them. These testimonies help to inspire others, and enhance their spiritual growth.",
+      "The Clarion is the official newsletter of the Trinity Methodist Church, Petaling Jaya (TMC PJ) and is published quarterly.",
     faqs: [
       {
         question: "What is The Clarion and how can I contribute?",
         answer:
-          "The Clarion will carry the Pastoral Message and lead articles on the theme according to the issue. There will be reports on the activities of the various ministries; home fellowships; testimonies of members in experiencing God; The Chinese Ministry; and announcements of births, marriages and those who have returned to the Lord. Also in The Clarion will be feature articles; book reviews; and reports on talks by invited preachers and other activities (if and when the need arises) such as street feeding, vacation church school and so on. The Editorial Board welcomes articles on the above and invites you to write for The Clarion. All your articles published are literary tributes to God, a way of praising Him and thanking Him for all the blessings and love He has given you. If you have difficulty with writing due poor eye-sight, the inability to type and so on, please contact a member of the Editorial Board. We will help you.",
+          "The Clarion will carry the Pastoral Message and lead articles on the theme according to the issue. There will be reports on the activities of the various ministries; home fellowships; testimonies of members in experiencing God; The Chinese Ministry; and announcements of births, marriages and those who have returned to the Lord.",
       },
     ],
     library: [
@@ -260,136 +260,41 @@ export const STATIC_MINISTRIES = [
         title: "2021: Easter Brings Hope",
         thumb: "https://trinitypj.com/wp-content/uploads/Clarion-2021-Issue-1.png",
       },
-      {
-        id: "the-clarion-2019-4",
-        src: "https://drive.google.com/file/d/1rBbVyAi3BEo_R4rCRJShBvv0EmZFmkD5/view?usp=sharing",
-        title: "2019: For God so Loved the World, He Gave His Only Son",
-      },
-      {
-        id: "the-clarion-2019-3",
-        src: "https://drive.google.com/file/d/12WTCWT2jd1HTqE-D4xWEHUkl2K9usb8Z/view?usp=sharing",
-        title: "2019: Celebrating 60 Years of God's Faithfulness",
-      },
-      {
-        id: "the-clarion-2019-2",
-        src: "https://drive.google.com/file/d/1ilLrzuNHABbV5PtaOjo2_yOdEy0RK06D/view?usp=sharing",
-        title: "2019: Youth Ministry",
-      },
-      {
-        id: "the-clarion-2019",
-        src: "https://drive.google.com/file/d/1eE6qUraqBxJhfzK7I21DmfC5TKG4NOSX",
-        title: "2019: It's Finished!",
-      },
-      {
-        id: "the-clarion-2018-4",
-        src: "https://drive.google.com/file/d/1e4oRq0MH5l4j99b8CuIK0-d_qoFocqmD/view?usp=sharing",
-        title: "2018: Jesus - Light of the World",
-      },
-      {
-        id: "the-clarion-2018-3",
-        src: "https://drive.google.com/file/d/1emlSeyVVhvTi8Xp-vEUPXNxlB_c_ItZk/view?usp=sharing",
-        title: "2018: Will You Be There for One Another, My Young Friends",
-      },
-      {
-        id: "the-clarion-2018-2",
-        src: "https://drive.google.com/file/d/1fbCo7b1iR2xxrVoEHjI49XefW86l1xCE/view?usp=sharing",
-        title: "2018: The Family That Prays Together Stays Together",
-      },
-      {
-        id: "the-clarion-2018",
-        src: "https://drive.google.com/file/d/1QvC5ZdEXK22LrdyTTs9mwcSxt0dTFU1Z/view?usp=sharing",
-        title: "2018: Christ Is Risen! He Is Risen Indeed!",
-      },
-      {
-        id: "the-clarion-2017-3",
-        src: "https://drive.google.com/file/d/1ZVK6K_VgL286DRo3E7mnAk2pjmjCgYz3/view?usp=sharing",
-        title: "2017: It's All About Jesus",
-      },
-      {
-        id: "the-clarion-2017-2",
-        src: "https://drive.google.com/file/d/1TBudq6IQj8evyZdk8X_kjglXVQdd_sF6/view?usp=sharing",
-        title: "2017: One Church Worship",
-      },
-      {
-        id: "the-clarion-2017",
-        src: "https://drive.google.com/file/d/1i1Xx4FG7A0RLjcTIu7EJMbEiCpgc9T1c/view?usp=sharing",
-        title: "2017: He Is Risen",
-      },
-      {
-        id: "the-clarion-2016-4",
-        src: "https://trinitypj.com/wp-content/uploads/2016/12/Clarion-Issue-4-Final-2016.pdf",
-        title: "2016: Come Lord Jesus",
-        thumb: "https://trinitypj.com/wp-content/uploads/2016/12/Clarion-2016-Issue4.jpg",
-      },
-      {
-        id: "the-clarion-2016-3",
-        src: "https://trinitypj.com/wp-content/uploads/2016/12/Clarion-Issue-3.pdf",
-        title: '2016: Wholesome Families Begin When "Two Shall Become One"',
-        thumb: "https://trinitypj.com/wp-content/uploads/2016/12/Clarion-Issue-3.jpg",
-      },
-      {
-        id: "the-clarion-2016-2",
-        src: "https://trinitypj.com/wp-content/uploads/2016/08/Clarion-Issue-2.pdf",
-        title: "2016: Pentecost - The Gifts of the Holy Spirit",
-        thumb: "https://trinitypj.com/wp-content/uploads/2016/08/Clarion-2016-Issue-2.jpg",
-      },
-      {
-        id: "the-clarion-2016",
-        src: "https://trinitypj.com/wp-content/uploads/2016/03/Clarion-2016-Issue-1.pdf",
-        title: "2016: Evangelism",
-        thumb: "https://trinitypj.com/wp-content/uploads/2016/03/Clarion-2016-Issue-1-Cover.jpg",
-      },
     ],
   },
   {
     id: "oasis-centre",
     name: "TMC Oasis Lay Pastoral Care and Counselling Centre",
     description:
-      "Weighed down by life’s challenges? Christian counselling is provided at the OASIS Centre. \n\nYou are welcome to call : \n\nDr. Eddie Chiew (012-323 9557) \nLim Muan Tee (017-340 7055) \n\nYou can also walk-in on Saturdays from 2:30 – 4:30PM.",
+      "Weighed down by life’s challenges? Christian counselling is provided at the OASIS Centre.",
   },
   {
     id: "visitations",
     name: "Visitations",
     description:
-      "Visiting the parishioners is a pivotal part of pastoral oversight in TMC PJ. Visitations are made on a weekly basis.\n\nVisitations are primarily for those who are aged, unwell and homebound. A time of worship is shared with those visited and, as is appropriate, the Holy Communion will also be celebrated and served. These visitations provide an opportunity for pastoral care to be issued and the connection between those visited and the community of faith be kept.\n\nVisitations are also made beyond the scheduled times, such as for those outside the community of faith after their needs are made known, especially for prayer, for the sharing of the Gospel or simply to lend comfort in times of crisis. As Jesus visited different ones in their homes, the Visitation Ministry seeks to “bring Christ” to the lives and homes of those visited.",
+      "Visiting the parishioners is a pivotal part of pastoral oversight in TMC PJ. Visitations are made on a weekly basis.",
     photos: ["https://trinitypj.com/wp-content/uploads/Visitations-Ministry.jpg"],
-  }
+  },
 ]
 
+/**
+ * Fetch ministries from the database.
+ * Falls back to static data if no database records are found.
+ */
 export async function getMinistries() {
-  const mediaMap = await MediaAssetService.getMediaMap()
+  try {
+    const dynamicMinistries = await ministryService.getAll()
 
-  return STATIC_MINISTRIES.map((ministry) => {
-    // 1. Map simple photos
-    const mappedPhotos = ministry.photos?.map((url) => {
-      return MediaAssetService.getUrl(url, mediaMap)
-    })
-
-    // 2. Map PDF / Attachments
-    const mappedPdf = ministry.pdf
-      ? { ...ministry.pdf, src: MediaAssetService.getUrl(ministry.pdf.src, mediaMap) }
-      : undefined
-
-    const mappedAttachment = ministry.attachment
-      ? {
-          ...ministry.attachment,
-          src: MediaAssetService.getUrl(ministry.attachment.src, mediaMap),
-        }
-      : undefined
-
-    // 3. Map Library thumbnails and sources
-    const mappedLibrary = ministry.library?.map((item) => ({
-      ...item,
-      thumb: item.thumb ? MediaAssetService.getUrl(item.thumb, mediaMap) : undefined,
-      src: MediaAssetService.getUrl(item.src, mediaMap),
-    }))
-
-    return {
-      ...ministry,
-      ...(mappedPhotos && { photos: mappedPhotos }),
-      ...(mappedPdf && { pdf: mappedPdf }),
-      ...(mappedAttachment && { attachment: mappedAttachment }),
-      ...(mappedLibrary && { library: mappedLibrary }),
+    if (dynamicMinistries && dynamicMinistries.length > 0) {
+      return dynamicMinistries
     }
-  })
+
+    console.warn(
+      "[MINISTRIES_DATA] No dynamic ministries found, falling back to static data."
+    )
+    return STATIC_MINISTRIES
+  } catch (error) {
+    console.error("[MINISTRIES_DATA] Failed to fetch dynamic ministries:", error)
+    return STATIC_MINISTRIES
+  }
 }

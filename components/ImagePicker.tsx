@@ -38,8 +38,35 @@ export default function ImagePicker({
   }, [value])
 
   const fetchCurrentAsset = async (id: string) => {
-    const { data } = await supabase.from("media_assets").select("*").eq("id", id).single()
-    if (data) setSelectedAsset(data)
+    // 1. Check if ID is a full URL (Legacy Support)
+    if (id.startsWith("http") || id.includes("/")) {
+      setSelectedAsset({
+        id: "legacy",
+        storage_path: "", // Not used if we handle it in the img tag
+        filename: id.split("/").pop() || "legacy-image",
+        // @ts-ignore - Adding extra field for literal URL display
+        is_literal: true,
+        literal_url: id
+      })
+      return
+    }
+
+    // 2. Validate UUID format before querying Postgres
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+    if (!uuidRegex.test(id)) {
+      console.warn("[ImagePicker] Invalid ID format (not a UUID or URL):", id)
+      setSelectedAsset(null)
+      return
+    }
+
+    try {
+      const { data, error } = await supabase.from("media_assets").select("*").eq("id", id).single()
+      if (data) setSelectedAsset(data)
+      else setSelectedAsset(null)
+    } catch (err) {
+      console.error("[ImagePicker] Error fetching asset:", err)
+      setSelectedAsset(null)
+    }
   }
 
   const fetchLibrary = async () => {
@@ -154,7 +181,9 @@ export default function ImagePicker({
             {/* Image with subtle Inner Shadow for Depth */}
             <div className="pointer-events-none absolute inset-0 z-10 shadow-[inset_0_0_40px_rgba(0,0,0,0.05)]" />
             <img
-              src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${selectedAsset.storage_path}`}
+              src={(selectedAsset as any).is_literal 
+                ? (selectedAsset as any).literal_url 
+                : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${selectedAsset.storage_path}`}
               className="cubic-bezier(0.4, 0, 0.2, 1) h-full w-full object-contain transition-transform duration-1000 group-hover:scale-[1.03]"
               alt="Selected asset"
             />

@@ -89,7 +89,7 @@ export function Navigation({ dict }: NavigationProps) {
             </Button>
 
             {/* Language Toggles (Same as before) */}
-            <div className="ml-4 flex items-center gap-2 border-l pl-4 text-sm">
+            {/* <div className="ml-4 flex items-center gap-2 border-l pl-4 text-sm">
               <button
                 onClick={() => switchLanguage("en-US")}
                 disabled={currentLang === "en-US"}
@@ -109,7 +109,7 @@ export function Navigation({ dict }: NavigationProps) {
               >
                 中文
               </button>
-            </div>
+            </div> */}
           </div>
 
           {/* Mobile Menu */}
@@ -144,7 +144,7 @@ export function Navigation({ dict }: NavigationProps) {
                   </SheetClose>
 
                   {/* Mobile Language Toggle */}
-                  <div className="mt-8 border-t pt-6 pb-8">
+                  {/* <div className="mt-8 border-t pt-6 pb-8">
                     <p className="mb-3 text-sm font-semibold text-gray-500">Language</p>
                     <div className="flex gap-4">
                       <Button
@@ -170,7 +170,7 @@ export function Navigation({ dict }: NavigationProps) {
                         中文
                       </Button>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </SheetContent>
             </Sheet>

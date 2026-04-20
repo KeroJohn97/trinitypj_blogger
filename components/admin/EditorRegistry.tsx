@@ -12,6 +12,7 @@ import ServiceTimesEditor from "components/admin/editors/ServiceTimesEditor"
 import SmallGroupsEditor from "components/admin/editors/SmallGroupsEditor"
 import SpecialAlertsEditor from "components/admin/editors/SpecialAlertsEditor"
 import VisionEditor from "components/admin/editors/VisionEditor"
+import MinistriesEditor from "components/admin/editors/MinistriesEditor"
 import React from "react"
 import LandingNoticesEditor from "./editors/LandingNoticesEditor"
 import MediaAssetsEditor from "./editors/MediaAssetsEditor"
@@ -37,6 +38,7 @@ export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
   // Community
   groups: () => <SmallGroupsEditor />,
   prayer: () => <PrayerGatheringEditor />,
+  ministries: () => <MinistriesEditor />,
 
   // Resources
   alpha: () => <AlphaMediaEditor />,

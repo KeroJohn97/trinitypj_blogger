@@ -6,15 +6,49 @@ import DrivePdfViewer from "@/components/drive-pdf-viewer"
 import { MediaModal } from "@/components/media-modal"
 import { formatEmail } from "@/lib/helpers"
 import { AnimatePresence, motion } from "framer-motion"
-import { ChevronLeft } from "lucide-react"
-import { useCallback, useRef, useState } from "react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import InfiniteMinistryCarousel from "./ministry-carousel"
 import { MinistriesPageProps, Ministry } from "@/lib/interface"
 
 export default function MinistriesPage({ ministries }: MinistriesPageProps) {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const [selected, setSelected] = useState<Ministry | null>(ministries.length > 0 ? ministries[0]! : null)
   const sectionRef = useRef<HTMLDivElement>(null)
+
+  const openLightbox = (index: number) => {
+    setSelectedIndex(index)
+    document.body.style.overflow = "hidden"
+  }
+
+  const closeLightbox = useCallback(() => {
+    setSelectedIndex(null)
+    document.body.style.overflow = "auto"
+  }, [])
+
+  const nextImage = useCallback(() => {
+    if (selectedIndex !== null && selected?.photos) {
+      setSelectedIndex((selectedIndex + 1) % selected.photos.length)
+    }
+  }, [selectedIndex, selected?.photos])
+
+  const prevImage = useCallback(() => {
+    if (selectedIndex !== null && selected?.photos) {
+      setSelectedIndex((selectedIndex - 1 + selected.photos.length) % selected.photos.length)
+    }
+  }, [selectedIndex, selected?.photos])
+
+  // Keyboard Navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedIndex === null) return
+      if (e.key === "Escape") closeLightbox()
+      if (e.key === "ArrowRight") nextImage()
+      if (e.key === "ArrowLeft") prevImage()
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [selectedIndex, closeLightbox, nextImage, prevImage])
 
   const handleCardClick = useCallback(
     (clickedIndex: number) => {
@@ -75,44 +109,101 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
             {selected.disclaimer && <div className="mb-6 text-red-600 italic">{selected.disclaimer}</div>}
 
             {/* Photos */}
-            {selected.photos && selected.photos.length > 1 && (
+            {selected.photos && selected.photos.length > 0 && (
               <motion.div
-                className="mb-6 grid gap-4 sm:grid-cols-1 lg:grid-cols-3"
+                className="mb-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
                 initial="hidden"
                 animate="visible"
                 variants={{
                   visible: { transition: { staggerChildren: 0.1 } },
                 }}
               >
-                {selected.photos.slice(1).map((src, i) => (
-                  <div key={i} className="cursor-pointer overflow-hidden rounded-lg border shadow-sm">
+                {selected.photos.map((src, i) => (
+                  <div key={i} className="cursor-pointer overflow-hidden rounded-lg border shadow-sm group">
                     <motion.img
-                      key={i}
                       src={src}
                       alt={`${selected.name} photo ${i + 1}`}
-                      className="h-48 w-full rounded-xl object-cover shadow-sm"
+                      className="h-48 w-full rounded-xl object-cover shadow-sm transition-transform duration-500 group-hover:scale-110"
                       variants={{
                         hidden: { opacity: 0, y: 20 },
                         visible: { opacity: 1, y: 0 },
                       }}
-                      onClick={() => setSelectedImage(src)}
+                      onClick={() => openLightbox(i)}
                     />
-                    {/* Modal */}
-                    {selectedImage && (
-                      <MediaModal
-                        item={{
-                          id: i.toString(),
-                          type: "image",
-                          src: selectedImage,
-                        }}
-                        isOpen={!!selectedImage}
-                        onClose={() => setSelectedImage(null)}
-                      />
-                    )}
                   </div>
                 ))}
               </motion.div>
             )}
+
+            {/* LIGHTBOX MODAL */}
+            <AnimatePresence>
+              {selectedIndex !== null && selected.photos && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/40 backdrop-blur-md"
+                  onClick={closeLightbox}
+                >
+                  <button
+                    onClick={closeLightbox}
+                    className="absolute top-8 right-8 z-[110] rounded-full bg-white/10 p-3 text-white transition-all hover:bg-white/20 hover:scale-110"
+                  >
+                    <ChevronLeft className="h-6 w-6 rotate-45" /> {/* Close "X" style with icon or just X-Circle */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                       <span className="text-xl font-bold">×</span>
+                    </div>
+                  </button>
+
+                  {/* Navigation Buttons */}
+                  <div className="absolute inset-x-0 top-1/2 z-[105] flex -translate-y-1/2 justify-between px-4 md:px-12">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        prevImage()
+                      }}
+                      className="rounded-full bg-black/50 p-4 text-white ring-1 ring-white/10 backdrop-blur-md transition-all hover:bg-white/20 hover:scale-110"
+                    >
+                      <ChevronLeft className="h-8 w-8" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        nextImage()
+                      }}
+                      className="rounded-full bg-black/50 p-4 text-white ring-1 ring-white/10 backdrop-blur-md transition-all hover:bg-white/20 hover:scale-110"
+                    >
+                      <ChevronRight className="h-8 w-8" />
+                    </button>
+                  </div>
+
+                  {/* Main Image View */}
+                  <div 
+                    className="relative flex max-h-[85vh] max-w-[90vw] flex-col items-center gap-6"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <motion.img
+                      key={selectedIndex}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                      src={selected.photos[selectedIndex]}
+                      alt={`${selected.name} moment`}
+                      className="max-h-[75vh] w-auto rounded-3xl object-contain shadow-2xl"
+                    />
+
+                    <div className="text-center">
+                      <p className="text-xl font-bold tracking-tight text-white md:text-2xl">
+                        {selected.name}
+                      </p>
+                      <p className="mt-2 text-sm font-black tracking-widest text-white/40 uppercase">
+                        Photo {selectedIndex + 1} / {selected.photos.length}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {selected.attachment && (
               <div className="mb-6">

@@ -2,253 +2,185 @@
 
 import defaultMinistry from "@/../assets/default-ministry.jpg"
 import { Ministry } from "@/lib/interface"
-import { motion } from "framer-motion"
-import { useCallback, useEffect, useMemo, useRef } from "react"
-
-// Animation constants
-const ANIMATION_DURATION = 300
-const SCROLL_DEBOUNCE_MS = 150
-const RESIZE_DEBOUNCE_MS = 200
-const HOVER_SCALE = 1.05
-const DEFAULT_GAP_PX = 24
+import { AnimatePresence, motion } from "framer-motion"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import React, { useCallback, useEffect, useState } from "react"
+import useEmblaCarousel from "embla-carousel-react"
+import { cn } from "@/lib/utils"
 
 interface InfiniteMinistryCarouselProps {
   ministries: Ministry[]
   selectedId: string | null
   onSelect: (index: number) => void
-  gapPx?: number
 }
 
 export default function InfiniteMinistryCarousel({
   ministries,
   selectedId,
   onSelect,
-  gapPx = DEFAULT_GAP_PX,
 }: InfiniteMinistryCarouselProps) {
-  const containerRef = useRef<HTMLDivElement | null>(null)
-  const scrollRef = useRef<HTMLDivElement | null>(null)
-  const scrollTimeout = useRef<NodeJS.Timeout | null>(null)
-  const isWarpingRef = useRef(false)
-  const setWidthRef = useRef(0)
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "center",
+    skipSnaps: false,
+    dragFree: false,
+  })
 
-  const ministryCount = ministries.length
-  if (ministryCount === 0) return null
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [canScrollPrev, setCanScrollPrev] = useState(false)
+  const [canScrollNext, setCanScrollNext] = useState(false)
 
-  // Tripled array for infinite effect
-  const tripledMinistries = useMemo(() => [...ministries, ...ministries, ...ministries], [ministries])
-  const MIDDLE_SET_START = ministryCount
-
-  // --- Width Calculation ---
-  const calculateSetWidth = useCallback(() => {
-    const scrollContainer = scrollRef.current
-    if (!scrollContainer || ministryCount === 0) return
-
-    let totalWidth = 0
-    for (let i = 0; i < ministryCount; i++) {
-      const element = scrollContainer.children[i] as HTMLElement | undefined
-      if (!element) break
-      totalWidth += element.offsetWidth + gapPx
+  const onSelectEmbla = useCallback(() => {
+    if (!emblaApi) return
+    const index = emblaApi.selectedScrollSnap()
+    setActiveIndex(index)
+    setCanScrollPrev(emblaApi.canScrollPrev())
+    setCanScrollNext(emblaApi.canScrollNext())
+    
+    // Sync with parent state
+    // We only call onSelect if the selectedId doesn't match the new index's ministry id
+    const currentMinistry = ministries[index]
+    if (currentMinistry && currentMinistry.id !== selectedId) {
+      onSelect(index)
     }
-    setWidthRef.current = totalWidth - gapPx
-  }, [ministryCount, gapPx])
+  }, [emblaApi, ministries, selectedId, onSelect])
 
-  // --- Helpers ---
-  const getContainerCenterX = useCallback(() => {
-    const container = containerRef.current
-    if (!container) return 0
-    const rect = container.getBoundingClientRect()
-    return rect.left + rect.width / 2
-  }, [])
-
-  const centerElement = useCallback((element: HTMLElement) => {
-    const container = containerRef.current
-    const scrollContainer = scrollRef.current
-    if (!container || !scrollContainer || !element) return
-
-    const containerWidth = container.clientWidth
-    const contentWidth = scrollContainer.scrollWidth
-    const elementCenter = element.offsetLeft + element.offsetWidth / 2
-
-    let targetScroll = elementCenter - containerWidth / 2
-
-    if (contentWidth <= containerWidth) {
-      targetScroll = 0
-    } else {
-      targetScroll = Math.min(Math.max(targetScroll, 0), contentWidth - containerWidth)
-    }
-
-    scrollContainer.scrollTo({
-      left: targetScroll,
-      behavior: "smooth",
-    })
-  }, [])
-
-  const findNearestIndexToCenter = useCallback((): number | null => {
-    const scrollContainer = scrollRef.current
-    if (!scrollContainer) return null
-
-    const centerX = getContainerCenterX()
-    let minDistance = Infinity
-    let nearestIndex: number | null = null
-
-    for (let i = 0; i < scrollContainer.children.length; i++) {
-      const element = scrollContainer.children[i] as HTMLElement
-      const rect = element.getBoundingClientRect()
-      const elementCenter = rect.left + rect.width / 2
-      const distance = Math.abs(elementCenter - centerX)
-
-      if (distance < minDistance) {
-        minDistance = distance
-        nearestIndex = i
-      }
-    }
-
-    return nearestIndex
-  }, [getContainerCenterX])
-
-  // --- Scroll Handler ---
-  const handleScroll = useCallback(() => {
-    const scrollContainer = scrollRef.current
-    if (!scrollContainer || isWarpingRef.current || setWidthRef.current === 0) return
-
-    const setWidth = setWidthRef.current
-    const minThreshold = setWidth * 0.5
-    const maxThreshold = setWidth * 1.5
-    const currentScroll = scrollContainer.scrollLeft
-    const containerWidth = containerRef.current?.clientWidth || 0
-    const contentWidth = scrollContainer.scrollWidth
-
-    // Infinite wrap
-    if (currentScroll < minThreshold || currentScroll > maxThreshold) {
-      isWarpingRef.current = true
-      const targetScroll = currentScroll < minThreshold ? currentScroll + setWidth : currentScroll - setWidth
-      scrollContainer.scrollTo({ left: targetScroll, behavior: "auto" })
-      requestAnimationFrame(() => {
-        isWarpingRef.current = false
-      })
-    }
-
-    // Debounced snap
-    if (scrollTimeout.current) clearTimeout(scrollTimeout.current)
-    scrollTimeout.current = setTimeout(() => {
-      if (contentWidth <= containerWidth) return
-      const nearestIndex = findNearestIndexToCenter()
-      if (nearestIndex !== null) {
-        const element = scrollContainer.children[nearestIndex] as HTMLElement
-        if (element) centerElement(element)
-      }
-    }, SCROLL_DEBOUNCE_MS)
-  }, [findNearestIndexToCenter, centerElement])
-
-  // --- Effects ---
   useEffect(() => {
-    const container = containerRef.current
-    const scrollContainer = scrollRef.current
-    if (!container || !scrollContainer) return
-
-    calculateSetWidth()
-
-    requestAnimationFrame(() => {
-      if (scrollRef.current && containerRef.current) {
-        const padding = containerRef.current.clientWidth / 2
-        scrollRef.current.style.paddingLeft = `${padding}px`
-        scrollRef.current.style.paddingRight = `${padding}px`
-      }
-
-      const firstMiddleCard = scrollContainer.children[MIDDLE_SET_START] as HTMLElement | undefined
-      if (!firstMiddleCard) return
-
-      scrollContainer.scrollTo({
-        left: firstMiddleCard.offsetLeft - container.clientWidth / 2 + firstMiddleCard.offsetWidth / 2,
-        behavior: "auto",
-      })
-    })
-
-    const resizeTimer = { current: null as NodeJS.Timeout | null }
-    const handleResize = () => {
-      if (resizeTimer.current) clearTimeout(resizeTimer.current)
-      resizeTimer.current = setTimeout(() => {
-        calculateSetWidth()
-        const nearestIndex = findNearestIndexToCenter()
-        if (nearestIndex !== null) {
-          const element = scrollRef.current!.children[nearestIndex] as HTMLElement
-          if (element) centerElement(element)
-        }
-      }, RESIZE_DEBOUNCE_MS)
-    }
-
-    window.addEventListener("resize", handleResize)
+    if (!emblaApi) return
+    onSelectEmbla()
+    emblaApi.on("select", onSelectEmbla)
+    emblaApi.on("reInit", onSelectEmbla)
     return () => {
-      window.removeEventListener("resize", handleResize)
-      if (resizeTimer.current) clearTimeout(resizeTimer.current)
+      emblaApi.off("select", onSelectEmbla)
     }
-  }, [MIDDLE_SET_START, calculateSetWidth, findNearestIndexToCenter, centerElement])
+  }, [emblaApi, onSelectEmbla])
+
+  // External control: If selectedId changes from outside, scroll to it
+  useEffect(() => {
+    if (!emblaApi || selectedId === null) return
+    const targetIndex = ministries.findIndex(m => m.id === selectedId)
+    if (targetIndex !== -1 && targetIndex !== emblaApi.selectedScrollSnap()) {
+      emblaApi.scrollTo(targetIndex)
+    }
+  }, [emblaApi, selectedId, ministries])
+
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi])
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi])
+
+  if (ministries.length === 0) return null
 
   return (
-    <div className="relative">
-      {/* 🚀 NEW INDEX LIST ELEMENT 🚀 */}
-      <div className="relative top-0 right-0 block h-full p-4 md:hidden md:w-auto">
-        <div className="mx-12 flex h-full flex-col items-start justify-center gap-2">
-          {ministries.map((ministry, originalIndex) => {
-            const isActive = selectedId === ministry.id
-
+    <div className="relative group/carousel">
+      {/* Viewport */}
+      <div 
+        className="overflow-hidden px-4 py-8" 
+        ref={emblaRef}
+      >
+        <div className="flex touch-pan-y gap-4 lg:gap-8">
+          {ministries.map((ministry, index) => {
+            const isActive = activeIndex === index
+            
             return (
-              <button
+              <div 
                 key={ministry.id}
-                onClick={() => onSelect(originalIndex)}
-                className={`w-full rounded-lg p-3 text-left transition ${
-                  isActive
-                    ? "border-l-4 border-emerald-600 bg-emerald-100 font-semibold text-emerald-800 shadow"
-                    : "bg-white text-gray-700 hover:bg-gray-50"
-                }`}
+                className="relative flex-[0_0_82%] min-w-0 sm:flex-[0_0_45%] lg:flex-[0_0_32%]"
+                onClick={() => emblaApi?.scrollTo(index)}
               >
-                {ministry.name}
-              </button>
+                <motion.div
+                  animate={{
+                    scale: isActive ? 1 : 0.9,
+                    opacity: isActive ? 1 : 0.6,
+                  }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className={cn(
+                    "relative aspect-[4/3] cursor-pointer overflow-hidden rounded-[32px] bg-white shadow-xl transition-all duration-500",
+                    isActive ? "ring-4 ring-emerald-500/20 shadow-emerald-900/10" : "grayscale-[20%]"
+                  )}
+                >
+                  {/* Overlay Gradient */}
+                  <div className="absolute inset-0 z-10 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+                  
+                  {/* Image */}
+                  <img
+                    src={ministry.photos?.[0] || defaultMinistry.src}
+                    alt={ministry.name}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  
+                  {/* Content */}
+                  <div className="absolute inset-x-0 bottom-0 z-20 p-6 text-white md:p-8">
+                    <motion.div
+                       initial={{ opacity: 0, y: 10 }}
+                       animate={{ opacity: 1, y: 0 }}
+                       transition={{ delay: 0.1 }}
+                    >
+                      <h3 className="text-2xl font-black tracking-tight md:text-3xl">
+                        {ministry.name}
+                      </h3>
+                      <AnimatePresence>
+                        {isActive && ministry.tagline && (
+                          <motion.p 
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="mt-2 text-sm font-bold tracking-wide text-emerald-300 uppercase"
+                          >
+                            {ministry.tagline}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  </div>
+                  
+                  {/* Active Indicator */}
+                  {isActive && (
+                    <motion.div 
+                      layoutId="active-pill"
+                      className="absolute top-6 right-6 z-20 flex h-2 w-10 rounded-full bg-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.5)]"
+                    />
+                  )}
+                </motion.div>
+              </div>
             )
           })}
         </div>
       </div>
-      <div ref={containerRef} className="overflow-hidden">
-        <motion.div
-          ref={scrollRef}
-          onScroll={handleScroll}
-          className="no-scrollbar hidden gap-6 overflow-x-scroll py-4 md:flex"
-          style={{ scrollSnapType: "none" }}
-        >
-          {tripledMinistries.map((ministry, idx) => {
-            const originalIndex = idx % ministryCount
-            const isActive = selectedId === ministry.id
 
-            return (
-              <motion.div
-                key={`${ministry.id}-${idx}`}
-                onClick={(event) => {
-                  const element = event.currentTarget as HTMLElement
-                  onSelect(originalIndex)
-                  centerElement(element)
-                }}
-                className={`group relative min-w-[250px] cursor-pointer overflow-hidden rounded-2xl border-2 bg-white shadow-lg transition-all sm:min-w-[300px] lg:min-w-[350px] ${
-                  isActive ? "border-primary shadow-primary/20" : "hover:border-gray/20 border-transparent"
-                }`}
-                whileHover={{ scale: HOVER_SCALE }}
-                transition={{ duration: ANIMATION_DURATION / 1000, ease: "easeOut" }}
-              >
-                <div className="absolute inset-0 z-10 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
-                <motion.img
-                  src={ministry.photos?.[0] || defaultMinistry.src}
-                  alt={ministry.name}
-                  className="h-64 w-full object-cover"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: ANIMATION_DURATION / 1000, ease: "easeOut" }}
-                />
-                <div className="absolute right-0 bottom-0 left-0 z-20 p-4 text-white">
-                  <h3 className="text-xl font-semibold text-balance">{ministry.name}</h3>
-                  {ministry.tagline && <p className="mt-1 text-sm text-pretty text-gray-200">{ministry.tagline}</p>}
-                </div>
-              </motion.div>
-            )
-          })}
-        </motion.div>
+      {/* Navigation Arrows (Desktop) */}
+      <div className="absolute inset-y-0 -left-4 z-30 hidden items-center md:flex lg:-left-12">
+        <button
+          onClick={scrollPrev}
+          className="group flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-slate-800 shadow-xl ring-1 ring-slate-200 backdrop-blur transition-all hover:bg-emerald-600 hover:text-white disabled:opacity-30 lg:h-14 lg:w-14"
+          aria-label="Previous Ministry"
+        >
+          <ChevronLeft className="h-6 w-6 transition-transform group-hover:-translate-x-1" />
+        </button>
+      </div>
+      <div className="absolute inset-y-0 -right-4 z-30 hidden items-center md:flex lg:-right-12">
+        <button
+          onClick={scrollNext}
+          className="group flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-slate-800 shadow-xl ring-1 ring-slate-200 backdrop-blur transition-all hover:bg-emerald-600 hover:text-white disabled:opacity-30 lg:h-14 lg:w-14"
+          aria-label="Next Ministry"
+        >
+          <ChevronRight className="h-6 w-6 transition-transform group-hover:translate-x-1" />
+        </button>
+      </div>
+
+      {/* Pagination Dots (Mobile/Tablet) */}
+      <div className="mt-4 flex items-center justify-center gap-3">
+        {ministries.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => emblaApi?.scrollTo(index)}
+            className={cn(
+              "h-1.5 rounded-full transition-all duration-500",
+              activeIndex === index 
+                ? "w-8 bg-emerald-500" 
+                : "w-2 bg-slate-200 hover:bg-slate-300"
+            )}
+            aria-label={`Go to ministry ${index + 1}`}
+          />
+        ))}
       </div>
     </div>
   )

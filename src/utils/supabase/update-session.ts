@@ -58,10 +58,15 @@ export async function updateSession(request: NextRequest) {
   // 3. Refresh the session
   // IMPORTANT: We use getUser() as it is more secure than getSession()
   // as it revalidates the user with the Supabase Auth server.
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
 
-  // 4. Return both the response (with updated cookies) and the user session status
-  return { res, user }
+    // 4. Return both the response (with updated cookies) and the user session status
+    return { res, user }
+  } catch (error) {
+    console.error("[SESSION UPDATE ERROR]", error)
+    return { res, user: null }
+  }
 }

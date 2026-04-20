@@ -41,6 +41,10 @@ export default function AdminLoginForm({ dict }: AdminLoginFormProps) {
         return
       }
 
+      // Explicitly sign out to clear any stale tokens/sessions in memory or cookies
+      // before attempting a new login. This resolves "token cache issues".
+      await supabase.auth.signOut()
+
       const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password })
       
       if (authError) {

@@ -5,11 +5,11 @@ import {
   HeartHandshake,
   Image as ImageIcon,
   Info,
-  LayoutDashboard,
+  LayoutGrid,
   Megaphone,
   Type,
   Users,
-  Video,
+  Video
 } from "lucide-react"
 
 export const ADMIN_NAV = [
@@ -37,6 +37,7 @@ export const ADMIN_NAV = [
     items: [
       { name: "Small Groups", icon: Users, slug: "groups" },
       { name: "Prayer Gatherings", icon: HeartHandshake, slug: "prayer" },
+      { name: "Ministries", icon: LayoutGrid, slug: "ministries" },
       { name: "Ministry Spotlights", icon: ImageIcon, slug: "spotlights" },
     ],
   },
