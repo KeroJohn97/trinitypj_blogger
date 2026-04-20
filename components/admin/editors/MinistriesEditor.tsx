@@ -7,6 +7,7 @@ import {
   HelpCircle,
   Image as ImageIcon,
   LayoutGrid,
+  Library,
   Loader2,
   Palette,
   Plus,
@@ -175,6 +176,13 @@ export default function MinistriesEditor() {
         item.id === itemId ? { ...item, ...updates } : item
       )
       return { ...m, library: newLibrary }
+    }))
+  }
+
+  const removeLibraryItem = (ministryId: string, itemId: string) => {
+    setMinistries(prev => prev.map(m => {
+      if (m.id !== ministryId) return m
+      return { ...m, library: (m.library || []).filter(item => item.id !== itemId) }
     }))
   }
 
@@ -422,21 +430,77 @@ export default function MinistriesEditor() {
                             </div>
                           </div>
 
-                          {/* Expansion Area Footer */}
-                          <div className="mt-12 flex items-center justify-between border-t border-slate-100 pt-8">
-                            <button
-                              onClick={() => handleDelete(ministry.id)}
-                              className="flex items-center gap-2 rounded-2xl px-6 py-3 text-sm font-bold text-slate-400 transition-all hover:bg-red-50 hover:text-red-600"
-                            >
-                              <Trash2 size={18} /> Delete Ministry
-                            </button>
-                            <button
-                              onClick={() => setExpandedId(null)}
-                              className="rounded-[20px] bg-slate-900 px-12 py-3.5 text-sm font-black tracking-widest text-white uppercase shadow-xl shadow-slate-200 transition-all hover:bg-black active:scale-[0.98]"
-                            >
-                              Collapse Editor
-                            </button>
-                          </div>
+                              {/* MAGAZINE ARCHIVE / LIBRARY */}
+                              <section className="space-y-4">
+                                <div className="flex items-center justify-between border-b border-slate-50 pb-2">
+                                  <div className="flex items-center gap-2">
+                                    <Library size={16} className="text-emerald-500" />
+                                    <h4 className="text-[10px] font-black tracking-widest text-slate-400 uppercase">Magazine Archive / Library</h4>
+                                  </div>
+                                  <button onClick={() => addLibraryItem(ministry.id)} className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-600 hover:text-emerald-700">
+                                    <Plus size={14} /> Add Issue
+                                  </button>
+                                </div>
+                                <div className="space-y-4">
+                                  {ministry.library?.map((item) => (
+                                    <div key={item.id} className="group/lib relative flex gap-4 rounded-2xl border border-slate-100 bg-slate-50/50 p-4 transition-all hover:bg-white hover:shadow-sm">
+                                      <button
+                                        onClick={() => removeLibraryItem(ministry.id, item.id)}
+                                        className="absolute -top-2 -right-2 z-10 rounded-full bg-white p-1 text-slate-300 shadow-sm transition-colors hover:text-red-500 group-hover/lib:text-slate-400"
+                                      >
+                                        <XCircle size={16} />
+                                      </button>
+                                      
+                                      {/* Thumb Picker */}
+                                      <div className="h-20 w-14 shrink-0 overflow-hidden rounded-lg bg-slate-100">
+                                        <ImagePicker
+                                          label=""
+                                          value={item.thumb || ""}
+                                          onChange={(newId) => updateLibraryItem(ministry.id, item.id, { thumb: newId })}
+                                          bucket="brand-assets"
+                                        />
+                                      </div>
+
+                                      <div className="flex-1 space-y-2">
+                                        <input
+                                          placeholder="Issue Title (e.g. 2024 Issue 1)"
+                                          value={item.title || ""}
+                                          onChange={e => updateLibraryItem(ministry.id, item.id, { title: e.target.value })}
+                                          className="w-full bg-transparent text-sm font-bold text-slate-700 outline-none placeholder:text-slate-300"
+                                        />
+                                        <input
+                                          placeholder="External Link (Google Drive, PDF URL, etc.)"
+                                          value={item.src || ""}
+                                          onChange={e => updateLibraryItem(ministry.id, item.id, { src: e.target.value })}
+                                          className="w-full bg-transparent text-[10px] font-medium text-emerald-600 outline-none placeholder:text-slate-300"
+                                        />
+                                      </div>
+                                    </div>
+                                  ))}
+
+                                  {(!ministry.library || ministry.library.length === 0) && (
+                                    <div className="rounded-2xl border border-dashed border-slate-200 py-8 text-center">
+                                      <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">No Library Items</p>
+                                    </div>
+                                  )}
+                                </div>
+                              </section>
+
+                              {/* Expansion Area Footer */}
+                              <div className="mt-12 flex items-center justify-between border-t border-slate-100 pt-8">
+                                <button
+                                  onClick={() => handleDelete(ministry.id)}
+                                  className="flex items-center gap-2 rounded-2xl px-6 py-3 text-sm font-bold text-slate-400 transition-all hover:bg-red-50 hover:text-red-600"
+                                >
+                                  <Trash2 size={18} /> Delete Ministry
+                                </button>
+                                <button
+                                  onClick={() => setExpandedId(null)}
+                                  className="rounded-[20px] bg-slate-900 px-12 py-3.5 text-sm font-black tracking-widest text-white uppercase shadow-xl shadow-slate-200 transition-all hover:bg-black active:scale-[0.98]"
+                                >
+                                  Collapse Editor
+                                </button>
+                              </div>
                         </motion.div>
                       )}
                     </AnimatePresence>

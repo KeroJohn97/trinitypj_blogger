@@ -27,6 +27,10 @@ BEGIN
   IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='ministries' AND COLUMN_NAME='is_active') THEN
     ALTER TABLE public.ministries ADD COLUMN is_active boolean DEFAULT true;
   END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='ministries' AND COLUMN_NAME='library') THEN
+    ALTER TABLE public.ministries ADD COLUMN library jsonb DEFAULT '[]';
+  END IF;
 END $$;
 
 -- 3. Create Performance Index for Sorting
@@ -105,7 +109,16 @@ VALUES
   'The official newsletter of the TMCPJ',
   null,
   'The Clarion is the official newsletter of the Trinity Methodist Church, Petaling Jaya...',
-  '{}', '[]', null, null, null, '[]', 6
+  '{}', '[]', null, null, null, 
+  '[
+    {"id": "the-clarion-2024", "src": "https://drive.google.com/file/d/16QBSVUnuec8mprlcz3SvP0PNK46v4OQ8", "title": "2024: A Renewed Church"},
+    {"id": "the-clarion-2023", "src": "https://drive.google.com/file/d/1vyDKnlgQN_d99kIsb-u2ofKaejP9FjAI/view", "title": "2023: See How God is Knitting Us, For His Glory!"},
+    {"id": "the-clarion-2022-2", "src": "https://drive.google.com/file/d/1bX2zrb-dwfMC9BnPk3owdGOh08Px3z6T/view", "title": "2022: Celebrating 63 Years of God''s Faithfulness"},
+    {"id": "the-clarion-2022", "src": "https://drive.google.com/file/d/1oPknYi-Cr58cBT9f6CeT5Q0PX4-xQ88d/view?usp=sharing", "title": "2022: See, God Is Going to Do Something New This Year..."},
+    {"id": "the-clarion-2021-2", "src": "https://drive.google.com/file/d/1mDGx1GlPGBGvghZVFS1V4FdlQR4egz47/view", "title": "2021: Celebrating 62 Years of God''s Faithfulness"},
+    {"id": "the-clarion-2021", "src": "https://drive.google.com/file/d/1CM6JqUdQwASj25zkUGPbtJeF6Yc4g8mj/view?usp=sharing", "title": "2021: Easter Brings Hope", "thumb": "https://trinitypj.com/wp-content/uploads/Clarion-2021-Issue-1.png"}
+  ]'::jsonb, 
+  6
 ),
 (
   'oasis-centre',

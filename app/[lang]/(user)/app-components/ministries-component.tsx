@@ -230,7 +230,16 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
               </div>
             )}
 
-            {selected.library && <DriveLibraryViewer items={selected.library} />}
+            {/* Magazine Archive / Library */}
+            {selected.library && selected.library.length > 0 && (
+              <div className="mb-10 space-y-6">
+                <div className="flex items-center gap-3 border-b-2 border-emerald-50 pb-2">
+                  <h3 className="text-2xl font-black tracking-tight text-emerald-800">Magazine Archive</h3>
+                  <div className="h-1 flex-1 bg-emerald-50/50" />
+                </div>
+                <DriveLibraryViewer items={selected.library} />
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
