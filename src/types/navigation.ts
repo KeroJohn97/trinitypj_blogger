@@ -36,6 +36,7 @@ export const ADMIN_NAV = [
     group: "Community Life",
     items: [
       { name: "Small Groups", icon: Users, slug: "groups" },
+      { name: "Fellowship Groups", icon: Users, slug: "church-groups" },
       { name: "Prayer Gatherings", icon: HeartHandshake, slug: "prayer" },
       { name: "Ministries", icon: LayoutGrid, slug: "ministries" },
       { name: "Ministry Spotlights", icon: ImageIcon, slug: "spotlights" },

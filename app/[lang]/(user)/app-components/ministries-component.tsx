@@ -102,11 +102,11 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
 
             {/* Description */}
             <p className="mb-6 text-lg leading-relaxed whitespace-pre-wrap text-gray-700">
-              {formatEmail(selected.description)}
+              {selected.description && formatEmail(selected.description)}
             </p>
 
             {/* Disclaimer */}
-            {selected.disclaimer && <div className="mb-6 text-red-600 italic">{selected.disclaimer}</div>}
+            {selected.metadata?.disclaimer && <div className="mb-6 text-red-600 italic">{selected.metadata.disclaimer}</div>}
 
             {/* Photos */}
             {selected.photos && selected.photos.length > 0 && (
@@ -192,36 +192,43 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
                       className="max-h-[75vh] w-auto rounded-3xl object-contain shadow-2xl"
                     />
 
-                    <div className="text-center">
-                      <p className="text-xl font-bold tracking-tight text-white md:text-2xl">
-                        {selected.name}
-                      </p>
-                      <p className="mt-2 text-sm font-black tracking-widest text-white/40 uppercase">
-                        Photo {selectedIndex + 1} / {selected.photos.length}
-                      </p>
-                    </div>
+                      <div className="text-center">
+                        <p className="text-xl font-bold tracking-tight text-white md:text-2xl">
+                          {selected.name}
+                        </p>
+                        <p className="mt-2 text-sm font-black tracking-widest text-white/40 uppercase">
+                          Photo {selectedIndex + 1} / {selected.photos.length}
+                        </p>
+                      </div>
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {selected.attachment && (
+            {selected.metadata?.attachment && (
               <div className="mb-6">
-                <DriveFolderViewer folder={selected.attachment.src} title={selected.attachment.title} height={320} />
+                <DriveFolderViewer 
+                  folder={selected.metadata.attachment.src} 
+                  title={selected.metadata.attachment.title} 
+                  height={320} 
+                />
               </div>
             )}
 
-            {selected.pdf && (
+            {selected.metadata?.pdf && (
               <div className="mb-6">
-                <DrivePdfViewer url={selected.pdf.src} title={selected.pdf.title} />
+                <DrivePdfViewer 
+                  url={selected.metadata.pdf.src} 
+                  title={selected.metadata.pdf.title} 
+                />
               </div>
             )}
 
             {/* Q&A Section */}
-            {selected.faqs && (
+            {selected.metadata?.faqs && selected.metadata.faqs.length > 0 && (
               <div className="mb-6 space-y-4">
                 <h3 className="text-2xl font-semibold text-red-700">Q&A</h3>
-                {selected.faqs.map((faq, i) => (
+                {selected.metadata.faqs.map((faq, i) => (
                   <div key={i} className="rounded-xl border bg-gray-50 p-4">
                     <h4 className="font-medium text-gray-900">{faq.question}</h4>
                     <p className="mt-2 whitespace-pre-wrap text-gray-600">{formatEmail(faq.answer)}</p>
@@ -231,13 +238,13 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
             )}
 
             {/* Magazine Archive / Library */}
-            {selected.library && selected.library.length > 0 && (
+            {selected.metadata?.library && selected.metadata.library.length > 0 && (
               <div className="mb-10 space-y-6">
                 <div className="flex items-center gap-3 border-b-2 border-emerald-50 pb-2">
-                  <h3 className="text-2xl font-black tracking-tight text-emerald-800">Magazine Archive</h3>
+                  <h3 className="text-2xl font-black tracking-tight text-emerald-800">Archive & Resources</h3>
                   <div className="h-1 flex-1 bg-emerald-50/50" />
                 </div>
-                <DriveLibraryViewer items={selected.library} />
+                <DriveLibraryViewer items={selected.metadata.library} />
               </div>
             )}
           </motion.div>

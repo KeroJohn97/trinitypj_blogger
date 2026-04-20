@@ -43,17 +43,26 @@ export const ministryService = {
     }));
 
     return {
-      id: dbData.slug || dbData.id, // Prefer slug for existing data compatibility
+      id: dbData.id,
+      type: 'ministry',
+      slug: dbData.slug,
       name: dbData.name,
       tagline: dbData.tagline || undefined,
       description: dbData.description,
-      color: dbData.color || undefined,
-      disclaimer: dbData.disclaimer || undefined,
+      
       photos: mappedPhotos.length > 0 ? mappedPhotos : undefined,
-      faqs: dbData.faqs || [],
-      pdf: mappedPdf,
-      attachment: mappedAttachment,
-      library: mappedLibrary.length > 0 ? mappedLibrary : undefined
+      
+      metadata: {
+        faqs: dbData.faqs || [],
+        pdf: mappedPdf,
+        attachment: mappedAttachment,
+        library: mappedLibrary.length > 0 ? mappedLibrary : undefined,
+        disclaimer: dbData.disclaimer || undefined,
+      },
+
+      sort_order: dbData.sort_order || 0,
+      is_active: dbData.is_active || true,
+      is_featured: dbData.is_featured || false,
     };
   },
 
@@ -62,6 +71,21 @@ export const ministryService = {
    */
   async getAll(resolveMedia: boolean = true, supabaseClient = defaultSupabase): Promise<Ministry[]> {
     console.log(`[MINISTRY_SERVICE] Fetching All Ministries (Resolve: ${resolveMedia})...`);
+    
+    // First try the new unified table
+    const { data: unifiedRows, error: unifiedError } = await supabaseClient
+      .from("communities")
+      .select("*")
+      .eq("type", "ministry")
+      .eq("is_active", true)
+      .order("sort_order", { ascending: true });
+
+    if (!unifiedError && unifiedRows && unifiedRows.length > 0) {
+      const mediaMap = resolveMedia ? await MediaAssetService.getMediaMap() : {};
+      return Promise.all(unifiedRows.map(row => this.mapFromDb(row, mediaMap, resolveMedia)));
+    }
+
+    // Fallback to legacy table
     const { data: rows, error } = await supabaseClient
       .from("ministries")
       .select("*")
@@ -75,9 +99,7 @@ export const ministryService = {
 
     if (!rows || rows.length === 0) return [];
 
-    // Resolve Media Assets if requested
     const mediaMap = resolveMedia ? await MediaAssetService.getMediaMap() : {};
-    
     return Promise.all(rows.map(row => this.mapFromDb(row, mediaMap, resolveMedia)));
   },
 
@@ -100,25 +122,34 @@ export const ministryService = {
   /**
    * Save (Upsert) a ministry
    */
-  async save(ministry: any, supabaseClient = defaultSupabase) {
+  async save(ministry: Ministry, supabaseClient = defaultSupabase) {
+    const isNew = ministry.id?.startsWith("temp-") || !ministry.id;
+    
     const dbRow = {
-      slug: ministry.id || ministry.slug, // Map frontend 'id' to DB 'slug'
+      type: 'ministry',
+      slug: ministry.slug || ministry.id,
       name: ministry.name,
       tagline: ministry.tagline || null,
       description: ministry.description,
-      color: ministry.color || null,
-      disclaimer: ministry.disclaimer || null,
       photos: ministry.photos || [],
-      faqs: ministry.faqs || [],
-      pdf: ministry.pdf || null,
-      attachment: ministry.attachment || null,
-      library: ministry.library || [],
+      
+      // Metadata fields from the nested object
+      faqs: ministry.metadata?.faqs || [],
+      pdf: ministry.metadata?.pdf || null,
+      attachment: ministry.metadata?.attachment || null,
+      library: ministry.metadata?.library || [],
+      disclaimer: ministry.metadata?.disclaimer || null,
+      
+      metadata: ministry.metadata || {},
+      
       sort_order: ministry.sort_order || 0,
-      is_active: ministry.is_active !== undefined ? ministry.is_active : true
+      is_active: ministry.is_active !== undefined ? ministry.is_active : true,
+      is_featured: ministry.is_featured || false
     };
 
+    // Save to the new unified table
     const { data, error } = await supabaseClient
-      .from("ministries")
+      .from("communities")
       .upsert(dbRow, { onConflict: "slug" })
       .select();
 

@@ -8,20 +8,13 @@ import AdultFellowshipPage from "app/[lang]/(user)/ministries-groups/methodist-a
 import SeniorPage from "app/[lang]/(user)/ministries-groups/methodist-senior-fellowship"
 import MethodistWomenPage from "app/[lang]/(user)/ministries-groups/methodist-women"
 import MYFPage from "app/[lang]/(user)/ministries-groups/methodist-youth-fellowship"
-import { Layers3, Users } from "lucide-react"
+import { Layers3, Users, LayoutGrid } from "lucide-react"
 import React, { useEffect, useMemo, useRef, useState } from "react"
+import { ChurchGroup, CommunityEntity, Ministry } from "@/lib/interface"
+import CommunityCard from "@/components/CommunityCard"
+import { motion, AnimatePresence } from "framer-motion"
 
 // --- Types ---
-interface GroupData {
-  id: number
-  name: string
-  time: string
-  location: string
-  // Add other fields if present in dictionary items (image, etc.)
-  image?: string
-  description?: string
-  leader?: string
-}
 
 interface DictionaryProps {
   header: { title: string; subtitle: string }
@@ -32,56 +25,64 @@ interface DictionaryProps {
     emptyState: { title: string; desc: string }
   }
   ministriesTab: { title: string; subtitle: string }
-  groupsData: GroupData[]
+  groupsData: any[]
 }
 
 interface GroupsTopicCloudProps {
   dict: DictionaryProps
-  ministries: any[]
+  ministries: CommunityEntity[]
+  groupsData?: CommunityEntity[]
 }
 
 /* --------------------------- COMPONENT MAP --------------------------- */
 // Note: We type this loosely as 'any' for props to avoid complex type drilling for now
-const ComponentMap: Record<number, React.FC<any>> = {
-  1: SeniorPage,
-  2: AdultFellowshipPage,
-  3: MethodistWomenPage,
-  4: MYFPage,
-  5: KindergartenPage,
+const ComponentMap: Record<string, React.FC<any>> = {
+  "methodist-senior-fellowship": SeniorPage,
+  "methodist-adult-fellowship": AdultFellowshipPage,
+  "methodist-women": MethodistWomenPage,
+  "methodist-youth-fellowship": MYFPage,
+  "trinity-kindergarten": KindergartenPage,
 }
 
 /* ------------------------ GROUP DETAIL PANEL ------------------------ */
 const GroupDetailPanel = React.forwardRef<
   HTMLDivElement,
-  { group: GroupData | undefined; emptyStateText: { title: string; desc: string } }
+  { group: CommunityEntity | undefined; emptyStateText: { title: string; desc: string } }
 >(({ group, emptyStateText }, ref) => {
   if (!group) {
     return (
       <div
         ref={ref}
-        className="flex min-h-[350px] flex-col items-center justify-center rounded-xl border-4 border-dashed border-gray-300 bg-gray-100 p-8 text-center"
+        className="flex min-h-[350px] flex-col items-center justify-center rounded-2xl border-4 border-dashed border-slate-200 bg-slate-50 p-8 text-center"
       >
-        <Users className="mb-4 h-12 w-12 text-emerald-500" />
-        <h3 className="text-2xl font-bold text-gray-700">{emptyStateText.title}</h3>
-        <p className="mt-2 text-gray-500">{emptyStateText.desc}</p>
+        <LayoutGrid className="mb-4 h-12 w-12 text-emerald-500" />
+        <h3 className="text-2xl font-black tracking-tight text-slate-700">{emptyStateText.title}</h3>
+        <p className="mt-2 text-sm font-medium text-slate-400">{emptyStateText.desc}</p>
       </div>
     )
   }
 
-  const Component = ComponentMap[group.id]
+  const Component = group?.slug ? ComponentMap[group.slug] : null
 
   return (
-    <div ref={ref} className="w-full rounded-xl bg-white shadow-xl">
-      {/* We pass the dictionary group data into the sub-component */}
-      {Component && <Component group={group} />}
+    <div ref={ref} className="w-full space-y-6">
+      {/* Dynamic Summary Card */}
+      <CommunityCard entity={group} />
+      
+      {/* Rich Detail View (Legacy Pages) */}
+      {Component && (
+        <div className="overflow-hidden rounded-[24px] bg-white shadow-xl ring-1 ring-slate-100">
+          <Component group={group} />
+        </div>
+      )}
     </div>
   )
 })
 GroupDetailPanel.displayName = "GroupDetailPanel"
 
 /* -------------------------- GROUPS TAB CONTENT -------------------------- */
-const GroupsTabContent = ({ groups, text }: { groups: GroupData[]; text: DictionaryProps["groupsTab"] }) => {
-  const [activeGroupId, setActiveGroupId] = useState<number | null>(groups.length > 0 ? groups[0]!.id : null)
+const GroupsTabContent = ({ groups, text }: { groups: CommunityEntity[]; text: DictionaryProps["groupsTab"] }) => {
+  const [activeGroupId, setActiveGroupId] = useState<string | null>(groups.length > 0 ? groups[0]!.id : null)
 
   const detailPanelRef = useRef<HTMLDivElement>(null)
 
@@ -95,31 +96,29 @@ const GroupsTabContent = ({ groups, text }: { groups: GroupData[]; text: Diction
   }, [activeGroupId])
 
   return (
-    <div className="mt-8 flex flex-col gap-6 lg:flex-row">
-      {/* LEFT COLUMN */}
-      <div className="w-full rounded-xl border border-gray-200 bg-white p-4 shadow-lg sm:p-6 lg:w-1/3">
-        <h3 className="mb-3 text-xl font-bold text-gray-800 sm:text-2xl">{text.title}</h3>
-        <p className="mb-4 text-xs text-gray-500">{text.subtitle}</p>
+    <div className="mt-12 flex flex-col gap-8 lg:flex-row">
+      {/* LEFT COLUMN: Sidebar Selection */}
+      <div className="w-full space-y-6 lg:w-80">
+        <div>
+          <h3 className="text-2xl font-black tracking-tight text-slate-900">{text.title}</h3>
+          <p className="mt-1 text-xs font-bold uppercase tracking-widest text-slate-400">{text.subtitle}</p>
+        </div>
 
-        <div className="space-y-2">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-1">
           {groups.map((group) => (
-            <button
+            <CommunityCard
               key={group.id}
+              entity={group}
+              variant="compact"
+              isActive={activeGroupId === group.id}
               onClick={() => setActiveGroupId(group.id)}
-              className={`w-full rounded-lg p-3 text-left transition ${
-                activeGroupId === group.id
-                  ? "border-l-4 border-emerald-600 bg-emerald-100 font-semibold text-emerald-800 shadow"
-                  : "bg-white text-gray-700 hover:bg-gray-50"
-              }`}
-            >
-              {group.name}
-            </button>
+            />
           ))}
         </div>
       </div>
 
-      {/* RIGHT COLUMN */}
-      <div className="w-full lg:w-2/3">
+      {/* RIGHT COLUMN: Detail View */}
+      <div className="flex-1">
         <GroupDetailPanel ref={detailPanelRef} group={activeGroup} emptyStateText={text.emptyState} />
       </div>
     </div>
@@ -139,8 +138,13 @@ const MinistriesTabContent = ({ text, ministries }: { text: DictionaryProps["min
 }
 
 /* ---------------------------- MAIN COMPONENT ---------------------------- */
-const GroupsTopicCloud = ({ dict, ministries }: GroupsTopicCloudProps) => {
+const GroupsTopicCloud = ({ dict, ministries, groupsData = [] }: GroupsTopicCloudProps) => {
   const [activeTab, setActiveTab] = useState("ministries") // Use keys "ministries" | "groups"
+
+  const displayGroups = useMemo(() => {
+    // If we have groupsData from DB, use it, otherwise fallback to dict (for backwards compatibility during migration)
+    return groupsData.length > 0 ? groupsData : (dict.groupsData as unknown as ChurchGroup[]);
+  }, [groupsData, dict.groupsData]);
 
   const tabs = [
     {
@@ -153,7 +157,7 @@ const GroupsTopicCloud = ({ dict, ministries }: GroupsTopicCloudProps) => {
       id: "groups",
       label: dict.tabs.groups,
       icon: Users,
-      content: <GroupsTabContent groups={dict.groupsData} text={dict.groupsTab} />,
+      content: <GroupsTabContent groups={displayGroups} text={dict.groupsTab} />,
     },
   ]
 

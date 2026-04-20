@@ -12,11 +12,12 @@ import ServiceTimesEditor from "components/admin/editors/ServiceTimesEditor"
 import SmallGroupsEditor from "components/admin/editors/SmallGroupsEditor"
 import SpecialAlertsEditor from "components/admin/editors/SpecialAlertsEditor"
 import VisionEditor from "components/admin/editors/VisionEditor"
-import MinistriesEditor from "components/admin/editors/MinistriesEditor"
 import React from "react"
 import LandingNoticesEditor from "./editors/LandingNoticesEditor"
 import MediaAssetsEditor from "./editors/MediaAssetsEditor"
 import UpcomingActivityEditor from "./editors/UpcomingActivityEditor"
+import GroupsEditor from "./editors/GroupsEditor"
+import MinistriesEditor from "./editors/MinistriesEditor"
 
 // --- Tab Registry (Easy to expand!) ---
 export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
@@ -37,6 +38,7 @@ export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
 
   // Community
   groups: () => <SmallGroupsEditor />,
+  "church-groups": () => <GroupsEditor />,
   prayer: () => <PrayerGatheringEditor />,
   ministries: () => <MinistriesEditor />,
 

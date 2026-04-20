@@ -72,10 +72,18 @@ export default function MinistriesEditor() {
     const newId = `temp-${Date.now()}`
     const newMinistry: Ministry = {
       id: newId,
+      type: "ministry",
+      slug: "",
       name: "",
       description: "",
-      faqs: [],
       photos: [],
+      metadata: {
+        faqs: [],
+        library: []
+      },
+      sort_order: 0,
+      is_active: true,
+      is_featured: false
     }
     setMinistries([newMinistry, ...ministries])
     setExpandedId(newId)
@@ -142,47 +150,59 @@ export default function MinistriesEditor() {
   const addFAQ = (ministryId: string) => {
     const m = ministries.find(m => m.id === ministryId)
     if (!m) return
-    const newFaqs = [...(m.faqs || []), { question: "", answer: "" }]
-    handleUpdate(ministryId, { faqs: newFaqs })
+    const currentMetadata = m.metadata || {}
+    const newFaqs = [...(currentMetadata.faqs || []), { question: "", answer: "" }]
+    handleUpdate(ministryId, { 
+      metadata: { ...currentMetadata, faqs: newFaqs } 
+    })
   }
 
   const updateFAQ = (ministryId: string, index: number, field: keyof FAQ, value: string) => {
     setMinistries(prev => prev.map(m => {
       if (m.id !== ministryId) return m
-      const newFaqs: any = [...(m.faqs || [])]
+      const currentMetadata = m.metadata || {}
+      const newFaqs: any = [...(currentMetadata.faqs || [])]
       newFaqs[index] = { ...newFaqs[index], [field]: value }
-      return { ...m, faqs: newFaqs }
+      return { ...m, metadata: { ...currentMetadata, faqs: newFaqs } }
     }))
   }
 
   const removeFAQ = (ministryId: string, index: number) => {
     const m = ministries.find(m => m.id === ministryId)
     if (!m) return
-    handleUpdate(ministryId, { faqs: (m.faqs || []).filter((_, i) => i !== index) })
+    const currentMetadata = m.metadata || {}
+    handleUpdate(ministryId, { 
+      metadata: { ...currentMetadata, faqs: (currentMetadata.faqs || []).filter((_, i) => i !== index) } 
+    })
   }
 
   // --- LIBRARY SUB-EDITOR ---
   const addLibraryItem = (ministryId: string) => {
     const m = ministries.find(m => m.id === ministryId)
     if (!m) return
-    const newLibrary = [...(m.library || []), { id: `lib-${Date.now()}`, title: "", src: "", thumb: "" }]
-    handleUpdate(ministryId, { library: newLibrary })
+    const currentMetadata = m.metadata || {}
+    const newLibrary = [...(currentMetadata.library || []), { id: `lib-${Date.now()}`, title: "", src: "", thumb: "" }]
+    handleUpdate(ministryId, { 
+      metadata: { ...currentMetadata, library: newLibrary }
+    })
   }
 
   const updateLibraryItem = (ministryId: string, itemId: string, updates: Partial<Attachment>) => {
     setMinistries(prev => prev.map(m => {
       if (m.id !== ministryId) return m
-      const newLibrary = (m.library || []).map(item =>
+      const currentMetadata = m.metadata || {}
+      const newLibrary = (currentMetadata.library || []).map(item =>
         item.id === itemId ? { ...item, ...updates } : item
       )
-      return { ...m, library: newLibrary }
+      return { ...m, metadata: { ...currentMetadata, library: newLibrary } }
     }))
   }
 
   const removeLibraryItem = (ministryId: string, itemId: string) => {
     setMinistries(prev => prev.map(m => {
       if (m.id !== ministryId) return m
-      return { ...m, library: (m.library || []).filter(item => item.id !== itemId) }
+      const currentMetadata = m.metadata || {}
+      return { ...m, metadata: { ...currentMetadata, library: (currentMetadata.library || []).filter(item => item.id !== itemId) } }
     }))
   }
 
@@ -313,7 +333,7 @@ export default function MinistriesEditor() {
                                 </div>
 
                                 <div className="space-y-4">
-                                  {ministry.faqs?.map((faq, idx) => (
+                                  {ministry.metadata?.faqs?.map((faq, idx) => (
                                     <div key={idx} className="relative space-y-2 rounded-2xl border border-slate-100 bg-slate-50/50 p-4">
                                       <button
                                         onClick={() => removeFAQ(ministry.id, idx)}
@@ -351,12 +371,12 @@ export default function MinistriesEditor() {
                                   <label className="text-[10px] font-bold text-slate-400 uppercase ml-1">Theme Color</label>
                                   <div className="flex items-center gap-3">
                                     <input
-                                      value={ministry.color || ""}
-                                      onChange={e => handleUpdate(ministry.id, { color: e.target.value })}
+                                      value={ministry.metadata?.theme_color || ""}
+                                      onChange={e => handleUpdate(ministry.id, { metadata: { ...ministry.metadata, theme_color: e.target.value } })}
                                       className="flex-1 rounded-xl bg-white px-4 py-2.5 text-xs font-bold ring-1 ring-slate-200 transition-all outline-none focus:ring-emerald-200"
                                       placeholder="e.g. emerald, blue, rose..."
                                     />
-                                    <div className="h-10 w-10 rounded-xl" style={{ backgroundColor: ministry.color || "transparent" }} />
+                                    <div className="h-10 w-10 rounded-xl" style={{ backgroundColor: ministry.metadata?.theme_color || "transparent" }} />
                                   </div>
                                 </div>
                               </section>
@@ -413,14 +433,24 @@ export default function MinistriesEditor() {
                                     <div className="flex items-center gap-2">
                                       <input
                                         placeholder="Title"
-                                        value={ministry.pdf?.title || ""}
-                                        onChange={e => handleUpdate(ministry.id, { pdf: { ...ministry.pdf, title: e.target.value } as any })}
+                                        value={ministry.metadata?.pdf?.title || ""}
+                                        onChange={e => handleUpdate(ministry.id, { 
+                                          metadata: { 
+                                            ...ministry.metadata, 
+                                            pdf: { ...(ministry.metadata?.pdf || {}), title: e.target.value } as any 
+                                          } 
+                                        })}
                                         className="w-1/3 rounded-xl bg-slate-50 px-3 py-2 text-xs font-bold"
                                       />
                                       <input
                                         placeholder="URL / File Path"
-                                        value={ministry.pdf?.src || ""}
-                                        onChange={e => handleUpdate(ministry.id, { pdf: { ...ministry.pdf, src: e.target.value } as any })}
+                                        value={ministry.metadata?.pdf?.src || ""}
+                                        onChange={e => handleUpdate(ministry.id, { 
+                                          metadata: { 
+                                            ...ministry.metadata, 
+                                            pdf: { ...(ministry.metadata?.pdf || {}), src: e.target.value } as any 
+                                          } 
+                                        })}
                                         className="flex-1 rounded-xl bg-slate-50 px-3 py-2 text-xs font-bold"
                                       />
                                     </div>
@@ -442,7 +472,7 @@ export default function MinistriesEditor() {
                                   </button>
                                 </div>
                                 <div className="space-y-4">
-                                  {ministry.library?.map((item) => (
+                                  {ministry.metadata?.library?.map((item) => (
                                     <div key={item.id} className="group/lib relative flex gap-4 rounded-2xl border border-slate-100 bg-slate-50/50 p-4 transition-all hover:bg-white hover:shadow-sm">
                                       <button
                                         onClick={() => removeLibraryItem(ministry.id, item.id)}
@@ -460,7 +490,7 @@ export default function MinistriesEditor() {
                                           bucket="brand-assets"
                                         />
                                       </div>
-
+ 
                                       <div className="flex-1 space-y-2">
                                         <input
                                           placeholder="Issue Title (e.g. 2024 Issue 1)"
@@ -477,8 +507,8 @@ export default function MinistriesEditor() {
                                       </div>
                                     </div>
                                   ))}
-
-                                  {(!ministry.library || ministry.library.length === 0) && (
+ 
+                                  {(!ministry.metadata?.library || ministry.metadata.library.length === 0) && (
                                     <div className="rounded-2xl border border-dashed border-slate-200 py-8 text-center">
                                       <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">No Library Items</p>
                                     </div>
