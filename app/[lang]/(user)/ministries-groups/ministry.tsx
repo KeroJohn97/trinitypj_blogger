@@ -8,7 +8,7 @@ export default async function ChurchMinistryPage() {
   return (
     <div className="bg-background min-h-screen">
       <PageHeader title="Church Ministries" />
-      <MinistriesPage ministries={ministries as any} />
+      <MinistriesPage ministries={ministries} />
     </div>
   )
 }
