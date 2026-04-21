@@ -3,6 +3,19 @@ import { NavigationGuardProvider } from "@/context/navigation-guard-context"
 import { getDictionary } from "dictionaries"
 import "globals.css"
 import { Metadata } from "next"
+import { Montserrat, Oswald } from "next/font/google"
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+})
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-oswald",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: "Trinity Methodist Church Petaling Jaya – TMCPJ",
@@ -30,7 +43,7 @@ export default async function RootLayout({
       <DialogProvider>
         <html lang={lang}>
           <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-          <body className="relative text-emerald-800">
+          <body className={`${montserrat.variable} ${oswald.variable} relative`}>
             {children}
           </body>
         </html>
@@ -38,4 +51,3 @@ export default async function RootLayout({
     </NavigationGuardProvider>
   )
 }
-

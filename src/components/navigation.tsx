@@ -1,6 +1,6 @@
 "use client"
 
-import logo from "@/../assets/logo.jpg"
+import logo from "@/../assets/logo.png"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
@@ -128,7 +128,7 @@ export function Navigation({ dict }: NavigationProps) {
 
                 <div className="mx-4 mt-8 flex flex-col space-y-4">
                   <Link href={`/${currentLang}`} onClick={() => setIsOpen(false)}>
-                    <img src={logo.src} alt="Logo" className="h-24 w-auto object-contain" />
+                    <img src={logo.src} alt="Logo" className="h-16 w-auto object-contain" />
                   </Link>
                   {navigationItems.map((item) => (
                     <SheetClose asChild key={item.name}>

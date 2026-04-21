@@ -2,7 +2,7 @@ import { Clock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
-import logo from "@/../assets/logo.jpg"
+import logo from "@/../assets/logo.png"
 
 // Define the shape of the dictionary part required
 interface FooterProps {
@@ -35,9 +35,9 @@ export function Footer({ dict }: FooterProps) {
           {/* Logo and Tagline */}
           <div className="col-span-1 md:col-span-2">
             <div className="mb-4 flex items-center space-x-2">
-              <Image src={logo} alt="TMCPJ Logo" />
+              <Image src={logo} alt="TMCPJ Logo" className="h-44 w-auto object-contain" />
             </div>
-            <p className="text-muted-primary mb-4 max-w-md font-bold tracking-wider">{dict.tagline}</p>
+            <p className="text-muted-primary mb-4 pl-4 max-w-md font-bold tracking-wider">{dict.tagline}</p>
           </div>
 
           {/* Service Times */}
