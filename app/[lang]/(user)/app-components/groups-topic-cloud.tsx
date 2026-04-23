@@ -134,12 +134,12 @@ const GroupsTabContent = ({ groups, text }: { groups: CommunityEntity[]; text: D
                 </div>
                 <div className="flex-1 overflow-hidden">
                   <p className={cn(
-                    "truncate text-sm font-bold tracking-tight transition-colors",
+                    "text-sm font-bold tracking-tight transition-colors leading-tight",
                     isActive ? "text-slate-900" : "text-slate-500"
                   )}>
                     {group.name}
                   </p>
-                  <p className="truncate text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
+                  <p className="mt-1 text-[10px] font-black text-slate-400 uppercase tracking-tight">
                     {group.type.replace('_', ' ')}
                   </p>
                 </div>

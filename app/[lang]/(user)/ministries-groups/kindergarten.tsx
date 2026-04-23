@@ -13,7 +13,7 @@ export default function KindergartenPage({ isNested = false }: { isNested?: bool
       {/* Project Overview */}
       <section className="pt-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 items-start gap-12">
+          <div className="mb-16 flex flex-col items-start gap-12 lg:flex-row">
             <div>
               <h3 className="text-foreground mb-2 text-xl font-bold lg:text-2xl">Our Focus</h3>
               <div className="prose prose-lg text-muted-foreground">

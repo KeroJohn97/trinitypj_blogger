@@ -61,13 +61,18 @@ export default function Table({ title, columns, data }: TableProps) {
                       return (
                         <td
                           key={colIdx}
-                          className={`px-6 py-5 text-sm whitespace-nowrap transition-all ${
+                          className={`px-6 py-5 text-sm transition-all ${
                             isTitle ? "font-semibold text-slate-900" : "font-medium text-slate-500"
                           } ${col.className || ""}`}
                         >
                           <div className="flex items-center gap-2">
-                            {isTitle && isFeatured && <Star size={14} className="fill-amber-400 text-amber-400" />}
-                            <span className={!isTitle ? "tabular-nums" : ""}>{formatEmail(String(value || ""))}</span>
+                            {isTitle && isFeatured && <Star size={14} className="fill-amber-400 text-amber-400 shrink-0" />}
+                            <span className={cn(
+                              !isTitle ? "tabular-nums" : "",
+                              col.accessor === "email" ? "break-all" : "break-words"
+                            )}>
+                              {formatEmail(String(value || ""))}
+                            </span>
                           </div>
                         </td>
                       )

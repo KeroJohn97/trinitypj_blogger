@@ -100,22 +100,22 @@ export default function CommunityCard({ entity, onClick, variant = "detailed", i
           </p>
 
           {/* Metadata Grid */}
-          <div className="mt-6 flex flex-wrap gap-y-3 gap-x-6 border-t border-slate-50 pt-6">
+          <div className="mt-6 grid grid-cols-1 gap-y-4 gap-x-6 border-t border-slate-50 pt-6 sm:grid-cols-2">
             {(entity.meeting_day || entity.meeting_time) && (
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-600">
-                <Calendar size={14} className="text-emerald-500" />
+              <div className="flex items-center gap-3 text-xs font-bold text-slate-600">
+                <Calendar size={16} className="text-emerald-500 shrink-0" />
                 <span>{entity.meeting_day && `${entity.meeting_day}, `}{entity.meeting_time}</span>
               </div>
             )}
             {(entity.location_name || entity.location_area) && (
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-600">
-                <MapPin size={14} className="text-emerald-500" />
-                <span>{entity.location_name || entity.location_area}</span>
+              <div className="flex items-center gap-3 text-xs font-bold text-slate-600">
+                <MapPin size={16} className="text-emerald-500 shrink-0" />
+                <span className="truncate">{entity.location_name || entity.location_area}</span>
               </div>
             )}
             {entity.leader_name && (
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-600">
-                <User size={14} className="text-emerald-500" />
+              <div className="flex items-center gap-3 text-xs font-bold text-slate-600">
+                <User size={16} className="text-emerald-500 shrink-0" />
                 <span>Leader: {entity.leader_name}</span>
               </div>
             )}
