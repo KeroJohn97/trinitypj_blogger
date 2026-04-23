@@ -12,18 +12,20 @@ import ServiceTimesEditor from "components/admin/editors/ServiceTimesEditor"
 import SmallGroupsEditor from "components/admin/editors/SmallGroupsEditor"
 import SpecialAlertsEditor from "components/admin/editors/SpecialAlertsEditor"
 import VisionEditor from "components/admin/editors/VisionEditor"
+import MinistriesEditor from "components/admin/editors/MinistriesEditor"
+import WhatsNewEditor from "components/admin/editors/WhatsNewEditor"
 import React from "react"
 import LandingNoticesEditor from "./editors/LandingNoticesEditor"
 import MediaAssetsEditor from "./editors/MediaAssetsEditor"
 import UpcomingActivityEditor from "./editors/UpcomingActivityEditor"
 import GroupsEditor from "./editors/GroupsEditor"
-import MinistriesEditor from "./editors/MinistriesEditor"
 
 // --- Tab Registry (Easy to expand!) ---
 export const EDITOR_COMPONENTS: Record<string, React.FC<any>> = {
   // Brand
   general: (props) => <GeneralSettingsEditor />,
   "landing-notices": () => <LandingNoticesEditor />,
+  "whats-new": () => <WhatsNewEditor />,
   about: (props) => <AboutUsEditor initialData={props.data?.aboutUsMarkdown} />,
   vision: () => <VisionEditor />,
   "media-assets": () => <MediaAssetsEditor />,

@@ -225,3 +225,27 @@ ON public.vision_pillars FOR ALL
 TO anon, authenticated 
 USING (true) 
 WITH CHECK (true);
+
+-- 1. Create the Whats New Table
+CREATE TABLE IF NOT EXISTS public.whats_new (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  description text,
+  image_id uuid REFERENCES public.media_assets(id) ON DELETE SET NULL,
+  video_url text,
+  link_url text,
+  link_label text DEFAULT 'Read More',
+  is_active boolean DEFAULT true,
+  sort_order integer DEFAULT 0,
+  created_at timestamp with time zone DEFAULT now()
+);
+
+-- 2. Enable Row Level Security (RLS)
+ALTER TABLE public.whats_new ENABLE ROW LEVEL SECURITY;
+
+-- 3. Create a Universal Access Policy
+CREATE POLICY "Universal Access Whats New" 
+ON public.whats_new FOR ALL 
+TO anon, authenticated 
+USING (true) 
+WITH CHECK (true);

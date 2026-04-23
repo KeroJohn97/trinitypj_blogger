@@ -9,7 +9,8 @@ import {
   Megaphone,
   Type,
   Users,
-  Video
+  Video,
+  Newspaper
 } from "lucide-react"
 
 export const ADMIN_NAV = [
@@ -17,6 +18,7 @@ export const ADMIN_NAV = [
     group: "Brand & Identity",
     items: [
       { name: "Landing Notices", icon: Megaphone, slug: "landing-notices" },
+      { name: "What's New", icon: Newspaper, slug: "whats-new" },
       { name: "About Us (Editor)", icon: Type, slug: "about" },
       { name: "Vision & Mission", icon: ImageIcon, slug: "vision" },
       { name: "LCEC Page", icon: ImageIcon, slug: "lcec-page" },

@@ -12,6 +12,7 @@ import Link from "next/link"
 import UpcomingActivitiesCarousel from "./app-components/upcoming-activities-carousel"
 import { LandingNoticeService } from "@/services/landing-notice-service"
 import { LandingNoticesSection } from "@/components/landing-notices-section"
+import WhatsNewSection from "components/WhatsNewSection"
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -45,6 +46,11 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
         <RevealOnScroll>
           <OngoingEvents dict={dict.ongoingEvents} />
+        </RevealOnScroll>
+
+        {/* Dynamic What's New Feed */}
+        <RevealOnScroll>
+          <WhatsNewSection />
         </RevealOnScroll>
 
         {/* Explore Section */}
