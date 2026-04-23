@@ -8,7 +8,7 @@ export default function Activity() {
         </p>
         {/* Staggered Image Gallery */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="gallery-item-container cursor-pointer overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl">
+          <div className="gallery-item-container overflow-hidden rounded-lg shadow-md transition-shadow duration-300">
             <img
               src="https://source.unsplash.com/random/400x600?event"
               data-src="https://source.unsplash.com/random/1200x1800?event"
@@ -16,7 +16,7 @@ export default function Activity() {
               alt="Event photo"
             ></img>
           </div>
-          <div className="gallery-item-container cursor-pointer overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl">
+          <div className="gallery-item-container overflow-hidden rounded-lg shadow-md transition-shadow duration-300">
             <img
               src="https://source.unsplash.com/random/400x400?concert"
               data-src="https://source.unsplash.com/random/1200x1200?concert"
@@ -24,7 +24,7 @@ export default function Activity() {
               alt="Concert photo"
             ></img>
           </div>
-          <div className="gallery-item-container cursor-pointer overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl">
+          <div className="gallery-item-container overflow-hidden rounded-lg shadow-md transition-shadow duration-300">
             <img
               src="https://source.unsplash.com/random/400x400?meeting"
               data-src="https://source.unsplash.com/random/1200x1200?meeting"
@@ -32,7 +32,7 @@ export default function Activity() {
               alt="Meeting photo"
             ></img>
           </div>
-          <div className="gallery-item-container cursor-pointer overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl">
+          <div className="gallery-item-container overflow-hidden rounded-lg shadow-md transition-shadow duration-300">
             <img
               src="https://source.unsplash.com/random/400x600?workshop"
               data-src="https://source.unsplash.com/random/1200x1800?workshop"
@@ -40,7 +40,7 @@ export default function Activity() {
               alt="Workshop photo"
             ></img>
           </div>
-          <div className="gallery-item-container cursor-pointer overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl">
+          <div className="gallery-item-container overflow-hidden rounded-lg shadow-md transition-shadow duration-300">
             <img
               src="https://source.unsplash.com/random/400x500?party"
               data-src="https://source.unsplash.com/random/1200x1500?party"
@@ -48,7 +48,7 @@ export default function Activity() {
               alt="Party photo"
             ></img>
           </div>
-          <div className="gallery-item-container cursor-pointer overflow-hidden rounded-lg shadow-md transition-shadow duration-300 hover:shadow-xl">
+          <div className="gallery-item-container overflow-hidden rounded-lg shadow-md transition-shadow duration-300">
             <img
               src="https://source.unsplash.com/random/400x500?conference"
               data-src="https://source.unsplash.com/random/1200x1500?conference"

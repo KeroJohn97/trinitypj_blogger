@@ -27,12 +27,12 @@ export function LandingNoticesSection({ notices }: LandingNoticesSectionProps) {
             >
               {/* Media Container */}
               <div className="relative w-full overflow-hidden rounded-[32px] shadow-2xl lg:w-1/2">
-                <div className="group relative aspect-video cursor-pointer">
+                <div className="group relative aspect-video">
                   {notice.media_assets?.storage_path ? (
                     <img
                       src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${notice.media_assets.storage_path}`}
                       alt={notice.title}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="h-full w-full object-cover transition-transform duration-700"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-slate-100">
@@ -42,7 +42,7 @@ export function LandingNoticesSection({ notices }: LandingNoticesSectionProps) {
 
                   {/* Video Play Indicator */}
                   {notice.video_url && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 transition-opacity group-hover:opacity-100">
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity">
                       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-xl backdrop-blur-md">
                         <Play className="h-6 w-6 text-emerald-600" />
                       </div>

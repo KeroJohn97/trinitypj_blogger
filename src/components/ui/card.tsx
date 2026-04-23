@@ -10,7 +10,11 @@ type CardProps = React.HTMLAttributes<HTMLDivElement> & {
 const Card = React.forwardRef<HTMLDivElement, CardProps>(({ className, backgroundImage, style, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("bg-card text-card-foreground rounded-lg border shadow-sm", className)}
+    className={cn(
+      "bg-card text-card-foreground rounded-lg border shadow-sm",
+      props.onClick && "cursor-pointer",
+      className
+    )}
     style={
       backgroundImage
         ? {

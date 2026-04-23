@@ -23,7 +23,7 @@ export default function CommunityCard({ entity, onClick, variant = "detailed", i
         whileHover={{ y: -4 }}
         whileTap={{ scale: 0.98 }}
         onClick={onClick}
-        className={`group relative flex w-full flex-col overflow-hidden rounded-2xl bg-white p-4 text-left transition-all ${
+        className={`group relative flex w-full flex-col overflow-hidden rounded-2xl bg-white p-4 text-left transition-all cursor-pointer ${
           isActive 
             ? "ring-2 ring-emerald-500 shadow-lg" 
             : "ring-1 ring-slate-100 shadow-sm hover:shadow-md"
@@ -50,18 +50,18 @@ export default function CommunityCard({ entity, onClick, variant = "detailed", i
     <motion.div
       layout
       className={`group relative flex flex-col overflow-hidden rounded-[24px] bg-white transition-all md:flex-row ${
-        isActive ? "ring-2 ring-emerald-500 shadow-xl" : "ring-1 ring-slate-100 shadow-sm hover:shadow-lg"
+        isActive ? "ring-2 ring-emerald-500 shadow-xl" : "ring-1 ring-slate-100 shadow-sm"
       }`}
     >
       {/* Featured Image */}
       <div className="relative h-48 w-full shrink-0 md:h-auto md:w-48 lg:w-56">
         {entity.image ? (
-          <Image
-            src={entity.image}
-            alt={entity.name}
-            fill
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
-          />
+            <Image
+              src={entity.image}
+              alt={entity.name}
+              fill
+              className="object-cover transition-transform duration-700"
+            />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-slate-50 text-slate-200">
             {isMinistry ? <Layers size={48} /> : <Users size={48} />}

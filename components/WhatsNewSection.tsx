@@ -57,7 +57,7 @@ export default function WhatsNewSection() {
             return (
               <div 
                 key={item.id} 
-                className="group flex flex-col overflow-hidden rounded-[40px] bg-white shadow-sm ring-1 ring-slate-100 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-emerald-500/10"
+                className="group flex flex-col overflow-hidden rounded-[40px] bg-white shadow-sm ring-1 ring-slate-100"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Media Container */}
@@ -74,7 +74,7 @@ export default function WhatsNewSection() {
                       src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${item.media_assets.storage_path}`}
                       alt={item.title}
                       fill
-                      className="object-contain p-4 transition-transform duration-700 group-hover:scale-105"
+                      className="object-contain p-4 transition-transform duration-700"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-slate-50 text-slate-200">
@@ -85,7 +85,7 @@ export default function WhatsNewSection() {
 
                 {/* Content Container */}
                 <div className="flex flex-1 flex-col p-8 md:p-10">
-                  <h3 className="mb-4 text-xl font-bold tracking-tight text-slate-900 line-clamp-2 group-hover:text-emerald-600 transition-colors">
+                  <h3 className="mb-4 text-xl font-bold tracking-tight text-slate-900 line-clamp-2 transition-colors">
                     {item.title}
                   </h3>
                   <p className="mb-8 flex-1 text-sm leading-relaxed text-slate-500 line-clamp-3">

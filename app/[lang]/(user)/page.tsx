@@ -78,9 +78,9 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
                 return (
                   <RevealOnScroll key={feature.id} delay={index * 0.1} className="h-full w-full md:w-[280px]">
-                    <Card className="group h-full transition-shadow duration-300 hover:shadow-lg">
+                    <Card className="group h-full transition-shadow duration-300">
                       <CardContent className="flex h-full flex-col items-center p-6 text-center">
-                        <div className="bg-primary/10 group-hover:bg-primary/20 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
+                        <div className="bg-primary/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
                           <feature.icon className="text-primary h-6 w-6" />
                         </div>
 
