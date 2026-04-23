@@ -1,12 +1,14 @@
 import { PageHeader } from "@/components/page-header"
 
-export default function KindergartenPage() {
+export default function KindergartenPage({ isNested = false }: { isNested?: boolean }) {
   return (
-    <div className="bg-background min-h-screen">
-      <PageHeader
-        title="Methodist Kindergarten PJ"
-        subtitle="The Methodist Kindergarten was established in 1960 as a non-profit, church-based preschool to provide a quality, affordable and inclusive kindergarten programme for families of the Petaling Jaya, Selangor community."
-      />
+    <div className={isNested ? "" : "bg-background min-h-screen"}>
+      {!isNested && (
+        <PageHeader
+          title="Methodist Kindergarten PJ"
+          subtitle="The Methodist Kindergarten was established in 1960 as a non-profit, church-based preschool to provide a quality, affordable and inclusive kindergarten programme for families of the Petaling Jaya, Selangor community."
+        />
+      )}
 
       {/* Project Overview */}
       <section className="pt-16">

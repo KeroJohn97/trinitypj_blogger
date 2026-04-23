@@ -38,25 +38,26 @@ const youthVideos: MediaItem[] = [
   },
 ]
 
-export default function MYFPage() {
+export default function MYFPage({ isNested = false }: { isNested?: boolean }) {
   const [galleryVisible, setGalleryVisible] = useState(true)
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className={isNested ? "" : "bg-background min-h-screen"}>
       {/* <!-- Hero Section --> */}
-
-      <section
-        className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
-        style={{
-          backgroundImage: `url('https://trinitypj.com/wp-content/uploads/2019-Youth-Camp-high-res-file-min-scaled.jpg')`,
-        }}
-      >
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="relative px-6 text-center text-white">
-          <h1 className="text-4xl font-bold">Methodist Youth Fellowship</h1>
-          <p className="mt-3 text-lg"> Hi, there! Welcome to the Community of Young People!</p>
-        </div>
-      </section>
+      {!isNested && (
+        <section
+          className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
+          style={{
+            backgroundImage: `url('https://trinitypj.com/wp-content/uploads/2019-Youth-Camp-high-res-file-min-scaled.jpg')`,
+          }}
+        >
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="relative px-6 text-center text-white">
+            <h1 className="text-4xl font-bold">Methodist Youth Fellowship</h1>
+            <p className="mt-3 text-lg"> Hi, there! Welcome to the Community of Young People!</p>
+          </div>
+        </section>
+      )}
 
       {/* <!-- Event Details --> */}
       <section className="bg-card py-12">

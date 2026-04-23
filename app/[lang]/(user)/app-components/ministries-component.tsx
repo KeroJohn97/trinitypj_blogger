@@ -63,7 +63,7 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
   )
 
   return (
-    <section className="space-y-10 px-4 py-8 sm:max-w-lg md:max-w-2xl md:px-0 lg:max-w-4xl">
+    <section className="mx-auto w-full max-w-7xl space-y-12 px-4 py-8 md:px-8 lg:px-12">
       {/* Ministries carousel */}
       <div className="max-w-screen">
         <InfiniteMinistryCarousel
@@ -88,25 +88,29 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
             {/* Back Button */}
             <button
               onClick={() => setSelected(null)}
-              className="mb-4 flex items-center gap-2 font-semibold text-red-700 hover:text-red-800"
+              className="mb-6 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-slate-400 transition-colors hover:text-emerald-600"
             >
-              <ChevronLeft className="h-5 w-5" />
-              Back
+              <ChevronLeft className="h-4 w-4" />
+              Back to Overview
             </button>
 
             {/* Header */}
-            <div className="mb-6">
-              <h2 className="text-3xl font-bold text-gray-900">{selected.name}</h2>
-              {selected.tagline && <p className="mt-1 text-gray-600">{selected.tagline}</p>}
+            <div className="mb-8">
+              <h2 className="text-4xl font-black tracking-tight text-slate-900">{selected.name}</h2>
+              {selected.tagline && <p className="mt-2 text-lg font-bold text-emerald-600/80">{selected.tagline}</p>}
             </div>
 
             {/* Description */}
-            <p className="mb-6 text-lg leading-relaxed whitespace-pre-wrap text-gray-700">
+            <p className="mb-8 text-lg leading-relaxed text-slate-600 whitespace-pre-wrap">
               {selected.description && formatEmail(selected.description)}
             </p>
 
             {/* Disclaimer */}
-            {selected.metadata?.disclaimer && <div className="mb-6 text-red-600 italic">{selected.metadata.disclaimer}</div>}
+            {selected.metadata?.disclaimer && (
+              <div className="mb-8 rounded-xl bg-amber-50 p-4 text-sm font-medium text-amber-700 ring-1 ring-amber-100 italic">
+                {selected.metadata.disclaimer}
+              </div>
+            )}
 
             {/* Photos */}
             {selected.photos && selected.photos.length > 0 && (
@@ -226,14 +230,19 @@ export default function MinistriesPage({ ministries }: MinistriesPageProps) {
 
             {/* Q&A Section */}
             {selected.metadata?.faqs && selected.metadata.faqs.length > 0 && (
-              <div className="mb-6 space-y-4">
-                <h3 className="text-2xl font-semibold text-red-700">Q&A</h3>
-                {selected.metadata.faqs.map((faq, i) => (
-                  <div key={i} className="rounded-xl border bg-gray-50 p-4">
-                    <h4 className="font-medium text-gray-900">{faq.question}</h4>
-                    <p className="mt-2 whitespace-pre-wrap text-gray-600">{formatEmail(faq.answer)}</p>
-                  </div>
-                ))}
+              <div className="mb-10 space-y-6">
+                <div className="flex items-center gap-3 border-b-2 border-slate-50 pb-2">
+                  <h3 className="text-2xl font-black tracking-tight text-slate-900">Q&A</h3>
+                  <div className="h-1 flex-1 bg-slate-50/50" />
+                </div>
+                <div className="grid gap-4">
+                  {selected.metadata.faqs.map((faq, i) => (
+                    <div key={i} className="rounded-2xl border border-slate-100 bg-slate-50/50 p-6 transition-colors hover:bg-slate-50">
+                      <h4 className="text-lg font-bold text-slate-900">{faq.question}</h4>
+                      <p className="mt-3 whitespace-pre-wrap text-slate-600 leading-relaxed">{formatEmail(faq.answer)}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 

@@ -67,26 +67,28 @@ const activities = [
   },
 ]
 
-export default function AdultFellowshipPage() {
+export default function AdultFellowshipPage({ isNested = false }: { isNested?: boolean }) {
   const [lang, setLang] = useState("en")
   const t = (en: any, zh: any) => (lang === "en" ? en : zh)
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className={isNested ? "" : "bg-background min-h-screen"}>
       {/* <!-- Hero Section --> */}
-      <section
-        className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: `url('https://trinitypj.com/wp-content/uploads/2016/03/Picture4.png')` }}
-      >
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="relative px-6 text-center text-white">
-          <h1 className="text-4xl font-bold">Methodist Adult Fellowship</h1>
-          <p className="mt-3 text-lg">
-            To grow our faith and life in community with other Christians and be challenged to greater commitment and
-            service in our church, our community and society
-          </p>
-        </div>
-      </section>
+      {!isNested && (
+        <section
+          className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
+          style={{ backgroundImage: `url('https://trinitypj.com/wp-content/uploads/2016/03/Picture4.png')` }}
+        >
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="relative px-6 text-center text-white">
+            <h1 className="text-4xl font-bold">Methodist Adult Fellowship</h1>
+            <p className="mt-3 text-lg">
+              To grow our faith and life in community with other Christians and be challenged to greater commitment and
+              service in our church, our community and society
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* <!-- Added animated photo gallery section --> */}
       <section id="animated-gallery" className="bg-card overflow-hidden py-12">

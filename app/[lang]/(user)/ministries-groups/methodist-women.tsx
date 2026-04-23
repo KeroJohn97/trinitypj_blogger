@@ -3,23 +3,25 @@
 import methodistWomen from "@/../assets/methodist-women.webp"
 import { useState } from "react"
 
-export default function MethodistWomenPage() {
+export default function MethodistWomenPage({ isNested = false }: { isNested?: boolean }) {
   const [lang, setLang] = useState("en")
   const t = (en: any, zh: any) => (lang === "en" ? en : zh)
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className={isNested ? "" : "bg-background min-h-screen"}>
       {/* <!-- Hero Section --> */}
-      <section
-        className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${methodistWomen.src})` }}
-      >
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="relative px-6 text-center text-white">
-          <h1 className="text-4xl font-bold">Methodist Women</h1>
-          <p className="mt-3 text-lg">To Know Christ and to Make Him Known</p>
-        </div>
-      </section>
+      {!isNested && (
+        <section
+          className="relative flex h-[60vh] items-center justify-center bg-cover bg-center"
+          style={{ backgroundImage: `url(${methodistWomen.src})` }}
+        >
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="relative px-6 text-center text-white">
+            <h1 className="text-4xl font-bold">Methodist Women</h1>
+            <p className="mt-3 text-lg">To Know Christ and to Make Him Known</p>
+          </div>
+        </section>
+      )}
 
       {/* <!-- Added animated photo gallery section --> */}
       <section id="animated-gallery" className="bg-card overflow-hidden py-12">

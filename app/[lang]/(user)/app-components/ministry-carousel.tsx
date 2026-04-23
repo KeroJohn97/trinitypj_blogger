@@ -86,60 +86,42 @@ export default function InfiniteMinistryCarousel({
                 className="relative flex-[0_0_82%] min-w-0 sm:flex-[0_0_45%] lg:flex-[0_0_32%]"
                 onClick={() => emblaApi?.scrollTo(index)}
               >
-                <motion.div
-                  animate={{
-                    scale: isActive ? 1 : 0.9,
-                    opacity: isActive ? 1 : 0.6,
-                  }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className={cn(
-                    "relative aspect-[4/3] cursor-pointer overflow-hidden rounded-[32px] bg-white shadow-xl transition-all duration-500",
-                    isActive ? "ring-4 ring-emerald-500/20 shadow-emerald-900/10" : "grayscale-[20%]"
-                  )}
-                >
-                  {/* Overlay Gradient */}
-                  <div className="absolute inset-0 z-10 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
-                  
-                  {/* Image */}
-                  <img
-                    src={ministry.photos?.[0] || defaultMinistry.src}
-                    alt={ministry.name}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  
-                  {/* Content */}
-                  <div className="absolute inset-x-0 bottom-0 z-20 p-6 text-white md:p-8">
-                    <motion.div
-                       initial={{ opacity: 0, y: 10 }}
-                       animate={{ opacity: 1, y: 0 }}
-                       transition={{ delay: 0.1 }}
-                    >
-                      <h3 className="text-2xl font-black tracking-tight md:text-3xl">
-                        {ministry.name}
-                      </h3>
-                      <AnimatePresence>
-                        {isActive && ministry.tagline && (
-                          <motion.p 
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="mt-2 text-sm font-bold tracking-wide text-emerald-300 uppercase"
-                          >
-                            {ministry.tagline}
-                          </motion.p>
-                        )}
-                      </AnimatePresence>
-                    </motion.div>
-                  </div>
-                  
-                  {/* Active Indicator */}
-                  {isActive && (
-                    <motion.div 
-                      layoutId="active-pill"
-                      className="absolute top-6 right-6 z-20 flex h-2 w-10 rounded-full bg-emerald-400 shadow-[0_0_15px_rgba(52,211,153,0.5)]"
+                <div className="flex flex-col items-center">
+                  <motion.div
+                    animate={{
+                      scale: isActive ? 1 : 0.92,
+                      opacity: isActive ? 1 : 0.8,
+                    }}
+                    transition={{ duration: 0.5, ease: "circOut" }}
+                    className={cn(
+                      "relative aspect-[4/3] w-full cursor-pointer overflow-hidden rounded-[40px] bg-white transition-all duration-500",
+                      isActive ? "shadow-2xl shadow-emerald-500/10 ring-2 ring-emerald-500" : "shadow-md ring-1 ring-slate-100"
+                    )}
+                  >
+                    {/* Image */}
+                    <img
+                      src={ministry.photos?.[0] || defaultMinistry.src}
+                      alt={ministry.name}
+                      className="h-full w-full object-cover"
                     />
-                  )}
-                </motion.div>
+                  </motion.div>
+                  
+                  {/* Subtle Label below image */}
+                  <motion.div
+                    animate={{
+                      opacity: isActive ? 1 : 0.5,
+                      y: isActive ? 0 : 5
+                    }}
+                    className="mt-4 text-center px-4"
+                  >
+                    <p className={cn(
+                      "text-xs font-black uppercase tracking-[0.2em] transition-colors duration-300",
+                      isActive ? "text-emerald-600" : "text-slate-400"
+                    )}>
+                      {ministry.name}
+                    </p>
+                  </motion.div>
+                </div>
               </div>
             )
           })}

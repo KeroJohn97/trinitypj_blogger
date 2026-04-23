@@ -37,7 +37,7 @@ export default function CommunityCard({ entity, onClick, variant = "detailed", i
           </div>
           <div className="flex-1 overflow-hidden">
             <h4 className="truncate text-sm font-bold text-slate-800">{entity.name}</h4>
-            <p className="truncate text-[10px] font-medium text-slate-400 uppercase tracking-wider">
+            <p className="truncate text-[10px] font-bold text-slate-500 uppercase tracking-wider">
               {entity.meeting_time || entity.meeting_day || "Schedule TBD"}
             </p>
           </div>
