@@ -203,3 +203,25 @@ CREATE POLICY "Allow public read access" ON public.landing_notices
 -- 4. Allow authenticated users (Admins) to perform all actions
 CREATE POLICY "Allow admin manage access" ON public.landing_notices
   FOR ALL TO authenticated USING (true);
+
+-- 1. Create the Vision Pillars Table
+CREATE TABLE IF NOT EXISTS public.vision_pillars (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  description text,
+  image_id uuid REFERENCES public.media_assets(id) ON DELETE SET NULL,
+  sort_order integer DEFAULT 0,
+  created_at timestamp with time zone DEFAULT now()
+);
+
+-- 2. Enable Row Level Security (RLS)
+ALTER TABLE public.vision_pillars ENABLE ROW LEVEL SECURITY;
+
+-- 3. Create a Universal Access Policy
+-- This allows the table to be managed by the Admin portal and read by the public site
+-- (Matches the security pattern used in your other tables like alpha_media and landing_notices)
+CREATE POLICY "Universal Access Vision" 
+ON public.vision_pillars FOR ALL 
+TO anon, authenticated 
+USING (true) 
+WITH CHECK (true);
