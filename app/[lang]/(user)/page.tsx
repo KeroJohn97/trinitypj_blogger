@@ -67,15 +67,17 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
               </div>
             </RevealOnScroll>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="flex flex-wrap justify-center gap-6">
               {quickLinks.map((feature, index) => {
                 // LOOKUP TRANSLATION HERE
                 // We cast 'feature.id' to specific keys to satisfy TypeScript
                 const key = feature.id as keyof typeof dict.home.quickLinks
                 const content = dict.home.quickLinks[key]
 
+                if (!content) return null
+
                 return (
-                  <RevealOnScroll key={feature.id} delay={index * 0.1} className="h-full">
+                  <RevealOnScroll key={feature.id} delay={index * 0.1} className="h-full w-full md:w-[280px]">
                     <Card className="group h-full transition-shadow duration-300 hover:shadow-lg">
                       <CardContent className="flex h-full flex-col items-center p-6 text-center">
                         <div className="bg-primary/10 group-hover:bg-primary/20 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">

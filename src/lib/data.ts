@@ -2,11 +2,6 @@ import { Calendar, DollarSign, HandHeart, Heart, MapPin, Users } from "lucide-re
 
 export const quickLinks = [
   {
-    id: "news", // Matches JSON key
-    href: "/news-events",
-    icon: Heart,
-  },
-  {
     id: "vision",
     href: "/vision-mission",
     icon: Users,
@@ -15,11 +10,6 @@ export const quickLinks = [
     id: "ministries",
     href: "/ministries-groups",
     icon: MapPin,
-  },
-  {
-    id: "alpha",
-    href: "/alpha-course",
-    icon: Calendar,
   },
 ] as const
 

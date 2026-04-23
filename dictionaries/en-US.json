@@ -30,10 +30,6 @@
         },
         "upcomingActivities": "Upcoming Activities",
         "quickLinks": {
-            "news": {
-                "title": "News & Events",
-                "description": "Experience our warm and inclusive community"
-            },
             "vision": {
                 "title": "Vision & Mission",
                 "description": "Discover our purpose and calling"
@@ -41,10 +37,6 @@
             "ministries": {
                 "title": "Ministries & Groups",
                 "description": "Find us and explore our church ministries"
-            },
-            "alpha": {
-                "title": "Alpha Course",
-                "description": "Join our restoration initiative"
             }
         }
     },
