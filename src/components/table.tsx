@@ -1,5 +1,6 @@
 "use client"
 import { formatEmail } from "@/lib/helpers"
+import { cn } from "@/lib/utils"
 import { Star, Users } from "lucide-react"
 
 type TableColumn = {
