@@ -8,6 +8,7 @@ import { quickLinks } from "@/lib/data"
 // Ensure this path matches where you actually created the getDictionary helper
 import { getWebsiteSettings } from "@/lib/db/website"
 import { getDictionary } from "dictionaries"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import UpcomingActivitiesCarousel from "./app-components/upcoming-activities-carousel"
 import { LandingNoticeService } from "@/services/landing-notice-service"
@@ -67,34 +68,37 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
               </div>
             </RevealOnScroll>
 
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {quickLinks.map((feature, index) => {
-                // LOOKUP TRANSLATION HERE
-                // We cast 'feature.id' to specific keys to satisfy TypeScript
                 const key = feature.id as keyof typeof dict.home.quickLinks
                 const content = dict.home.quickLinks[key]
 
                 if (!content) return null
 
                 return (
-                  <RevealOnScroll key={feature.id} delay={index * 0.1} className="h-full w-full md:w-[280px]">
-                    <Card className="group h-full transition-shadow duration-300">
-                      <CardContent className="flex h-full flex-col items-center p-6 text-center">
-                        <div className="bg-primary/10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors">
-                          <feature.icon className="text-primary h-6 w-6" />
-                        </div>
+                  <RevealOnScroll key={feature.id} delay={index * 0.1}>
+                    <Link href={feature.href} className="group block h-full">
+                      <Card className="h-full border-slate-100 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-500/5">
+                        <CardContent className="flex h-full flex-col p-8">
+                          <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 transition-colors group-hover:bg-emerald-600 group-hover:text-white">
+                            <feature.icon className="h-7 w-7" />
+                          </div>
 
-                        {/* Use Translated Content */}
-                        <h3 className="text-foreground mb-2 font-semibold">{content.title}</h3>
-                        <p className="text-muted-foreground mb-4 flex-1 text-sm">{content.description}</p>
+                          <h3 className="mb-3 text-xl font-bold tracking-tight text-slate-900 group-hover:text-emerald-600 transition-colors">
+                            {content.title}
+                          </h3>
+                          
+                          <p className="mb-6 flex-1 text-sm leading-relaxed text-slate-500">
+                            {content.description}
+                          </p>
 
-                        <Button asChild variant="outline" size="sm" className="mt-auto">
-                          <Link href={feature.href}>
-                            {dict.home.explore.action} {/* "Learn More" */}
-                          </Link>
-                        </Button>
-                      </CardContent>
-                    </Card>
+                          <div className="flex items-center gap-2 text-sm font-bold text-emerald-600">
+                            {dict.home.explore.action}
+                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
                   </RevealOnScroll>
                 )
               })}

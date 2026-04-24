@@ -11,6 +11,16 @@ export const quickLinks = [
     href: "/ministries-groups",
     icon: MapPin,
   },
+  {
+    id: "pledge",
+    href: "/financial-pledge",
+    icon: DollarSign,
+  },
+  {
+    id: "connect",
+    href: "/connect-serve",
+    icon: Heart,
+  },
 ] as const
 
 export const formCategories = [

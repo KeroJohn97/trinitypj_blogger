@@ -37,6 +37,14 @@
             "ministries": {
                 "title": "Ministries & Groups",
                 "description": "Find us and explore our church ministries"
+            },
+            "pledge": {
+                "title": "Give & Pledge",
+                "description": "Support our mission through faithful giving"
+            },
+            "connect": {
+                "title": "Connect & Serve",
+                "description": "Find your place in our church family"
             }
         }
     },
