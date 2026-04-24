@@ -249,3 +249,51 @@ ON public.whats_new FOR ALL
 TO anon, authenticated 
 USING (true) 
 WITH CHECK (true);
+
+-- Migration: Create web_landing_notices table
+-- Description: Stores temporary spotlight banners and announcements for the homepage.
+
+CREATE TABLE IF NOT EXISTS public.web_landing_notices (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT NOT NULL,
+    description TEXT,
+    image_id UUID REFERENCES public.media_assets(id) ON DELETE SET NULL,
+    video_url TEXT,
+    link_url TEXT,
+    link_label TEXT DEFAULT 'Learn More',
+    sort_order INTEGER DEFAULT 0,
+    is_active BOOLEAN DEFAULT true,
+    expiry_date TIMESTAMPTZ,
+    created_at TIMESTAMPTZ DEFAULT now(),
+    updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Enable RLS
+ALTER TABLE public.web_landing_notices ENABLE ROW LEVEL SECURITY;
+
+-- Policies
+-- 1. Anyone can read active notices
+CREATE POLICY "Allow public read for active landing notices" 
+ON public.web_landing_notices FOR SELECT 
+USING (is_active = true AND (expiry_date IS NULL OR expiry_date > now()));
+
+-- 2. Authenticated users can do everything (Admin)
+CREATE POLICY "Allow full access for authenticated users" 
+ON public.web_landing_notices FOR ALL 
+TO authenticated 
+USING (true) 
+WITH CHECK (true);
+
+-- Trigger for updated_at
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER update_web_landing_notices_updated_at
+    BEFORE UPDATE ON public.web_landing_notices
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_updated_at_column();
