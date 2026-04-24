@@ -1,19 +1,21 @@
-// types/navigation.ts or within your component
 import {
-  Calendar,
-  Clock,
-  HeartHandshake,
-  Image as ImageIcon,
-  Info,
   LayoutGrid,
   Megaphone,
-  Type,
+  Newspaper,
+  Image as ImageIcon,
+  Clock,
+  Calendar,
   Users,
-  Video,
-  Newspaper
+  HeartHandshake
 } from "lucide-react"
 
 export const ADMIN_NAV = [
+  {
+    group: "Dashboard",
+    items: [
+      { name: "Overview", icon: LayoutGrid, slug: "overview" },
+    ],
+  },
   {
     group: "Brand & Identity",
     items: [
@@ -27,7 +29,6 @@ export const ADMIN_NAV = [
   {
     group: "Weekly Pulse",
     items: [
-      { name: "Service Times", icon: Clock, slug: "services" },
       { name: "Upcoming Activities", icon: Calendar, slug: "activities" },
     ],
   },

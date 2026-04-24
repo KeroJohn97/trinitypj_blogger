@@ -7,7 +7,7 @@ import { EDITOR_COMPONENTS } from "./EditorRegistry"
 
 export default function AdminDashboard({ siteData }: { siteData: any }) {
   const searchParams = useSearchParams()
-  const activeTab = searchParams.get("tab") || "general"
+  const activeTab = searchParams.get("tab") || "overview"
   const { isDirty } = useNavigationGuard()
 
   const ActiveEditor = EDITOR_COMPONENTS[activeTab]
