@@ -14,16 +14,16 @@ export default function Sidebar({ activeSlug, onSelect, onSignOut }: SidebarProp
   return (
     <aside className="sticky top-0 flex h-screen w-64 flex-col overflow-y-auto border-r bg-white">
       {/* Header */}
-      <div className="flex h-20 flex-col justify-center border-b border-gray-100 px-6">
+      <div className="flex h-20 flex-col justify-center border-b border-slate-100 px-6">
         <h1 className="text-lg leading-none font-black text-emerald-600">TMCPJ Portal</h1>
-        <p className="mt-1.5 text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">Admin Dashboard</p>
+        <p className="mt-1.5 text-[10px] font-bold tracking-[0.2em] text-slate-400 uppercase">Admin Dashboard</p>
       </div>
 
       {/* Navigation Groups */}
       <nav className="flex-1 space-y-8 p-4">
         {ADMIN_NAV.map((group) => (
           <div key={group.group}>
-            <h3 className="mb-2 px-3 text-xs font-semibold tracking-widest text-gray-400 uppercase">{group.group}</h3>
+            <h3 className="mb-2 px-3 text-xs font-semibold tracking-widest text-slate-400 uppercase">{group.group}</h3>
             <div className="space-y-1">
               {group.items.map((item) => {
                 const Icon = item.icon
@@ -34,10 +34,10 @@ export default function Sidebar({ activeSlug, onSelect, onSignOut }: SidebarProp
                     key={item.slug}
                     onClick={() => onSelect(item.slug)}
                     className={`flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                      isActive ? "bg-emerald-50 text-emerald-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      isActive ? "bg-emerald-50 text-emerald-700" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                     }`}
                   >
-                    <Icon size={18} className={isActive ? "text-emerald-600" : "text-gray-400"} />
+                    <Icon size={18} className={isActive ? "text-emerald-600" : "text-slate-400"} />
                     {item.name}
                   </button>
                 )

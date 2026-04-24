@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Play } from "lucide-react"
@@ -30,7 +32,7 @@ const YoutubeButton = ({ dict }: YoutubeButtonProps) => {
         <div className="aspect-video w-full">
           <iframe
             className="h-full w-full"
-            src={`https://www.youtube.com/embed/live_stream?channel=${process.env.YOUTUBE_CHANNEL_ID}&autoplay=1`}
+            src={`https://www.youtube.com/embed/live_stream?channel=${process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_ID}&autoplay=1`}
             title={dict.videoTitle} // Good practice to translate iframe title too
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

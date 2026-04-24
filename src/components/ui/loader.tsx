@@ -44,7 +44,7 @@ export function Loader({ loading, overlay = true, text, className }: LoaderProps
               <motion.div
                 animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
-                className="h-3 w-3 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50"
+                className="absolute h-3 w-3 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50"
               />
             </div>
             
@@ -52,7 +52,7 @@ export function Loader({ loading, overlay = true, text, className }: LoaderProps
               <motion.p
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-[10px] font-black tracking-[0.2em] text-emerald-700 uppercase"
+                className="text-[10px] font-black tracking-[0.2em] text-emerald-600 uppercase"
               >
                 {text}
               </motion.p>

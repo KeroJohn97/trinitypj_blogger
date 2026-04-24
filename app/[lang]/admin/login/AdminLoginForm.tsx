@@ -3,8 +3,8 @@ import { supabase } from "@/lib/supabase"
 import { ArrowRight, Loader2, ShieldCheck, Eye, EyeOff } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import React, { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { ErrorAlert } from "@/components/ui/error-alert"
-import { Loader } from "@/components/ui/loader"
 
 
 // Define the shape of the dictionary prop
@@ -55,13 +55,9 @@ export default function AdminLoginForm({ dict }: AdminLoginFormProps) {
         setError("Auth Error: Login succeeded but no session was returned.")
         setLoading(false)
       } else {
-        // Redirection should happen now
+        // Success - stay in loading state until page transition completes
         await router.refresh()
         router.push(`/${lang}/admin`)
-        
-        setTimeout(() => {
-          setLoading(false)
-        }, 3000)
       }
     } catch (err: any) {
       console.error("Critical Login error:", err)
@@ -105,13 +101,13 @@ export default function AdminLoginForm({ dict }: AdminLoginFormProps) {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600">
               <ShieldCheck size={16} className="text-white" strokeWidth={2} />
             </div>
-            <span className="text-sm font-bold tracking-wider text-emerald-700 uppercase">TMCPJ Portal</span>
+            <span className="text-sm font-bold tracking-wider text-emerald-600 uppercase">TMCPJ Portal</span>
           </div>
 
           {/* Heading */}
           <div className="space-y-1.5">
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">Admin Sign In</h1>
-            <p className="text-sm text-slate-500">Enter your credentials to access the dashboard.</p>
+            <p className="text-sm font-medium text-slate-500">Enter your credentials to access the dashboard.</p>
           </div>
 
           {/* Form */}
@@ -172,17 +168,37 @@ export default function AdminLoginForm({ dict }: AdminLoginFormProps) {
               onClear={() => setError(null)} 
             />
 
-            {/* Unified Loader Handlebars */}
-            <Loader loading={loading} text="Signing in to Portal..." />
-
             <button
               type="submit"
               disabled={loading}
               id="admin-login-submit"
-              className="group flex w-full items-center justify-center gap-2.5 rounded-xl bg-emerald-600 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-500/20 transition-all hover:bg-emerald-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+              className="group relative flex w-full items-center justify-center gap-2.5 rounded-xl bg-emerald-600 py-4 text-sm font-bold text-white shadow-lg shadow-emerald-500/20 transition-all hover:bg-emerald-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-90 overflow-hidden"
             >
-              Sign in to Dashboard
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+              <AnimatePresence mode="wait" initial={false}>
+                {loading ? (
+                  <motion.div
+                    key="loading"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    className="flex items-center gap-2.5"
+                  >
+                    <Loader2 size={18} className="animate-spin text-emerald-200" />
+                    <span className="tracking-wide">Signing in to Portal...</span>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="idle"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    className="flex items-center gap-2.5"
+                  >
+                    <span>Sign in to Dashboard</span>
+                    <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </button>
           </form>
 
