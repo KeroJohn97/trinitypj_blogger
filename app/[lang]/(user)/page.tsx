@@ -12,7 +12,6 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import UpcomingActivitiesCarousel from "./app-components/upcoming-activities-carousel"
 import { LandingNoticeService } from "@/services/landing-notice-service"
-import { LandingNoticesSection } from "@/components/landing-notices-section"
 import { LandingNoticeModal } from "@/components/landing-notice-modal"
 import WhatsNewSection from "components/WhatsNewSection"
 
@@ -39,8 +38,11 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           <HeroSection dict={dict.hero} />
         </RevealOnScroll>
 
-        {/* Dynamic Landing Notices Modal (Pops up once per session) */}
         <LandingNoticeModal notices={notices} />
+
+        <RevealOnScroll>
+          <WhatsNewSection />
+        </RevealOnScroll>
 
         <RevealOnScroll>
           <UpcomingActivitiesCarousel dict={dict.home} />
@@ -48,11 +50,6 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
         <RevealOnScroll>
           <OngoingEvents dict={dict.ongoingEvents} />
-        </RevealOnScroll>
-
-        {/* Dynamic What's New Feed */}
-        <RevealOnScroll>
-          <WhatsNewSection />
         </RevealOnScroll>
 
         {/* Explore Section */}

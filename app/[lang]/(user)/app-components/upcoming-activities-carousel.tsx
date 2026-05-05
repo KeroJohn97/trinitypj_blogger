@@ -72,10 +72,9 @@ export default function UpcomingActivitiesCarousel({ dict }: ActivityCarouselPro
   if (activities.length === 0) return null
 
   return (
-    /* REMOVED: bg-muted */
     <section className="animate-in fade-in mx-auto w-full max-w-6xl px-4 py-12 duration-1000 md:py-12">
       <div className="mb-10 flex flex-col items-center gap-2 text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-emerald-800 lg:text-4xl">{dict.upcomingActivities}</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-black lg:text-4xl">{dict.upcomingActivities}</h2>
       </div>
 
       <div className="group relative">
