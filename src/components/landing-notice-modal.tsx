@@ -17,15 +17,24 @@ export function LandingNoticeModal({ notices }: LandingNoticeModalProps) {
   useEffect(() => {
     if (notices.length === 0) return
 
-    const hasSeen = sessionStorage.getItem("has-seen-notices")
+    const lastSeenStr = localStorage.getItem("last-seen-notices-time")
+    let shouldShow = true
+
+    if (lastSeenStr) {
+      const lastSeenTime = parseInt(lastSeenStr, 10)
+      const oneDayInMs = 24 * 60 * 60 * 1000
+      if (Date.now() - lastSeenTime < oneDayInMs) {
+        shouldShow = false
+      }
+    }
     
-    // if (!hasSeen) {
+    if (shouldShow) {
       const timer = setTimeout(() => {
         setIsOpen(true)
-        sessionStorage.setItem("has-seen-notices", "true")
+        localStorage.setItem("last-seen-notices-time", Date.now().toString())
       }, 1200)
       return () => clearTimeout(timer)
-    // }
+    }
   }, [notices])
 
   const paginate = (newDirection: number) => {
